@@ -11,6 +11,10 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::group(['namespace' => 'Front', 'middleware' => 'front', 'prefix' => 'front'], function () {
+
+    //#Dashboard
+    Route::get('/main', 'MainController@getIndex');
+
 });
+
