@@ -1,0 +1,424 @@
+@charset "UTF-8";
+/*변수*/
+#__bs_notify__ {
+	z-index: 99999999 !important;
+	/* Do not delete */
+}
+
+/* noto-sans-kr-100 - korean */
+@font-face {
+	font-family: 'Noto Sans KR';
+	font-style: normal;
+	font-weight: 100;
+	src: url("../fonts/NotoSans/noto-sans-kr-v8-korean-100.eot");
+	/* IE9 Compat Modes */
+	src: local("Noto Sans KR Thin"), local("NotoSansKR-Thin"), url("../fonts/NotoSans/noto-sans-kr-v8-korean-100.eot?#iefix") format("embedded-opentype"), url("../fonts/NotoSans/noto-sans-kr-v8-korean-100.woff2") format("woff2"), url("../fonts/NotoSans/noto-sans-kr-v8-korean-100.woff") format("woff"), url("../fonts/NotoSans/noto-sans-kr-v8-korean-100.ttf") format("truetype"), url("../fonts/NotoSans/noto-sans-kr-v8-korean-100.svg#NotoSansKR") format("svg");
+	/* Legacy iOS */
+}
+
+/* noto-sans-kr-300 - korean */
+@font-face {
+	font-family: 'Noto Sans KR';
+	font-style: normal;
+	font-weight: 300;
+	src: url("../fonts/NotoSans/noto-sans-kr-v8-korean-300.eot");
+	/* IE9 Compat Modes */
+	src: local("Noto Sans KR Light"), local("NotoSansKR-Light"), url("../fonts/NotoSans/noto-sans-kr-v8-korean-300.eot?#iefix") format("embedded-opentype"), url("../fonts/NotoSans/noto-sans-kr-v8-korean-300.woff2") format("woff2"), url("../fonts/NotoSans/noto-sans-kr-v8-korean-300.woff") format("woff"), url("../fonts/NotoSans/noto-sans-kr-v8-korean-300.ttf") format("truetype"), url("../fonts/NotoSans/noto-sans-kr-v8-korean-300.svg#NotoSansKR") format("svg");
+	/* Legacy iOS */
+}
+
+/* noto-sans-kr-regular - korean */
+@font-face {
+	font-family: 'Noto Sans KR';
+	font-style: normal;
+	font-weight: 400;
+	src: url("../fonts/NotoSans/noto-sans-kr-v8-korean-regular.eot");
+	/* IE9 Compat Modes */
+	src: local("Noto Sans KR Light"), local("NotoSansKR-Light"), url("../fonts/NotoSans/noto-sans-kr-v8-korean-regular.eot?#iefix") format("embedded-opentype"), url("../fonts/NotoSans/noto-sans-kr-v8-korean-regular.woff2") format("woff2"), url("../fonts/NotoSans/noto-sans-kr-v8-korean-regular.woff") format("woff"), url("../fonts/NotoSans/noto-sans-kr-v8-korean-regular.ttf") format("truetype"), url("../fonts/NotoSans/noto-sans-kr-v8-korean-regular.svg#NotoSansKR") format("svg");
+	/* Legacy iOS */
+}
+
+/* noto-sans-kr-500 - korean */
+@font-face {
+	font-family: 'Noto Sans KR';
+	font-style: normal;
+	font-weight: 500;
+	src: url("../fonts/NotoSans/noto-sans-kr-v8-korean-500.eot");
+	/* IE9 Compat Modes */
+	src: local("Noto Sans KR Medium"), local("NotoSansKR-Medium"), url("../fonts/NotoSans/noto-sans-kr-v8-korean-500.eot?#iefix") format("embedded-opentype"), url("../fonts/NotoSans/noto-sans-kr-v8-korean-500.woff2") format("woff2"), url("../fonts/NotoSans/noto-sans-kr-v8-korean-500.woff") format("woff"), url("../fonts/NotoSans/noto-sans-kr-v8-korean-500.ttf") format("truetype"), url("../fonts/noto/noto-sans-kr-v8-korean-500.svg#NotoSansKR") format("svg");
+	/* Legacy iOS */
+}
+
+/* noto-sans-kr-700 - korean */
+@font-face {
+	font-family: 'Noto Sans KR';
+	font-style: normal;
+	font-weight: 700;
+	src: url("../fonts/NotoSans/noto-sans-kr-v8-korean-700.eot");
+	/* IE9 Compat Modes */
+	src: local("Noto Sans KR Bold"), local("NotoSansKR-Bold"), url("../fonts/NotoSans/noto-sans-kr-v8-korean-700.eot?#iefix") format("embedded-opentype"), url("../fonts/NotoSans/noto-sans-kr-v8-korean-700.woff2") format("woff2"), url("../fonts/NotoSans/noto-sans-kr-v8-korean-700.woff") format("woff"), url("../fonts/NotoSans/noto-sans-kr-v8-korean-700.ttf") format("truetype"), url("../fonts/NotoSans/noto-sans-kr-v8-korean-700.svg#NotoSansKR") format("svg");
+	/* Legacy iOS */
+}
+
+/* noto-sans-kr-900 - korean */
+@font-face {
+	font-family: 'Noto Sans KR';
+	font-style: normal;
+	font-weight: 900;
+	src: url("../fonts/NotoSans/noto-sans-kr-v8-korean-900.eot");
+	/* IE9 Compat Modes */
+	src: local("Noto Sans KR Black"), local("NotoSansKR-Black"), url("../fonts/NotoSans/noto-sans-kr-v8-korean-900.eot?#iefix") format("embedded-opentype"), url("../fonts/NotoSans/noto-sans-kr-v8-korean-900.woff2") format("woff2"), url("../fonts/NotoSans/noto-sans-kr-v8-korean-900.woff") format("woff"), url("../fonts/NotoSans/noto-sans-kr-v8-korean-900.ttf") format("truetype"), url("../fonts/NotoSans/noto-sans-kr-v8-korean-900.svg#NotoSansKR") format("svg");
+	/* Legacy iOS */
+}
+
+/* NanumBarunGothic-200 */
+@font-face {
+	font-family: 'NanumBarunGothic';
+	font-weight: 200;
+	src: url("../fonts/NanumBarunGothic/NanumBarunGothicUltraLightSubset.eot");
+	/* IE9 Compat Modes */
+	src: url("../fonts/NanumBarunGothic/NanumBarunGothicUltraLightSubset.eot?#iefix") format("embedded-opentype"), url("../fonts/NanumBarunGothic/NanumBarunGothicUltraLightSubset.woff2") format("woff2"), url("../fonts/NanumBarunGothic/NanumBarunGothicUltraLightSubset.woff") format("woff"), url("../fonts/NanumBarunGothic/NanumBarunGothicUltraLightSubset.ttf") format("truetype");
+	/* Safari, Android, iOS */
+}
+
+/* NanumBarunGothic-300 */
+@font-face {
+	font-family: 'NanumBarunGothic';
+	font-weight: 300;
+	src: url("../fonts/NanumBarunGothic/NanumBarunGothicLightSubset.eot");
+	/* IE9 Compat Modes */
+	src: url("../fonts/NanumBarunGothic/NanumBarunGothicLightSubset.eot?#iefix") format("embedded-opentype"), url("../fonts/NanumBarunGothic/NanumBarunGothicLightSubset.woff2") format("woff2"), url("../fonts/NanumBarunGothic/NanumBarunGothicLightSubset.woff") format("woff"), url("../fonts/NanumBarunGothic/NanumBarunGothicLightSubset.ttf") format("truetype");
+	/* Safari, Android, iOS */
+}
+
+/* NanumBarunGothic-400 */
+@font-face {
+	font-family: 'NanumBarunGothic';
+	font-weight: 400;
+	src: url("../fonts/NanumBarunGothic/NanumBarunGothicSubset.eot");
+	/* IE9 Compat Modes */
+	src: url("../fonts/NanumBarunGothic/NanumBarunGothicSubset.eot?#iefix") format("embedded-opentype"), url("../fonts/NanumBarunGothic/NanumBarunGothicSubset.woff2") format("woff2"), url("../fonts/NanumBarunGothic/NanumBarunGothicSubset.woff") format("woff"), url("../fonts/NanumBarunGothic/NanumBarunGothicSubset.ttf") format("truetype");
+	/* Safari, Android, iOS */
+}
+
+/* NanumBarunGothic-700 */
+@font-face {
+	font-family: 'NanumBarunGothic';
+	font-weight: 700;
+	src: url("../fonts/NanumBarunGothic/NanumBarunGothicBoldSubset.eot");
+	/* IE9 Compat Modes */
+	src: url("../fonts/NanumBarunGothic/NanumBarunGothicBoldSubset.eot?#iefix") format("embedded-opentype"), url("../fonts/NanumBarunGothic/NanumBarunGothicBoldSubset.woff2") format("woff2"), url("../fonts/NanumBarunGothic/NanumBarunGothicBoldSubset.woff") format("woff"), url("../fonts/NanumBarunGothic/NanumBarunGothicBoldSubset.ttf") format("truetype");
+	/* Safari, Android, iOS */
+}
+
+/* NanumSquare-200 */
+@font-face {
+	font-family: 'NanumSquare';
+	font-weight: 200;
+	src: url("../fonts/NanumSquare/NanumSquareL.eot");
+	/* IE9 Compat Modes */
+	src: url("../fonts/NanumSquare/NanumSquareL.eot?#iefix") format("embedded-opentype"), url("../fonts/NanumSquare/NanumSquareL.woff") format("woff"), url("../fonts/NanumSquare/NanumSquareL.ttf") format("truetype");
+	/* Safari, Android, iOS */
+}
+
+/* NanumSquare-400 */
+@font-face {
+	font-family: 'NanumSquare';
+	font-weight: 400;
+	src: url("../fonts/NanumSquare/NanumSquareR.eot");
+	/* IE9 Compat Modes */
+	src: url("../fonts/NanumSquare/NanumSquareR?#iefix") format("embedded-opentype"), url("../fonts/NanumSquare/NanumSquareR.woff") format("woff"), url("../fonts/NanumSquare/NanumSquareR.ttf") format("truetype");
+	/* Safari, Android, iOS */
+}
+
+/* NanumSquare-700 */
+@font-face {
+	font-family: 'NanumSquare';
+	font-weight: 700;
+	src: url("../fonts/NanumSquare/NanumSquareB.eot");
+	/* IE9 Compat Modes */
+	src: url("../fonts/NanumSquare/NanumSquareB?#iefix") format("embedded-opentype"), url("../fonts/NanumSquare/NanumSquareB.woff") format("woff"), url("../fonts/NanumSquare/NanumSquareB.ttf") format("truetype");
+	/* Safari, Android, iOS */
+}
+
+/* NanumSquare-900 */
+@font-face {
+	font-family: 'NanumSquare';
+	font-weight: 900;
+	src: url("../fonts/NanumSquare/NanumSquareEB.eot");
+	/* IE9 Compat Modes */
+	src: url("../fonts/NanumSquare/NanumSquareEB?#iefix") format("embedded-opentype"), url("../fonts/NanumSquare/NanumSquareEB.woff") format("woff"), url("../fonts/NanumSquare/NanumSquareEB.ttf") format("truetype");
+	/* Safari, Android, iOS */
+}
+
+/* Roboto-100 */
+@font-face {
+	unicode-range: U+0020-007E;
+	font-family: 'Roboto','Sans-serif';
+	font-weight: 100;
+	src: url("../fonts/Roboto/Roboto-Thin.ttf") format("truetype");
+}
+
+/* Roboto-300 */
+@font-face {
+	unicode-range: U+0020-007E;
+	font-family: 'Roboto','Sans-serif';
+	font-weight: 300;
+	src: url("../fonts/Roboto/Roboto-Light.ttf") format("truetype");
+}
+
+/* Roboto-400 */
+@font-face {
+	unicode-range: U+0020-007E;
+	font-family: 'Roboto','Sans-serif';
+	font-weight: 400;
+	src: url("../fonts/Roboto/Roboto-Regular.ttf") format("truetype");
+}
+
+/* Roboto-500 */
+@font-face {
+	unicode-range: U+0020-007E;
+	font-family: 'Roboto','Sans-serif';
+	font-weight: 500;
+	src: url("../fonts/Roboto/Roboto-Medium.ttf") format("truetype");
+}
+
+/* Roboto-700 */
+@font-face {
+	unicode-range: U+0020-007E;
+	font-family: 'Roboto','Sans-serif';
+	font-weight: 700;
+	src: url("../fonts/Roboto/Roboto-Bold.ttf") format("truetype");
+}
+
+/* Roboto-900 */
+@font-face {
+	unicode-range: U+0020-007E;
+	font-family: 'Roboto','Sans-serif';
+	font-weight: 900;
+	src: url("../fonts/Roboto/Roboto-Black.ttf") format("truetype");
+}
+
+.content-body {
+	min-height: 100vh;
+	padding: 54px 15px 60px;
+}
+
+.content-body.ppMain-content {
+	padding: 0 0 70px;
+}
+
+.content-body.fixed-scroll {
+	height: 100vh;
+	overflow: hidden;
+}
+
+.content-body .subEtc-container {
+	margin: 10px 0 20px;
+}
+
+.content-body .subEtc-container p {
+	font-size: 12px;
+	font-weight: 400;
+	color: #666;
+	line-height: 18px;
+}
+
+header {
+	position: fixed;
+	top: 0;
+	width: 100%;
+	height: 54px;
+	z-index: 10;
+}
+
+header .transparent-header {
+	padding: 0 15px;
+	height: 54px;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	-ms-flex-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
+	position: relative;
+}
+
+@-webkit-keyframes showing {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+@keyframes showing {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+@-webkit-keyframes hideing {
+	0% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+	}
+}
+
+@keyframes hideing {
+	0% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+	}
+}
+
+header .transparent-header.active {
+	background: #fff;
+	transition: .3s;
+}
+
+header .transparent-header.active img {
+	display: none;
+	-webkit-animation: hideing .3s ease-in;
+	        animation: hideing .3s ease-in;
+}
+
+header .transparent-header.active img.black-img {
+	display: block;
+	-webkit-animation: showing .3s ease-in;
+	        animation: showing .3s ease-in;
+}
+
+header .transparent-header.passive img {
+	display: block;
+	-webkit-animation: showing .3s ease-in;
+	        animation: showing .3s ease-in;
+}
+
+header .transparent-header.passive img.black-img {
+	display: none;
+	-webkit-animation: hideing .3s ease-in;
+	        animation: hideing .3s ease-in;
+}
+
+header .transparent-header img.black-img {
+	display: none;
+}
+
+header .transparent-header button {
+	background: none;
+	border: 0;
+}
+
+header .transparent-header .list-btn {
+	position: relative;
+	margin-right: 16px;
+}
+
+header .transparent-header .list-btn span {
+	position: absolute;
+	top: -5px;
+	right: -7px;
+	font-size: 10px;
+	font-weight: 700;
+	color: #fff;
+	background: #ee5322;
+	padding: 0px 6px;
+	border-radius: 99px;
+}
+
+header .transparent-header .btns-wrap {
+	position: absolute;
+	right: 15px;
+}
+
+header .transparent-header .btns-wrap button {
+	margin-right: 10px;
+}
+
+header .transparent-header .btns-wrap button:last-of-type {
+	margin-right: 0;
+}
+
+header .default-header {
+	padding: 0 15px;
+	height: 54px;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	-ms-flex-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
+	position: relative;
+	background: #fff;
+}
+
+header .default-header .back-btn {
+	background: none;
+	border: 0;
+	margin-right: 5px;
+	padding-bottom: 2px;
+}
+
+header .default-header .headerTitle {
+	font-size: 20px;
+	font-weight: 500;
+	line-height: 29px;
+}
+
+footer {
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	z-index: 10;
+}
+
+footer .tab-footer .shadow-box {
+	height: 15px;
+	opacity: 0.15;
+	background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0), #000000);
+}
+
+footer .tab-footer ul {
+	width: 100%;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	-ms-flex-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
+}
+
+footer .tab-footer ul li {
+	width: 50%;
+	text-align: center;
+	padding: 10px 0 15px;
+	background: #fff;
+}
+
+footer .tab-footer ul li img {
+	margin-bottom: 5px;
+}
+
+footer .tab-footer ul li p {
+	line-height: 15px;
+	font-size: 10px;
+	font-weight: 300;
+	color: #a2a2a2;
+}
+
+footer .tab-footer ul li.active p {
+	color: #ee5322;
+	font-size: 10px;
+	font-weight: 500;
+}
+
+/*# sourceMappingURL=common.css.map */
