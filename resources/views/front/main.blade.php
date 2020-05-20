@@ -1,5 +1,5 @@
 @extends('layouts.front')
-@section('title', trans('front.allowance_list.page_title'))
+@section('title', $title ?? '')
 @section('content')
         <div class="mainSlide-container swiper-container">
             <div class="swiper-wrapper">
