@@ -13,4 +13,10 @@ class MainController extends Controller
         $view = view('front.main');
         return $view;
 	}
+
+    public function getProduct($id)
+    {
+        $view = view('front.product.detail');
+        return $view;
+    }
 }
