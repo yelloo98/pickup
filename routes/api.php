@@ -13,6 +13,10 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
+/*Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
+});*/
+
+Route::group(['namespace' => 'Api', 'middleware' => 'api', 'prefix' => 'api', 'as' => 'api.'], function () {
+    Route::post('/join', 'ApiController@postJoin');
 });
