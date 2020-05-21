@@ -3,14 +3,16 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Customer;
 use Illuminate\Http\Request;
 
-class ApiController extends Controller
+class GodoController extends Controller
 {
 
 	public function postJoin(Request $request)
 	{
 	    $model = new Customer();
-	    $model->converter();
+	    $model->log = $request;
+	    $model->save();
 	}
 }

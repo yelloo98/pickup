@@ -17,6 +17,6 @@ use Illuminate\Http\Request;
     return $request->user();
 });*/
 
-Route::group(['namespace' => 'Api', 'middleware' => 'api', 'prefix' => 'api', 'as' => 'api.'], function () {
-    Route::post('/join', 'ApiController@postJoin');
+Route::group(['namespace' => 'Godo', 'prefix' => 'godo'], function () {
+    Route::post('/join', 'GodoController@postJoin');
 });
