@@ -15,7 +15,7 @@ class GodoController extends Controller
 	{
 	    $model = new Customer();
 	    try {
-            $model->log = json_encode($_POST['data']);
+            $model->log = json_encode($request->all());
             $model->save();
 
         } catch (\Exception $e) {
