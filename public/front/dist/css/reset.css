@@ -35,6 +35,11 @@ button {
 	padding: 0;
 }
 
+select {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+}
+
 pre {
 	word-break: break-all;
 	white-space: pre-wrap;

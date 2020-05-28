@@ -13,7 +13,8 @@ class MypageController extends Controller
      */
     public function getOrderList()
 	{
-        $view = view('front.cart');
+        $view = view('front.mypage.order');
+        $view->div_class = 'ppGoods-content';
         return $view;
 	}
 
@@ -150,6 +151,7 @@ class MypageController extends Controller
     public function getTermList()
     {
         $view = view('front.mypage.term');
+        $view->div_class='listUp-detailContent';
         return $view;
     }
 
@@ -159,6 +161,7 @@ class MypageController extends Controller
     public function getNoticeList()
     {
         $view = view('front.mypage.notice');
+        $view->div_class='listUp-content';
         return $view;
     }
 

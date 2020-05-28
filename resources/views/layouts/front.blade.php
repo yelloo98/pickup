@@ -20,13 +20,13 @@
 </head>
 <body class="{{$body_class ?? '@@class'}}">
 <div class="wrapper">
-    @include('layouts.front.header')
-    <div class="content-body ppMain-content">
+    @yield('header')
+    <div class="content-body {{$div_class ?? ''}}">
         @include('layouts.front.error')
         @include('layouts.front.sidebar')
         @yield('content')
     </div>
-    @include('layouts.front.footer')
+    @yield('footer')
 </div>
 </body>
 <script type="text/javascript" src="/front/dist/plugin/vendor.min.js"></script>

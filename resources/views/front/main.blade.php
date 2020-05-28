@@ -1,6 +1,10 @@
 @extends('layouts.front')
 @section('title', $title ?? '')
+@section('header')
+    @include('layouts.front.header')
+@endsection
 @section('content')
+    {{$result}}
         <div class="mainSlide-container swiper-container">
             <div class="swiper-wrapper">
                 <div class="swiper-slide">
@@ -249,6 +253,9 @@
                 </div>
             </div>
         </div>
+@endsection
+@section('footer')
+    @include('layouts.front.footer')
 @endsection
 @section('script')
     <script>

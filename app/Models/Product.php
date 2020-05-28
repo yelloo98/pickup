@@ -14,6 +14,11 @@ class Product extends Model implements ModelAdminInterface
 
     protected $table = 'product';
 
+    public function origin_product()
+    {
+        return $this->hasOne('App\Models\OriginProduct', 'id', 'product_id');
+    }
+
     /**
      * Override : DataTableList
      * -----------------------------------------------------------------------------------------------------------------
