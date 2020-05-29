@@ -15,14 +15,13 @@ class GodoController extends Controller
 	{
 	    $model = new Customer();
 	    try {
-            $model->log = json_encode($request);
+	        $model->memId = $request->memId;
+	        $model->cellPhone = $request->cellPhone;
             $model->save();
 
         } catch (\Exception $e) {
-            $model->log = json_decode($e->getMessage());
-            $model->save();
-            return $this->returnFailed($request->all());
+            return $this->returnFailed($e->getMessage());
         }
-        return $this->returnSuccess($request->all());
+        return $this->returnSuccess();
 	}
 }
