@@ -17,6 +17,7 @@ class GodoController extends Controller
 	    try {
 	        $model->memId = $request->memId;
 	        $model->cellPhone = $request->cellPhone;
+	        $model->log = '1.'.$request->memId.' 2.'.$request['memId'];
             $model->save();
 
         } catch (\Exception $e) {
