@@ -13,11 +13,16 @@ class GodoController extends Controller
 
 	public function postJoin(Request $request)
 	{
-	    $model = new Customer();
+
 	    try {
+            if(Customer::where('cellPhone', $request->cellPhone)->count()>0) {
+                $model = Customer::where('cellPhone', $request->cellPhone)->first();
+            } else {
+                $model = new Customer();
+                $model->cellPhone = $request->cellPhone;
+                $model->point = 0;
+            }
 	        $model->memId = $request->memId;
-	        $model->cellPhone = $request->cellPhone;
-	        $model->log = '1.'.$request->memId.' 2.'.$request['memId'];
             $model->save();
 
         } catch (\Exception $e) {
