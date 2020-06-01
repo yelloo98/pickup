@@ -4,7 +4,6 @@
     @include('layouts.front.header')
 @endsection
 @section('content')
-    {{$result}}
         <div class="mainSlide-container swiper-container">
             <div class="swiper-wrapper">
                 <div class="swiper-slide">
