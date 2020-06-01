@@ -15,11 +15,11 @@ class GodoController extends Controller
 	{
 
 	    try {
-            if(Customer::where('cellPhone', $request->cellPhone)->count()>0) {
-                $model = Customer::where('cellPhone', $request->cellPhone)->first();
+            if(Customer::where('phone', $request->cellPhone)->count()>0) {
+                $model = Customer::where('phone', $request->cellPhone)->first();
             } else {
                 $model = new Customer();
-                $model->cellPhone = $request->cellPhone;
+                $model->phone = $request->cellPhone;
                 $model->point = 0;
             }
 	        $model->memId = $request->memId;
