@@ -23,6 +23,7 @@ class GodoController extends Controller
                 $model->point = 0;
             }
 	        $model->memId = $request->memId;
+	        $model->memPw = bcrypt($request->memPw);
             $model->save();
 
         } catch (\Exception $e) {
