@@ -98,9 +98,10 @@ class MypageController extends Controller
     /**
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application|\Illuminate\View\View
      */
-    public function getQnaList()
+    public function getQna()
     {
         $view = view('front.mypage.qna');
+        $view->div_class = 'write-content';
         return $view;
     }
 

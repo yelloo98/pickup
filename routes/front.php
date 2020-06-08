@@ -11,6 +11,8 @@
 |
 */
 
+Route::get('/front/get/token', 'Front\AuthController@postLogin');
+
 Route::group(['namespace' => 'Front', 'middleware' => 'front', 'prefix' => 'front', 'as' => 'front.'], function () {
 
     /**
@@ -75,7 +77,7 @@ Route::group(['namespace' => 'Front', 'middleware' => 'front', 'prefix' => 'fron
         //# 상품 또는 매장의 Q&A
         Route::group(['prefix' => 'qna', 'as' => 'qna.'], function () {
             //상품 또는 매장의 Q&A 리스트
-            Route::get('/', 'MypageController@getQnaList');
+            Route::get('/', 'MypageController@getQna');
             //상품 또는 매장의 Q&A 등록
             Route::post('/', 'MypageController@postQna');
             //상품 또는 매장의 Q&A 수정

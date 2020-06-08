@@ -8,7 +8,7 @@
         <img src="/front/dist/img/icon_mainlogo.png" alt="" class="logo-img">
         <img class="black-img" src="/front/dist/img/icon_mainlogo_B.png" alt="" class="logo-img">
         <div class="btns-wrap">
-            <button>
+            <button onclick="location.href='/front/search'">
                 <img src="/front/dist/img/icon_search.png" alt="">
                 <img class="black-img" src="/front/dist/img/icon_search_B.png" alt="">
             </button>
