@@ -69,7 +69,7 @@
                 <div class="main-title">
                     <p>미트박스365 성남점</p>
                     <ul>
-                        <li class="gray-link">문의하기</li>
+                        <li class="gray-link" onclick="location.href='/front/mypage/qna';">문의하기</li>
                         <li class="red-link">매장변경</li>
                     </ul>
                 </div>
@@ -272,7 +272,7 @@
     </script>
 
     <script>
-        $(document).ready(function () {
+        $(document).ready(function(){
             var swiper = new Swiper('.swiper-container.mainSlide-container', {
                 loop: true,
                 pagination: {
@@ -300,11 +300,54 @@
             });
 
             var mainItemList = $('.cubeBox-wrapper .img-box').outerWidth();
-            $('.cubeBox-wrapper .img-box').css('height', mainItemList);
+            $('.cubeBox-wrapper .img-box').css('height',mainItemList);
 
-            $('.red-link').click(function () {
-                $('.fullPopup-wrapper').addClass('active');
+            $('.red-link').click(function(){
+                $('#storeSearch').addClass('slideIn').removeClass('slideOut');
                 $(this).closest('.content-body').addClass('fixed-scroll');
+            });
+
+            $('.alarm-btn').click(function(){
+                $('#PPalarm').addClass('slideIn').removeClass('slideOut');
+                $(this).closest('.content-body').addClass('fixed-scroll');
+            });
+
+
+
+
+            $('.pin').click(function(){
+                if ( $(this).hasClass('default-pin') ) {
+                    $(this).children('img').attr("src",$(this).children('img').attr("src").replace("_pin","_mainpin"));
+                    $(this).siblings().children('img').attr("src",$(this).siblings().children('img').attr("src").replace("_mainpin","_pin"));
+                    $(this).removeClass('default-pin').siblings().addClass('default-pin');
+                }
+            });
+
+            $('.pin img').click(function(){
+                $('.storeInfo-slide').slideDown(300);
+            });
+
+            $('.full-close').click(function(){
+                $(this).closest('.fullPopup-wrapper').removeClass('slideIn').addClass('slideOut');
+                $(this).closest('.fullPopup-wrapper').siblings('.wrapper').children('.content-body').removeClass('fixed-scroll');
+            });
+
+
+            //관심매장 리스트 없는경우
+            if( $('.enjoyStore-list ul li').length == 0 ) {
+                $('.enjoyStore-list').append('<p class="none-list">관심매장이 없습니다.</p>');
+            }
+
+            //알림 리스트 없는경우
+            if( $('.alarm-list ul li').length == 0 ) {
+                $('.alarm-list').append('<p class="none-list">등록된 알림이 없습니다.</p>');
+            }
+
+            $('.delete-list').click(function(){
+                $(this).closest('li').remove();
+                if( $('.alarm-list ul li').length == 0 ) {
+                    $('.alarm-list').append('<p class="none-list">등록된 알림이 없습니다.</p>');
+                }
             });
 
         });
