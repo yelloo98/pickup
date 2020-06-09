@@ -21,4 +21,10 @@ class MainController extends Controller
         $view->div_class = 'ppGoodsDetail-content';
         return $view;
     }
+
+    public function getLatestProduct(){
+        $view = view('front.product.latest');
+        $view->div_class = 'allPickup-content';
+        return $view;
+    }
 }

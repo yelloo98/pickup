@@ -85,7 +85,7 @@
             <div class="moreTitle-wrapper">
                 <img src="/front/dist/img/m_new.png" alt="">
                 <p>새로운 픽업상품이 출시했어요.</p>
-                <button><img src="/front/dist/img/icon_mainarrow.png" alt=""></button>
+                <button onclick="location.href='/front/product/latest';"><img src="/front/dist/img/icon_mainarrow.png" alt=""></button>
             </div>
             <div class="swiper-wrapper">
                 <div class="swiper-slide">

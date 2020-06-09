@@ -5,6 +5,7 @@
             <img src="/front/dist/img/icon_X_B.png" alt="">
         </button>
     </div>
+
     <div class="tab-section">
         <ul>
             <li class="tabItem active">주소로 찾기</li>
@@ -105,14 +106,14 @@
     <div class="header-section">
         <p>알림</p>
         <button class="full-close">
-            <img src="img/icon_X_B.png" alt="">
+            <img src="/front/dist/img/icon_X_B.png" alt="">
         </button>
     </div>
     <div class="list-section alarm-list">
         <ul>
             <li>
                 <button class="delete-list">
-                    <img src="img/icon_x_S.png" alt="">
+                    <img src="/front/dist/img/icon_x_S.png" alt="">
                 </button>
                 <div class="list-date">
                     <p>2020-03-22</p>
@@ -126,7 +127,7 @@
             </li>
             <li>
                 <button class="delete-list">
-                    <img src="img/icon_x_S.png" alt="">
+                    <img src="/front/dist/img/icon_x_S.png" alt="">
                 </button>
                 <div class="list-date">
                     <p>2020-03-22</p>
