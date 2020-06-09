@@ -3,10 +3,10 @@
 @section('header')
     <header>
         <div class="default-header">
-            <button class="back-btn">
+            <button class="back-btn" onclick="javascript:history.back()">
                 <img src="/front/dist/img/icon_gnbBack.png" alt="">
             </button>
-            <p class="headerTitle">구매한 픽업상품</p>
+            <p class="headerTitle">최신 픽업상품</p>
             <div class="btns-wrap">
                 <button>
                     <img class="black-img" src="/front/dist/img/icon_search_B.png" alt="">

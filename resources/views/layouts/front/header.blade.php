@@ -1,6 +1,6 @@
 <header>
     <div class="transparent-header">
-        <button class="list-btn" onclick="location.href='PP_goodsList.html'">
+        <button class="list-btn" onclick="location.href='/front/mypage/order'">
             <img src="/front/dist/img/icon_Pup.png" alt="">
             <img class="black-img" src="/front/dist/img/icon_Pup_B.png" alt="">
             <span>1</span>
