@@ -2636,16 +2636,12 @@
 }
 
 .index-box .popup-wrapper {
-	display: none;
 	background: rgba(0, 0, 0, 0.5);
 	position: fixed;
 	width: 100%;
 	height: 100vh;
 	bottom: 0;
 	padding: 0 30px;
-}
-
-.index-box .popup-wrapper.active {
 	display: -ms-flexbox;
 	display: -webkit-flex;
 	display: flex;
