@@ -2644,7 +2644,8 @@
 	padding: 0 30px;
 	display: -ms-flexbox;
 	display: -webkit-flex;
-	display: flex;
+	display: none;
+	z-index: 13;
 	-ms-flex-align: center;
 	-webkit-align-items: center;
 	        align-items: center;

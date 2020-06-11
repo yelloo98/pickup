@@ -273,7 +273,7 @@
 
     <script>
         $(document).ready(function(){
-            var swiper = new Swiper('.swiper-container.mainSlide-container', {
+            var swiperMain = new Swiper('.swiper-container.mainSlide-container', {
                 loop: true,
                 pagination: {
                     el: '.swiper-pagination',
@@ -285,16 +285,16 @@
                 },
             });
 
-            var swiper = new Swiper('.swiper-container.itemSlide-container', {
+            var swiperItem = new Swiper('.swiper-container.itemSlide-container', {
                 slidesPerView: 'auto',
                 spaceBetween: 10,
             });
 
-            var swiper = new Swiper('.swiper-container.wideSlide-container', {
+            var swiperWide = new Swiper('.swiper-container.wideSlide-container', {
                 slidesPerView: 'auto',
                 spaceBetween: 10,
             });
-            var swiper = new Swiper('.swiper-container.reviewSlide-container', {
+            var swiperReview = new Swiper('.swiper-container.reviewSlide-container', {
                 slidesPerView: 'auto',
                 spaceBetween: 30,
             });
@@ -311,11 +311,6 @@
                 $('#PPalarm').addClass('slideIn').removeClass('slideOut');
                 $(this).closest('.content-body').addClass('fixed-scroll');
             });
-            $('.my-page').click(function(){
-                $('#PPalarm').addClass('slideIn').removeClass('slideOut');
-                $(this).closest('.content-body').addClass('fixed-scroll');
-            });
-
 
 
 
@@ -352,6 +347,15 @@
                 $(this).closest('li').remove();
                 if( $('.alarm-list ul li').length == 0 ) {
                     $('.alarm-list').append('<p class="none-list">등록된 알림이 없습니다.</p>');
+                }
+            });
+
+            $('.clicking-btn').click(function(){
+                $(this).toggleClass('active');
+                if ( $(this).hasClass('active') ) {
+                    $(this).children('img').attr('src','img/icon_star_on.png');
+                } else {
+                    $(this).children('img').attr('src','img/icon_star.png');
                 }
             });
 
