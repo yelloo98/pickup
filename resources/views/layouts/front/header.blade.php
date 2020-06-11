@@ -17,7 +17,7 @@
                 <img class="black-img" src="/front/dist/img/icon_cart_B.png" alt="">
             </button>
             <button>
-                <img src="/front/dist/img/icon_menu.png" alt="">
+                <img src="/front/dist/img/icon_menu.png" alt="" onclick="pageModal.menuPopup();">
                 <img class="black-img" src="/front/dist/img/icon_menu_B.png" alt="">
             </button>
         </div>

@@ -213,6 +213,44 @@
 	overflow: hidden;
 }
 
+.content-body > .fixed-footer {
+	position: fixed;
+	z-index: 10;
+	width: 100%;
+	left: 0;
+	bottom: 0;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	-ms-flex-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
+}
+
+.content-body > .fixed-footer.full-btn button {
+	width: 100%;
+}
+
+.content-body > .fixed-footer button {
+	width: 50%;
+	height: 60px;
+	background: #ee5322;
+	color: #fff;
+	font-size: 15px;
+	font-weight: 400;
+	border: 0;
+}
+
+.content-body > .fixed-footer button span {
+	color: #fff;
+	font-size: 15px;
+	font-weight: 400;
+}
+
+.content-body > .fixed-footer button.cancel {
+	background: #000;
+}
+
 .content-body .subEtc-container {
 	margin: 10px 0 20px;
 }
@@ -377,7 +415,7 @@
 	font-weight: 500;
 	color: #999;
 	text-align: center;
-	line-height: calc( 100vh - 146px);
+	line-height: calc( 100vh - 64px);
 }
 
 .content-body.listUp-content .listUp-container ul li {
@@ -431,6 +469,17 @@
 	font-weight: 400;
 	line-height: 14px;
 	color: #999;
+}
+
+.content-body.listUp-content .listUp-container ul li > img {
+	width: 8px;
+}
+
+.barSection {
+	height: 7px;
+	background: #f6f6f6;
+	border-top: 1px solid #dcdcdc;
+	border-bottom: 1px solid #dcdcdc;
 }
 
 header {
@@ -518,6 +567,10 @@ header .transparent-header.passive img.black-img {
 	        animation: hideing .3s ease-in;
 }
 
+header .transparent-header > img {
+	width: 150px;
+}
+
 header .transparent-header img.black-img {
 	display: none;
 }
@@ -532,7 +585,12 @@ header .transparent-header .list-btn {
 	margin-right: 16px;
 }
 
+header .transparent-header .list-btn img {
+	width: 26px;
+}
+
 header .transparent-header .list-btn span {
+	display: inline-block;
 	position: absolute;
 	top: -5px;
 	right: -7px;
@@ -557,6 +615,10 @@ header .transparent-header .btns-wrap button:last-of-type {
 	margin-right: 0;
 }
 
+header .transparent-header .btns-wrap button img {
+	width: 19px;
+}
+
 header .default-header {
 	padding: 0 15px;
 	height: 54px;
@@ -575,6 +637,10 @@ header .default-header .back-btn {
 	border: 0;
 	margin-right: 5px;
 	padding-bottom: 2px;
+}
+
+header .default-header .back-btn img {
+	width: 14px;
 }
 
 header .default-header .headerTitle {
@@ -596,6 +662,10 @@ header .default-header .btns-wrap button {
 
 header .default-header .btns-wrap button:last-of-type {
 	margin-right: 0;
+}
+
+header .default-header .btns-wrap button img {
+	width: 19px;
 }
 
 footer {
@@ -630,6 +700,7 @@ footer .tab-footer ul li {
 
 footer .tab-footer ul li img {
 	margin-bottom: 5px;
+	width: 25px;
 }
 
 footer .tab-footer ul li p {
