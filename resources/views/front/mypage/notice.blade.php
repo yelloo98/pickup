@@ -3,24 +3,10 @@
 @section('header')
     <header>
         <div class="default-header">
-            <button class="back-btn">
+            <button class="back-btn" onclick="javascript:history.back()">
                 <img src="/front/dist/img/icon_gnbBack.png" alt="">
             </button>
             <p class="headerTitle">공지사항 목록</p>
-            <!-- <div class="btns-wrap">
-                <button>
-                    <img src="img/icon_search.png" alt="">
-                    <img class="black-img" src="img/icon_search_B.png" alt="">
-                </button>
-                <button>
-                    <img src="img/icon_cart.png" alt="">
-                    <img class="black-img" src="img/icon_cart_B.png" alt="">
-                </button>
-                <button>
-                    <img src="img/icon_menu.png" alt="">
-                    <img class="black-img" src="img/icon_menu_B.png" alt="">
-                </button>
-            </div> -->
         </div>
     </header>
 @endsection

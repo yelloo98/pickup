@@ -32,7 +32,23 @@
 <script type="text/javascript" src="/front/dist/plugin/vendor.min.js"></script>
 <script type="text/javascript" src="/front/dist/js/common.js"></script>
 @yield('script')
-<!-- <div id="google_translate_element"></div>
-<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script> -->
-</html>
+<script>
+    $('.pp').click(function(){
+        var btnIndex = $(this).index();
+        $(".popup-wrapper").eq(btnIndex).addClass("active").sibling().removeClass("active");
+
+    });
+    $('.close-box').click(function(){
+        $(this).parents('.popup-wrapper').removeClass('active');
+    });
+
+    var swiperPrice = new Swiper('.swiper-container,.price-container', {
+        slidesPerView: 'auto',
+        spaceBetween: 8,
+        centeredSlides: true,
+        pagination: {
+            el: '.swiper-pagination',
+        },
+    });
+</script></html>
 @include('layouts.front.modal')

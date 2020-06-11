@@ -19,4 +19,5 @@ use Illuminate\Http\Request;
 
 Route::group(['namespace' => 'Godo', 'prefix' => 'godo'], function () {
     Route::get('/join', 'GodoController@postJoin');
+    Route::get('/login', 'GodoController@login');
 });

@@ -98,9 +98,10 @@ class MypageController extends Controller
     /**
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application|\Illuminate\View\View
      */
-    public function getQnaList()
+    public function getQna()
     {
         $view = view('front.mypage.qna');
+        $view->div_class = 'write-content';
         return $view;
     }
 
@@ -124,6 +125,40 @@ class MypageController extends Controller
      *
      */
     public function deleteQna()
+    {
+
+    }
+
+    /**
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application|\Illuminate\View\View
+     */
+    public function getStoreQna()
+    {
+        $view = view('front.mypage.storeQna');
+        $view->div_class = 'write-content';
+        return $view;
+    }
+
+    /**
+     *
+     */
+    public function postStoreQna()
+    {
+
+    }
+
+    /**
+     * @param $id
+     */
+    public function updateStoreQna($id)
+    {
+
+    }
+
+    /**
+     *
+     */
+    public function deleteStoreQna()
     {
 
     }
