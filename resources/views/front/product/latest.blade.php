@@ -118,35 +118,5 @@
     @include('layouts.front.footer')
 @endsection
 @section('script')
-    <script>
-
-        $('.tab-footer ul li').click(function(){
-            $(this).addClass('active').siblings().removeClass('active');
-
-            if ( $(this).hasClass('active') ) {
-                $(this).children('img').attr("src",$(this).children('img').attr("src").replace("off.png","on.png"));
-                $(this).siblings().children('img').attr("src",$(this).siblings().children('img').attr("src").replace("on.png","off.png"));
-            }
-
-        });
-
-
-    </script>
-
-
-    <script>
-
-        $(document).ready(function(){
-            var machineItem = $('.machine-tabItem .img-box').outerWidth();
-            $('.machine-tabItem .img-box').css('height',machineItem);
-
-            $('.machine-tab li').click(function(){
-                $(this).addClass('active').siblings('li').removeClass('active');
-                var machineTarget = $(this).index();
-                $('.machine-list li').eq(machineTarget).addClass('active').siblings('li').removeClass('active');
-            });
-
-        });
-
-    </script>
+    <script src="/front/page/product/page.latest.init.js"></script>
 @endsection
