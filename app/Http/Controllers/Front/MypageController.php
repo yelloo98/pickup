@@ -132,6 +132,40 @@ class MypageController extends Controller
     /**
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application|\Illuminate\View\View
      */
+    public function getStoreQna()
+    {
+        $view = view('front.mypage.storeQna');
+        $view->div_class = 'write-content';
+        return $view;
+    }
+
+    /**
+     *
+     */
+    public function postStoreQna()
+    {
+
+    }
+
+    /**
+     * @param $id
+     */
+    public function updateStoreQna($id)
+    {
+
+    }
+
+    /**
+     *
+     */
+    public function deleteStoreQna()
+    {
+
+    }
+
+    /**
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application|\Illuminate\View\View
+     */
     public function getPush()
     {
         $view = view('front.mypage.push');

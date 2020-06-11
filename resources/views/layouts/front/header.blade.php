@@ -16,7 +16,7 @@
                 <img src="/front/dist/img/icon_cart.png" alt="">
                 <img class="black-img" src="/front/dist/img/icon_cart_B.png" alt="">
             </button>
-            <button>
+            <button class="my-page">
                 <img src="/front/dist/img/icon_menu.png" alt="">
                 <img class="black-img" src="/front/dist/img/icon_menu_B.png" alt="">
             </button>

@@ -81,16 +81,27 @@ Route::group(['namespace' => 'Front', 'middleware' => 'front', 'prefix' => 'fron
             //상품의 리뷰 삭제
             Route::delete('/', 'MypageController@deleteReview');
         });
-        //# 상품 또는 매장의 Q&A
+        //# 상품 Q&A
         Route::group(['prefix' => 'qna', 'as' => 'qna.'], function () {
-            //상품 또는 매장의 Q&A 리스트
+            //상품 Q&A 리스트
             Route::get('/', 'MypageController@getQna');
-            //상품 또는 매장의 Q&A 등록
+            //상품 Q&A 등록
             Route::post('/', 'MypageController@postQna');
-            //상품 또는 매장의 Q&A 수정
+            //상품 Q&A 수정
             Route::put('/', 'MypageController@updateQna');
-            //상품 또는 매장의 Q&A 삭제
+            //상품 Q&A 삭제
             Route::delete('/', 'MypageController@deleteQna');
+            //# 매장의 Q&A
+            Route::group(['prefix' => 'store'], function () {
+                //매장의 Q&A 리스트
+                Route::get('/', 'MypageController@getStoreQna');
+                //매장의 Q&A 등록
+                Route::post('/', 'MypageController@postStoreQna');
+                //매장의 Q&A 수정
+                Route::put('/', 'MypageController@updateStoreQna');
+                //매장의 Q&A 삭제
+                Route::delete('/', 'MypageController@deleteStoreQna');
+            });
         });
         //# 알림 수신 동의
         Route::group(['prefix' => 'push', 'as' => 'push.'], function () {

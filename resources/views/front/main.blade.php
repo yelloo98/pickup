@@ -69,7 +69,7 @@
                 <div class="main-title">
                     <p>미트박스365 성남점</p>
                     <ul>
-                        <li class="gray-link" onclick="location.href='/front/mypage/qna';">문의하기</li>
+                        <li class="gray-link" onclick="location.href='/front/mypage/qna/store';">문의하기</li>
                         <li class="red-link">매장변경</li>
                     </ul>
                 </div>
@@ -311,6 +311,11 @@
                 $('#PPalarm').addClass('slideIn').removeClass('slideOut');
                 $(this).closest('.content-body').addClass('fixed-scroll');
             });
+            $('.my-page').click(function(){
+                $('#PPalarm').addClass('slideIn').removeClass('slideOut');
+                $(this).closest('.content-body').addClass('fixed-scroll');
+            });
+
 
 
 
