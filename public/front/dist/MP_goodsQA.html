@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1"/>
+    <meta name="format-detection" content="telephone=no">
+
+    <title>@@title</title>
+
+    <link rel="stylesheet" type="text/css" href="plugin/vendor.min.css">
+    <link rel="stylesheet" type="text/css" href="css/reset.css">
+    <link rel="stylesheet" type="text/css" href="css/common.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+
+    <script type="text/javascript" src="lib/jquery/dist/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+</head>
+<body class="@@class">
+<div class="wrapper">
+<header>
+	<div class="default-header">
+		<button class="back-btn">
+			<img src="img/icon_gnbBack.png" alt="">
+		</button>
+		<p class="headerTitle">구매한 픽업상품</p>
+	</div>
+</header>
+
+<div class="content-body goodsQA-content"> 
+    <div class="tab-section">
+        <ul class="tab-list2">
+            <li class="tabItem active">상품 Q&A</li>
+            <li class="tabItem ">매장 Q&A</li>
+        </ul>
+        <div class="target-wrap">
+            <div class="tabTarget active">
+                <div class="goodsData-container">
+                    <div class="list-item">
+                        <div class="custom-bar">
+                            <p><span>답변대기</span></p>
+                            <ul>
+                                <li>수정</li>
+                                <li class="delete-list">삭제</li>
+                            </ul>
+                        </div>
+                        <div class="user-section">
+                            <div class="info-bar">
+                                <div class="user-info">
+                                    <p><span class="store">군자점</span><span class="
+                                        questionKinds">[배송문의]</span><span class="date">2020.03.12</span></p>
+                                </div>
+                                <button class="more-btn"><img src="img/icon_arrow_MD.png" alt=""></button>
+                            </div>
+                            <div class="title-bar">국내산 생생 삼겹살 250g</div>
+                            <div class="content-bar"><pre>15일에 도착할 수 있을까요?
+오늘 주문하면 3월 15일에 도착할 수 있는지 궁금해요</pre>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="list-item">
+                        <div class="custom-bar complete">
+                            <p><span>답변완료</span></p>
+                            <ul>
+                                <li class="delete-list">삭제</li>
+                            </ul>
+                        </div>
+                        <div class="user-section">
+                            <div class="info-bar">
+                                <div class="user-info">
+                                    <p><span class="store">군자점</span><span class="
+                                        questionKinds">[배송문의]</span><span class="date">2020.03.12</span></p>
+                                </div>
+                                <button class="more-btn"><img src="img/icon_arrow_MD.png" alt=""></button>
+                            </div>
+                            <div class="title-bar">국내산 생생 삼겹살 250g</div>
+                            <div class="content-bar"><pre>15일에 도착할 수 있을까요?
+오늘 주문하면 3월 15일에 도착할 수 있는지 궁금해요</pre>
+                            </div>
+                        </div>
+                        <div class="manager-section">
+                            <p class="answer">답변.</p>
+                            <pre class="contenttxt">안녕하세요 고객님! 
+2022년 5월 30일까지 입니다.</pre>
+                        </div>
+                    </div>
+                    <div class="list-item">
+                        <div class="custom-bar complete">
+                            <p><span>답변완료</span></p>
+                            <ul>
+                                <li class="delete-list">삭제</li>
+                            </ul>
+                        </div>
+                        <div class="user-section">
+                            <div class="info-bar">
+                                <div class="user-info">
+                                    <p><span class="store">군자점</span><span class="
+                                        questionKinds">[배송문의]</span><span class="date">2020.03.12</span></p>
+                                </div>
+                                <button class="more-btn"><img src="img/icon_arrow_MD.png" alt=""></button>
+                            </div>
+                            <div class="title-bar">국내산 생생 삼겹살 250g</div>
+                            <div class="content-bar"><pre>15일에 도착할 수 있을까요?
+오늘 주문하면 3월 15일에 도착할 수 있는지 궁금해요</pre>
+                            </div>
+                        </div>
+                        <div class="manager-section">
+                            <p class="answer">답변.</p>
+                            <pre class="contenttxt">안녕하세요 고객님! 
+2022년 5월 30일까지 입니다.</pre>
+                        </div>
+                    </div>
+                </div>
+            </div>            
+            <div class="tabTarget">
+                <div class="goodsData-container">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+</div>
+</body>
+
+<script type="text/javascript" src="plugin/vendor.min.js"></script>
+<script type="text/javascript" src="js/common.js"></script>
+</html>
+
+
+<script>
+    $('.tabTarget').each(function(){
+        if( $(this).find('.list-item').length == 0 ) {
+            $(this).find('.goodsData-container').append('<p class="none-list">Q&A가 없습니다.</p>');
+        }
+    });
+
+    $('.more-btn').click(function(){
+       $(this).closest('.word-box').toggleClass('showing');
+    });
+
+    $('.list-item .more-btn').hide();
+
+    $('.manager-section').siblings('.user-section').find('.more-btn').show();
+
+    $('.more-btn').click(function(){
+        $(this).toggleClass('active');
+        $(this).closest('.list-item').toggleClass('questionOpen').children('.manager-section').slideToggle(300);
+    });
+
+    $('.delete-list').click(function(){
+        $(this).closest('.list-item').remove();
+        $('.tabTarget').each(function(){
+            if( $(this).children('.goodsData-container').children().length == 0 ) {
+                $(this).find('.goodsData-container').append('<p class="none-list">Q&A가 없습니다.</p>');
+            }
+        });
+        
+    });
+
+</script>

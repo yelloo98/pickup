@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1"/>
+    <meta name="format-detection" content="telephone=no">
+
+    <title>@@title</title>
+
+    <link rel="stylesheet" type="text/css" href="plugin/vendor.min.css">
+    <link rel="stylesheet" type="text/css" href="css/reset.css">
+    <link rel="stylesheet" type="text/css" href="css/common.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+
+    <script type="text/javascript" src="lib/jquery/dist/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+</head>
+<body class="@@class">
+<div class="wrapper">
+<header>
+	<div class="default-header">
+		<button class="back-btn">
+			<img src="img/icon_gnbBack.png" alt="">
+		</button>
+		<p class="headerTitle">구매한 픽업상품</p>
+	</div>
+</header>
+
+<div class="content-body wish-content"> 
+    <div class="subMenu-container">
+        <div class="sub-txt">관심상품은 최대 90일간 보관됩니다.</div>
+        <div class="total-info">
+            <p>전체<strong><span>0</span>개</strong></p>
+            <button class="clear">전체삭제</button>
+        </div>
+    </div>
+    <div class="wishList-container">
+        <div class="wish-wrapper">
+            <button class="delete-list" type="button"><img src="img/icon_popup_x01.png" alt=""></button> 
+            <div class="img-box"></div>
+            <div class="word-box">
+                <div class="toTop">
+                    <p><span>군자점</span></p>                    
+                </div>
+                <div class="menuInfo">
+                    <p>푸드그램 호주산 이베리코 꽃돼지 주물럭입니다</p>
+                </div>
+                <div class="price">                    
+                    <p class="priceNum"><span>22,950</span>원</p>
+                </div>
+            </div>
+        </div>
+        <div class="wish-wrapper">
+            <button class="delete-list"><img src="img/icon_popup_x01.png" alt=""></button> 
+            <div class="img-box"></div>
+            <div class="word-box">
+                <div class="toTop">
+                    <p><span>군자점</span></p>                    
+                </div>
+                <div class="menuInfo">
+                    <p>국내산 생생 삼겹살250g</p>
+                </div>
+                <div class="price">                    
+                    <p class="priceNum"><span>22,950</span>원</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+</div>
+</body>
+
+<script type="text/javascript" src="plugin/vendor.min.js"></script>
+<script type="text/javascript" src="js/common.js"></script>
+</html>
+
+<script>
+var wishNum = $('.wish-wrapper:last-child').index();
+
+
+if( $('.wishList-container .wish-wrapper').length == 0 ) {
+    $('.wishList-container').append('<p class="none-list">등록된 상품이 없습니다.</p>');
+    $('.wish-content .total-info span').removeClass('colorNum');
+}else {
+    $('.wish-content .total-info span').addClass('colorNum');
+    $('.wish-content .total-info span').text(wishNum + 1);
+}
+
+
+$('.delete-list').click(function(){
+    $(this).closest('.wish-wrapper').remove();
+    $('.wish-content .total-info span').text(wishNum);
+    if( $('.wishList-container .wish-wrapper').length == 0 ) {
+        $('.wishList-container').append('<p class="none-list">등록된 상품이 없습니다.</p>');
+        $('.wish-content .total-info span').text(0).removeClass('colorNum');
+    }
+});
+
+$('.clear').click(function(){
+    $('.wishList-container').empty();
+    $('.wishList-container').append('<p class="none-list">등록된 상품이 없습니다.</p>');
+    $('.wish-content .total-info span').text(0).removeClass('colorNum');
+});
+
+
+</script>

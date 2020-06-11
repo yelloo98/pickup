@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1"/>
+    <meta name="format-detection" content="telephone=no">
+
+    <title>@@title</title>
+
+    <link rel="stylesheet" type="text/css" href="plugin/vendor.min.css">
+    <link rel="stylesheet" type="text/css" href="css/reset.css">
+    <link rel="stylesheet" type="text/css" href="css/common.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+
+    <script type="text/javascript" src="lib/jquery/dist/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+</head>
+<body class="@@class">
+<div class="wrapper">
+<header>
+	<div class="default-header">
+		<button class="back-btn">
+			<img src="img/icon_gnbBack.png" alt="">
+		</button>
+		<p class="headerTitle">구매한 픽업상품</p>
+	</div>
+</header>
+
+<div class="content-body attention-content"> 
+    <div class="storeList-container">
+        <div class="list-wrapper">
+            <button class="delete-list"><img src="img/icon_x_S.png" alt=""></button>
+            <div class="word-box">
+                <div class="store-category">
+                    <span>군자점</span>
+                </div>
+                <div class="store-address">
+                    <p>경기도 성남시 중현구 양원로 111번길</p>
+                </div>
+                <small>02)234-1234</small>
+            </div>
+        </div>
+        <div class="list-wrapper">
+            <button class="delete-list"><img src="img/icon_x_S.png" alt=""></button>
+            <div class="word-box">
+                <div class="store-category">
+                    <span>군자점</span>
+                </div>
+                <div class="store-address">
+                    <p>부산광역시 강서구 녹산산단382로14번가길 10~29번지(송정동)</p>
+                </div>
+                <small>02)234-1234</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+</div>
+</body>
+
+<script type="text/javascript" src="plugin/vendor.min.js"></script>
+<script type="text/javascript" src="js/common.js"></script>
+</html>
+
+
+<script>
+
+
+    $('.delete-list').click(function(){
+        $(this).closest('.list-wrapper').remove();
+        if( $('.attention-content .list-wrapper').length == 0 ) {
+            $('.attention-content .storeList-container').append('<p class="none-list">관심매장이 없습니다.</p>');
+        }
+    });
+
+</script>

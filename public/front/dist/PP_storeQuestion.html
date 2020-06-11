@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1"/>
+    <meta name="format-detection" content="telephone=no">
+
+    <title>@@title</title>
+
+    <link rel="stylesheet" type="text/css" href="plugin/vendor.min.css">
+    <link rel="stylesheet" type="text/css" href="css/reset.css">
+    <link rel="stylesheet" type="text/css" href="css/common.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+
+    <script type="text/javascript" src="lib/jquery/dist/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+</head>
+<body class="@@class">
+<div class="wrapper">
+<header>
+	<div class="default-header">
+		<button class="back-btn">
+			<img src="img/icon_gnbBack.png" alt="">
+		</button>
+		<p class="headerTitle">구매한 픽업상품</p>
+	</div>
+</header>
+
+<div class="content-body write-content">
+    <div class="goodsSelect-container">
+        <select name="" id="" class="noneVal">
+            <option value="" hidden>문의유형을 선택해주세요.</option>
+            <option value="">매장문의</option>
+            <option value="">기기문의</option>
+            <option value="">기타문의</option>
+        </select>
+        <img class="fake-arrow" src="img/icon_select01.png" alt="">
+    </div>
+    <div class="goodsWord-container">
+        <textarea class="noneCheck" name="" id="" cols="30" rows="10"></textarea>
+    </div>
+    <div class="fixed-footer full-btn">
+        <button>Q&A 등록하기</button>
+    </div>
+</div>
+
+
+
+</div>
+</body>
+
+<script type="text/javascript" src="plugin/vendor.min.js"></script>
+<script type="text/javascript" src="js/common.js"></script>
+</html>
+
+<script>
+
+$(document).ready(function(){
+    $('select').change(function(){
+        $(this).removeClass("noneVal");
+    });
+});
+
+</script>
