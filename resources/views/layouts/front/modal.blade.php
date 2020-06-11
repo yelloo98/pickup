@@ -552,3 +552,6 @@
 </div>
 
 <script src="/front/dist/js/modal.func.js"></script>
+<script>
+    $(".popup-wrapper").hide();
+</script>
