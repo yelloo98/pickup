@@ -25,6 +25,7 @@
         @include('layouts.front.error')
         @include('layouts.front.sidebar')
         @yield('content')
+        @include('layouts.front.modal')
     </div>
     @yield('footer')
 </div>
@@ -33,4 +34,3 @@
 <script type="text/javascript" src="/front/dist/js/common.js"></script>
 @yield('script')
 </html>
-@include('layouts.front.modal')
