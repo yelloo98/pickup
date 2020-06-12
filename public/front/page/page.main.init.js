@@ -55,7 +55,7 @@ $(document).ready(function(){
 
     $('.full-close').click(function(){
         $(this).closest('.fullPopup-wrapper').removeClass('slideIn').addClass('slideOut');
-        $(this).closest('.fullPopup-wrapper').siblings('.wrapper').children('.content-body').removeClass('fixed-scroll');
+        $(this).closest('.content-body').removeClass('fixed-scroll');
     });
 
 
