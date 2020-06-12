@@ -1,7 +1,16 @@
 $(document).ready(function(){
-    // $(".popup-wrapper").hide();
-
     $('.close-box').click(function(){
-        $(this).parents('.popup-wrapper').hide();
+        $(this).parents('.popup-wrapper').removeClass('active');
+    });
+
+    $('#priceBtn').click(function(){
+        var swiperPrice = new Swiper('.swiper-container.price-container', {
+            slidesPerView: 'auto',
+            spaceBetween: 8,
+            centeredSlides: true,
+            pagination: {
+                el: '.swiper-pagination',
+            },
+        });
     });
 });

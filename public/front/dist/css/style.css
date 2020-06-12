@@ -984,8 +984,23 @@
 	width: 8px;
 }
 
+.fullPopup-wrapper > p {
+	position: relative;
+}
+
+.fullPopup-wrapper > p > span {
+	margin-bottom: 5px;
+	font-size: 10px;
+	font-weight: 300;
+	line-height: 15px;
+	color: #999;
+	position: absolute;
+	right: 15px;
+	top: 0;
+}
+
 .fullPopup-wrapper .list-section {
-	margin-top: 10px;
+	margin-top: 20px;
 	padding: 0 15px;
 }
 
@@ -2636,16 +2651,20 @@
 }
 
 .index-box .popup-wrapper {
+	display: none;
 	background: rgba(0, 0, 0, 0.5);
 	position: fixed;
 	width: 100%;
 	height: 100vh;
 	bottom: 0;
 	padding: 0 30px;
+	z-index: 20;
+}
+
+.index-box .popup-wrapper.active {
 	display: -ms-flexbox;
 	display: -webkit-flex;
-	display: none;
-	z-index: 13;
+	display: flex;
 	-ms-flex-align: center;
 	-webkit-align-items: center;
 	        align-items: center;
@@ -6195,36 +6214,36 @@
 	text-align: center;
 }
 
-.content-body.nonememberOrder {
-	padding: 54px 0 0;
+.content-body.order {
+	padding: 54px 0 60px;
 }
 
-.content-body.nonememberOrder .goods-container {
+.content-body.order .goods-container {
 	padding: 10px 15px 25px;
 }
 
-.content-body.nonememberOrder .goods-container .container-title {
+.content-body.order .goods-container .container-title {
 	font-size: 14px;
 	font-weight: 700;
 	line-height: 23px;
 	margin-bottom: 10px;
 }
 
-.content-body.nonememberOrder .goods-container .container-content {
+.content-body.order .goods-container .container-content {
 	border-bottom: 1px solid #eeeeee;
 }
 
-.content-body.nonememberOrder .goods-container .container-content:after {
+.content-body.order .goods-container .container-content:after {
 	content: "";
 	display: block;
 	clear: both;
 }
 
-.content-body.nonememberOrder .goods-container .container-content:last-child {
+.content-body.order .goods-container .container-content:last-child {
 	border-bottom: 0;
 }
 
-.content-body.nonememberOrder .goods-container .container-content .img-wrapper {
+.content-body.order .goods-container .container-content .img-wrapper {
 	background: url(../img/image_09.png) center center;
 	width: 80px;
 	height: 80px;
@@ -6232,25 +6251,21 @@
 	float: left;
 }
 
-.content-body.nonememberOrder .goods-container .container-content .word-wrapper {
+.content-body.order .goods-container .container-content .word-wrapper {
 	width: calc( 100% - 90px);
 	float: right;
 }
 
-.content-body.nonememberOrder .goods-container .container-content .word-wrapper .top-area {
-	margin-bottom: 7px;
+.content-body.order .goods-container .container-content .word-wrapper .top-area {
+	margin-bottom: 10px;
 	position: relative;
-}
-
-.content-body.nonememberOrder .goods-container .container-content .word-wrapper .top-area p {
 	font-size: 11px;
 	font-weight: 300;
 	color: #333333;
 	line-height: 14px;
-	margin-top: 2px;
 }
 
-.content-body.nonememberOrder .goods-container .container-content .word-wrapper .top-area p span {
+.content-body.order .goods-container .container-content .word-wrapper .top-area span {
 	color: #fff;
 	font-size: 12px;
 	font-weight: 300;
@@ -6261,7 +6276,7 @@
 	display: inline-block;
 }
 
-.content-body.nonememberOrder .goods-container .container-content .word-wrapper .top-area button {
+.content-body.order .goods-container .container-content .word-wrapper .top-area button {
 	border: 1px solid rgba(0, 0, 0, 0.2);
 	background: #fff;
 	position: absolute;
@@ -6278,13 +6293,16 @@
 	-ms-flex-pack: center;
 	-webkit-justify-content: center;
 	        justify-content: center;
+	color: #333;
+	font-size: 11px;
+	font-weight: 300;
 }
 
-.content-body.nonememberOrder .goods-container .container-content .word-wrapper .menu-area {
+.content-body.order .goods-container .container-content .word-wrapper .menu-area {
 	margin-bottom: 12px;
 }
 
-.content-body.nonememberOrder .goods-container .container-content .word-wrapper .menu-area p {
+.content-body.order .goods-container .container-content .word-wrapper .menu-area p {
 	color: #333;
 	font-size: 14px;
 	font-weight: 500;
@@ -6297,55 +6315,55 @@
 	        align-items: center;
 }
 
-.content-body.nonememberOrder .goods-container .container-content .word-wrapper .bottom-area {
+.content-body.order .goods-container .container-content .word-wrapper .bottom-area {
 	width: 100%;
 }
 
-.content-body.nonememberOrder .goods-container .container-content .word-wrapper .bottom-area:after {
+.content-body.order .goods-container .container-content .word-wrapper .bottom-area:after {
 	content: "";
 	display: block;
 	clear: both;
 }
 
-.content-body.nonememberOrder .goods-container .container-content .word-wrapper .bottom-area .goodsStatus-box {
+.content-body.order .goods-container .container-content .word-wrapper .bottom-area .goodsStatus-box {
 	float: left;
 }
 
-.content-body.nonememberOrder .goods-container .container-content .word-wrapper .bottom-area .goodsStatus-box:after {
+.content-body.order .goods-container .container-content .word-wrapper .bottom-area .goodsStatus-box:after {
 	content: "";
 	display: block;
 	clear: both;
 }
 
-.content-body.nonememberOrder .goods-container .container-content .word-wrapper .bottom-area .goodsStatus-box p {
+.content-body.order .goods-container .container-content .word-wrapper .bottom-area .goodsStatus-box p {
 	font-size: 12px;
 	font-weight: 500;
 	line-height: 18px;
 }
 
-.content-body.nonememberOrder .goods-container .container-content .word-wrapper .bottom-area .goodsStatus-box .paymentComplete {
+.content-body.order .goods-container .container-content .word-wrapper .bottom-area .goodsStatus-box .paymentComplete {
 	float: left;
 	color: rgba(238, 83, 34, 0.4);
 	margin-right: 5px;
 	text-decoration: line-through;
 }
 
-.content-body.nonememberOrder .goods-container .container-content .word-wrapper .bottom-area .goodsStatus-box .paymentCancle {
+.content-body.order .goods-container .container-content .word-wrapper .bottom-area .goodsStatus-box .paymentCancle {
 	float: right;
 	color: #e52222;
 }
 
-.content-body.nonememberOrder .goods-container .container-content .word-wrapper .bottom-area .price-box {
+.content-body.order .goods-container .container-content .word-wrapper .bottom-area .price-box {
 	float: right;
 }
 
-.content-body.nonememberOrder .goods-container .container-content .word-wrapper .bottom-area .price-box:after {
+.content-body.order .goods-container .container-content .word-wrapper .bottom-area .price-box:after {
 	content: "";
 	display: block;
 	clear: both;
 }
 
-.content-body.nonememberOrder .goods-container .container-content .word-wrapper .bottom-area .price-box .priceNum {
+.content-body.order .goods-container .container-content .word-wrapper .bottom-area .price-box .priceNum {
 	float: left;
 	color: #333;
 	font-size: 12px;
@@ -6354,14 +6372,14 @@
 	line-height: 18px;
 }
 
-.content-body.nonememberOrder .goods-container .container-content .word-wrapper .bottom-area .price-box .priceNum span {
+.content-body.order .goods-container .container-content .word-wrapper .bottom-area .price-box .priceNum span {
 	color: #333;
 	font-size: 15px;
 	font-weight: 700;
 	line-height: 18px;
 }
 
-.content-body.nonememberOrder .goods-container .container-content .word-wrapper .bottom-area .price-box .pricePer {
+.content-body.order .goods-container .container-content .word-wrapper .bottom-area .price-box .pricePer {
 	float: right;
 	color: #333;
 	font-size: 12px;
@@ -6369,18 +6387,18 @@
 	line-height: 18px;
 }
 
-.content-body.nonememberOrder .goods-container .container-content .word-wrapper .bottom-area .price-box .pricePer span {
+.content-body.order .goods-container .container-content .word-wrapper .bottom-area .price-box .pricePer span {
 	color: #333;
 	font-size: 15px;
 	font-weight: 700;
 	line-height: 18px;
 }
 
-.content-body.nonememberOrder .user-container {
+.content-body.order .user-container {
 	padding: 25px 15px;
 }
 
-.content-body.nonememberOrder .user-container .container-title {
+.content-body.order .user-container .container-title {
 	font-size: 14px;
 	font-weight: 700;
 	line-height: 20px;
@@ -6388,34 +6406,43 @@
 	color: #000;
 }
 
-.content-body.nonememberOrder .user-container .container-table li {
+.content-body.order .user-container .container-table {
+	padding-bottom: 10px;
+	margin-bottom: 10px;
+	border-bottom: 1px solid #eee;
+}
+
+.content-body.order .user-container .container-table:last-child {
+	border-bottom: 0;
+	margin-bottom: 0;
+	padding-bottom: 0;
+}
+
+.content-body.order .user-container .container-table li {
 	margin-bottom: 5px;
 }
 
-.content-body.nonememberOrder .user-container .container-table li:last-of-type {
+.content-body.order .user-container .container-table li:last-of-type {
 	margin-bottom: 0;
 }
 
-.content-body.nonememberOrder .user-container .container-table li:after {
+.content-body.order .user-container .container-table li:after {
 	content: "";
 	display: block;
 	clear: both;
 }
 
-.content-body.nonememberOrder .user-container .container-table li.table-total {
-	margin: 10px 0 5px;
-	padding-top: 10px;
-	border-top: 1px solid #eee;
+.content-body.order .user-container .container-table li.table-total {
 	position: relative;
 }
 
-.content-body.nonememberOrder .user-container .container-table li.table-total .table-title {
+.content-body.order .user-container .container-table li.table-total .table-title {
 	position: absolute;
 	left: 0;
 	bottom: 0;
 }
 
-.content-body.nonememberOrder .user-container .container-table li.table-total .table-text span {
+.content-body.order .user-container .container-table li.table-total .table-text span.bigText {
 	color: #ee5322;
 	font-size: 23px;
 	font-weight: 700;
@@ -6423,7 +6450,7 @@
 	margin-right: 2px;
 }
 
-.content-body.nonememberOrder .user-container .container-table li .table-title {
+.content-body.order .user-container .container-table li .table-title {
 	font-size: 14px;
 	font-weight: 400;
 	color: #333;
@@ -6433,7 +6460,7 @@
 	margin-right: 60px;
 }
 
-.content-body.nonememberOrder .user-container .container-table li .table-text {
+.content-body.order .user-container .container-table li .table-text {
 	font-size: 14px;
 	font-weight: 500;
 	color: #000;
@@ -6443,35 +6470,35 @@
 	text-align: right;
 }
 
-.content-body.nonememberOrder .user-container .container-table li .table-text.colorText {
+.content-body.order .user-container .container-table li .table-text.colorText {
 	font-size: 12px;
 	font-weight: 400;
 	line-height: 18px;
 	color: #ee5322;
 }
 
-.content-body.nonememberOrder .user-container .container-table li .table-text.lightPrice {
+.content-body.order .user-container .container-table li .table-text.lightPrice {
 	font-size: 14px;
 	font-weight: 400;
 }
 
-.content-body.nonememberOrder .user-container .container-table li .table-text span {
+.content-body.order .user-container .container-table li .table-text span {
 	font-size: 14px;
 	font-weight: 400;
 	line-height: 17px;
 }
 
-.content-body.nonememberOrder .user-container .container-table li .table-text span.boldPrice {
+.content-body.order .user-container .container-table li .table-text span.boldPrice {
 	font-size: 14px;
 	font-weight: 700;
 }
 
-.content-body.nonememberOrder .user-container .container-table li .table-text span.mediumPrice {
+.content-body.order .user-container .container-table li .table-text span.mediumPrice {
 	font-size: 14px;
 	font-weight: 500;
 }
 
-.content-body.nonememberOrder .btn-area .okBtn {
+.content-body.order .btn-area .okBtn {
 	border: 0;
 	height: 60px;
 	width: 100%;

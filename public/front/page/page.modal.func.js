@@ -1,10 +1,8 @@
 var pageModal = {
     _config : {},
 
-    closePopup : function(){
-        $('.popup-wrapper').hide();
-    },
     menuPopup : function(){
-        $('.login-wrapper').show();
+        $('.login-wrapper').addClass('active');
+        $('.content-body').addClass('fixed-scroll');
     }
 };
