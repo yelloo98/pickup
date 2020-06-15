@@ -12,6 +12,7 @@ class Product extends Model implements ModelAdminInterface
 {
     use SoftDeletes, ModelFunction;
 
+    protected $connection = 'mysql';
     protected $table = 'product';
 
     public function origin_product()

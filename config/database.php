@@ -50,6 +50,7 @@ return [
             'database'  => env('DB_DATABASE'),
             'username'  => env('DB_USERNAME'),
             'password'  => env('DB_PASSWORD'),
+            'charset'  => env('DB_CHARSET'),
         ],
 
         'mysql2' => [
@@ -59,6 +60,7 @@ return [
             'database'  => env('DB_DATABASE_SECOND'),
             'username'  => env('DB_USERNAME_SECOND'),
             'password'  => env('DB_PASSWORD_SECOND'),
+            'charset'  => env('DB_CHARSET_SECOND'),
         ],
 
         'pgsql' => [

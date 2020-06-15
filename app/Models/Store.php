@@ -12,8 +12,13 @@ class Store extends Model implements ModelAdminInterface
 {
     use SoftDeletes, ModelFunction;
 
-    protected $table = 'store';
+    protected $connection = 'mysql';
+    protected $table = 'pickup_store';
 
+    //# fc_trader 정보
+    public function fcTrader(){
+        return $this->hasOne('\App\Models\FcTrader', 'traderNo', 'fc_trader_id');
+    }
     /**
      * Override : DataTableList
      * -----------------------------------------------------------------------------------------------------------------

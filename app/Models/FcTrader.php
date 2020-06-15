@@ -2,18 +2,15 @@
 
 namespace App\Models;
 
-use EnjoyWorks\core\ModelAdminInterface;
-use EnjoyWorks\core\ModelFunction;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
 
-class PickupOrders extends Model implements ModelAdminInterface
+class FcTrader extends Model
 {
-    use SoftDeletes, ModelFunction;
 
-    protected $connection = 'mysql';
-    protected $table = 'pickup_orders';
+    protected $connection = 'mysql2';
+    protected $table = 'fc_trader';
+    public $timestamps = false;
 
     /**
      * Override : DataTableList

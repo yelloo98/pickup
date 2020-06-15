@@ -8,12 +8,18 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
 
-class PickupOrders extends Model implements ModelAdminInterface
+class PickupProductReview extends Model implements ModelAdminInterface
 {
-    use SoftDeletes, ModelFunction;
+    use ModelFunction;
 
     protected $connection = 'mysql';
-    protected $table = 'pickup_orders';
+    protected $table = 'pickup_product_review';
+
+
+    public function product()
+    {
+        return $this->hasOne('App\Models\Product', 'id', 'product_id');
+    }
 
     /**
      * Override : DataTableList

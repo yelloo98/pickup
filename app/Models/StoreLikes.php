@@ -12,6 +12,7 @@ class StoreLikes extends Model implements ModelAdminInterface
 {
     use ModelFunction;
 
+    protected $connection = 'mysql';
     protected $table = 'store_likes';
 
     /**

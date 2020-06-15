@@ -12,7 +12,13 @@ class PickupOrdersProduct extends Model implements ModelAdminInterface
 {
     use SoftDeletes, ModelFunction;
 
+    protected $connection = 'mysql';
     protected $table = 'pickup_orders_product';
+
+    public function product()
+    {
+        return $this->hasOne('App\Models\Product', 'id', 'product_id');
+    }
 
     /**
      * Override : DataTableList
