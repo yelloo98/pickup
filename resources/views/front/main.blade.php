@@ -60,7 +60,7 @@
     <div class="storeTitle-container">
         <div class="ico-wrapper">
             <button class="clicking-btn" onclick="PickupCommon.storeLike('{{$store->id ?? 0}}', '{{$customer_id ?? 0}}')">
-                <img src="/front/dist/img/icon_star.png" alt="">
+                <img src="{{$store_like ?? '/front/dist/img/icon_star.png'}}" alt="">
             </button>
             <button class="counting-btn alarm-btn">
                 <img src="/front/dist/img/icon_notion.png" alt="">

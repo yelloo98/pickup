@@ -38,7 +38,13 @@ class MainController extends Controller
             $view->historyProduct = PickupProductViews::leftjoin('product','product.id','pickup_product_views.product_id')->where('product.store_id', $id)->select('pickup_product_views.*','product.product_id as origin_product_id')->orderBy('id','DESC')->limit(10)->get();
         }
 
-        $view->customer_id = 399;           //# 임시 유저 아이디
+        //# 임시 유저 아이디
+        $view->customer_id = 399;
+        //# 관심매장 여부
+        if(StoreLikes::where([['store_id', $id], ['customer_id', $view->customer_id]])->count() > 0){
+            $view->store_like = '/front/dist/img/icon_star_on.png';
+        }
+
         return $view;
     }
 }
