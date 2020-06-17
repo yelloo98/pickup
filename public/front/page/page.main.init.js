@@ -76,13 +76,13 @@ $(document).ready(function(){
         }
     });
 
-    $('.clicking-btn').click(function(){
+    /*$('.clicking-btn').click(function(){
         $(this).toggleClass('active');
         if ( $(this).hasClass('active') ) {
             $(this).children('img').attr('src','/front/dist/img/icon_star_on.png');
         } else {
             $(this).children('img').attr('src','/front/dist/img/icon_star.png');
         }
-    });
+    });*/
 
 });

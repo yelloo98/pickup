@@ -14,6 +14,7 @@ class StoreLikes extends Model implements ModelAdminInterface
 
     protected $connection = 'mysql';
     protected $table = 'store_likes';
+    public $timestamps = false;
 
     /**
      * Override : DataTableList

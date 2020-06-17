@@ -16,6 +16,12 @@ Route::get('/front/get/token', 'Front\AuthController@postLogin');
 Route::group(['namespace' => 'Front', 'middleware' => 'front', 'prefix' => 'front', 'as' => 'front.'], function () {
 
     /**
+     * API
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+    Route::get('/add/store', 'PickupController@addStore');                     //# 관심매장 등록/삭제
+
+    /**
      * Main
      * -----------------------------------------------------------------------------------------------------------------
      */

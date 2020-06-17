@@ -59,7 +59,7 @@
 
     <div class="storeTitle-container">
         <div class="ico-wrapper">
-            <button class="clicking-btn">
+            <button class="clicking-btn" onclick="PickupCommon.storeLike('{{$store->id ?? 0}}', '{{$customer_id ?? 0}}')">
                 <img src="/front/dist/img/icon_star.png" alt="">
             </button>
             <button class="counting-btn alarm-btn">
@@ -84,6 +84,7 @@
         </div>
     </div>
 
+    @if($newProduct->count() > 0 )
     <div class="itemSlide-container swiper-container sub-content">
         <div class="moreTitle-wrapper">
             <img src="/front/dist/img/m_new.png" alt="">
@@ -93,7 +94,7 @@
         <div class="swiper-wrapper">
             @forelse($newProduct as $k=>$v)
             <div class="swiper-slide" onclick="location.href='/front/product/detail/{{$v->product_id ?? 0}}'">
-                <div class="img-box">
+                <div class="img-box" @if($v->origin_product->image_path != null) style="background-image: url('{{env('IMAGE_URL').$v->origin_product->image_path}}')" @endif>
                     <img src="/front/dist/img/icon_cart_box.png" alt="">
                 </div>
                 <div class="price-box">
@@ -111,7 +112,9 @@
             @endforelse
         </div>
     </div>
+    @endif
 
+    @if($bestProduct->count() > 0 )
     <div class="wideSlide-container swiper-container sub-content">
         <div class="moreTitle-wrapper">
             <img src="/front/dist/img/m_hot.png" alt="">
@@ -121,7 +124,7 @@
         <div class="swiper-wrapper">
             @forelse($bestProduct as $k=>$v)
             <div class="swiper-slide" onclick="location.href='/front/product/detail/{{$v->product_id ?? 0}}'">
-                <div class="img-box">
+                <div class="img-box" @if($v->origin_product->image_path != null) style="background-image: url('{{env('IMAGE_URL').$v->origin_product->image_path}}')" @endif>
                     <img src="/front/dist/img/icon_cart_box.png" alt="">
                 </div>
                 <div class="word-box">
@@ -141,8 +144,9 @@
             @endforelse
         </div>
     </div>
+    @endif
 
-    @if(!empty($historyProduct))
+    @if(!empty($historyProduct) && $historyProduct->count() > 0 )
     <div class="cubeItem-container swiper-container sub-content">
         <div class="moreTitle-wrapper">
             <img src="/front/dist/img/m_pick.png" alt="">
@@ -152,7 +156,7 @@
         <div class="cubeBox-wrapper">
             @forelse($historyProduct as $k=>$v)
             <div class="cubeItem" onclick="location.href='/front/product/detail/{{$v->product_id ?? 0}}'">
-                <div class="img-box">
+                <div class="img-box" @if($v->origin_product->image_path != null) style="background-image: url('{{env('IMAGE_URL').$v->origin_product->image_path}}')" @endif>
                     <img src="/front/dist/img/icon_cart_box.png" alt="">
                 </div>
                 <div class="item-subject">
@@ -165,6 +169,7 @@
     </div>
     @endif
 
+    @if($ProductReview->count() > 0 )
     <div class="reviewSlide-container swiper-container sub-content">
         <div class="moreTitle-wrapper">
             <img src="/front/dist/img/m_best.png" alt="">
@@ -174,7 +179,7 @@
             @forelse($ProductReview as $k=>$v)
                 @if($k % 2 == 0) <div class="swiper-slide"> @endif
                     <div class="review-list">
-                        <div class="img-box"></div>
+                        <div class="img-box" @if($v->origin_product->image_path != null) style="background-image: url('{{env('IMAGE_URL').$v->origin_product->image_path}}')" @endif></div>
                         <div class="word-box">
                             <img src="/front/dist/img/icon_review.png" alt="">
                             <p class="user-word" style="-webkit-box-orient: vertical;">{{$v->contents ?? ''}}</p>
@@ -189,6 +194,8 @@
             @endforelse
         </div>
     </div>
+    @endif
+
 @endsection
 
 @section('footer')

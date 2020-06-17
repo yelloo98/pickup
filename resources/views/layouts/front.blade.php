@@ -32,5 +32,6 @@
 </body>
 <script type="text/javascript" src="/front/dist/plugin/vendor.min.js"></script>
 <script type="text/javascript" src="/front/dist/js/common.js"></script>
+<script type="text/javascript" src="/front/page/common.js"></script> <!-- 개발 스크립트 -->
 @yield('script')
 </html>

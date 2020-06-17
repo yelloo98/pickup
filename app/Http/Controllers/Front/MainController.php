@@ -38,6 +38,7 @@ class MainController extends Controller
             $view->historyProduct = PickupProductViews::leftjoin('product','product.id','pickup_product_views.product_id')->where('product.store_id', $id)->select('pickup_product_views.*','product.product_id as origin_product_id')->orderBy('id','DESC')->limit(10)->get();
         }
 
+        $view->customer_id = 399;           //# 임시 유저 아이디
         return $view;
     }
 }
