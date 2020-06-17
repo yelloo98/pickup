@@ -27,8 +27,8 @@ Route::group(['namespace' => 'Front', 'middleware' => 'front', 'prefix' => 'fron
      */
     Route::group(['prefix' => 'product', 'as' => 'product.'], function () {
         //픽업상품의 설명 제공
-        //Route::get('/{id?}', 'MainController@getProduct');
-        Route::get('/latest', 'MainController@getLatestProduct');
+        Route::get('/latest', 'ProductController@getLatestProduct');
+        Route::get('/detail/{id?}', 'ProductController@getProduct');
     });
 
     /**

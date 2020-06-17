@@ -18,7 +18,12 @@ class PickupProductReview extends Model implements ModelAdminInterface
 
     public function product()
     {
-        return $this->hasOne('App\Models\Product', 'id', 'product_id');
+        return $this->belongsTo('App\Models\Product', 'product_id');
+    }
+
+    public function origin_product()
+    {
+        return $this->belongsTo('App\Models\OriginProduct', 'origin_product_id');
     }
 
     /**

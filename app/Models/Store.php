@@ -17,7 +17,7 @@ class Store extends Model implements ModelAdminInterface
 
     //# fc_trader 정보
     public function fcTrader(){
-        return $this->hasOne('\App\Models\FcTrader', 'traderNo', 'fc_trader_id');
+        return $this->belongsTo('App\Models\FcTrader', 'fc_trader_id','traderNo');
     }
     /**
      * Override : DataTableList

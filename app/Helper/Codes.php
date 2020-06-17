@@ -4,6 +4,7 @@
 namespace App\Helper;
 
 
+use App\Models\Customer;
 use Illuminate\Database\Eloquent\Model;
 
 

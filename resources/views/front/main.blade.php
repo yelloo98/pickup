@@ -69,7 +69,7 @@
         </div>
         <div class="title-wrapper">
             <div class="main-title">
-                <p>{{$store->fcTrader->companyName}}</p>
+                <p>{{$store->fcTrader->companyName ?? ''}}</p>
                 <ul>
                     <li class="gray-link" onclick="location.href='/front/mypage/qna/store';">문의하기</li>
                     <li class="red-link">매장변경</li>
@@ -77,8 +77,8 @@
             </div>
             <div class="sub-title">
                 <ul>
-                    <li>{{$store->fcTrader->address}}</li>
-                    <li>{{\App\Helper\Codes::formatPhone($store->fcTrader->tel)}}</li>
+                    <li>{{$store->fcTrader->address ?? ''}}</li>
+                    <li>{{\App\Helper\Codes::formatPhone($store->fcTrader->tel ?? '')}}</li>
                 </ul>
             </div>
         </div>
@@ -92,15 +92,19 @@
         </div>
         <div class="swiper-wrapper">
             @forelse($newProduct as $k=>$v)
-            <div class="swiper-slide">
+            <div class="swiper-slide" onclick="location.href='/front/product/detail/{{$v->product_id ?? 0}}'">
                 <div class="img-box">
                     <img src="/front/dist/img/icon_cart_box.png" alt="">
                 </div>
                 <div class="price-box">
-                    <p><span class="sale-word">SALE</span><span>22,950</span><small>29,000</small></p>
+                    @if($v->product->price ?? '' == $v->origin_product->price_cost ?? '')
+                    <p><span>{{number_format($v->product->price ?? 0)}}</span></p>
+                    @else
+                    <p><span class="sale-word">SALE</span><span>{{number_format($v->product->price ?? 0)}}</span><small>{{number_format($v->origin_product->price_cost ?? 0)}}</small></p>
+                    @endif
                 </div>
                 <div class="item-subject">
-                    <p>쫀똑한 수제 산딸기 브라우니브라우니</p>
+                    <p>{{$v->origin_product->name ?? ''}}</p>
                 </div>
             </div>
             @empty
@@ -112,20 +116,24 @@
         <div class="moreTitle-wrapper">
             <img src="/front/dist/img/m_hot.png" alt="">
             <p>지금 핫한 인기 상품은?</p>
-            <button><img src="/front/dist/img/icon_mainarrow.png" alt=""></button>
+            <button onclick="location.href='';"><img src="/front/dist/img/icon_mainarrow.png" alt=""></button>
         </div>
         <div class="swiper-wrapper">
             @forelse($bestProduct as $k=>$v)
-            <div class="swiper-slide">
+            <div class="swiper-slide" onclick="location.href='/front/product/detail/{{$v->product_id ?? 0}}'">
                 <div class="img-box">
                     <img src="/front/dist/img/icon_cart_box.png" alt="">
                 </div>
                 <div class="word-box">
                     <div class="price-box">
-                        <p><span class="sale-word">SALE</span><span>22,950</span><small>29,000</small></p>
+                        @if($v->product->price ?? '' == $v->origin_product->price_cost ?? '')
+                        <p><span>{{number_format($v->product->price ?? 0)}}</span></p>
+                        @else
+                        <p><span class="sale-word">SALE</span><span>{{number_format($v->product->price ?? 0)}}</span><small>{{number_format($v->origin_product->price_cost ?? 0)}}</small></p>
+                        @endif
                     </div>
                     <div class="item-subject">
-                        <p>쫀똑한 수제 산딸기 브라우니브라우니</p>
+                        <p>{{$v->origin_product->name ?? ''}}</p>
                     </div>
                 </div>
             </div>
@@ -139,16 +147,16 @@
         <div class="moreTitle-wrapper">
             <img src="/front/dist/img/m_pick.png" alt="">
             <p>최근 본 상품을 확인하세요.</p>
-            <button><img src="/front/dist/img/icon_mainarrow.png" alt=""></button>
+            <button onclick="location.href='';"><img src="/front/dist/img/icon_mainarrow.png" alt=""></button>
         </div>
         <div class="cubeBox-wrapper">
             @forelse($historyProduct as $k=>$v)
-            <div class="cubeItem">
+            <div class="cubeItem" onclick="location.href='/front/product/detail/{{$v->product_id ?? 0}}'">
                 <div class="img-box">
                     <img src="/front/dist/img/icon_cart_box.png" alt="">
                 </div>
                 <div class="item-subject">
-                    <p>쫀똑한 수제 산딸기 브라우니브라우니</p>
+                    <p>{{$v->origin_product->name ?? ''}}</p>
                 </div>
             </div>
             @empty
@@ -169,11 +177,10 @@
                         <div class="img-box"></div>
                         <div class="word-box">
                             <img src="/front/dist/img/icon_review.png" alt="">
-                            <p class="user-word" style="-webkit-box-orient: vertical;">두번째 주문입니다. 보기엔 생각보다 작아보이는데 먹어보니
-                                은근 양이 꽤 많아요 ㅎㅎ 쫀쫀하고 고소해서 그냥 먹어도 괜찮을듯</p>
+                            <p class="user-word" style="-webkit-box-orient: vertical;">{{$v->contents ?? ''}}</p>
                             <div class="toBottom">
-                                <p class="user-name"><strong><span>신</span>OO</strong>님</p>
-                                <p class="item-subject">[국내산] 한돈 설깃살 모듬 구이용 500G</p>
+                                <p class="user-name"><strong><span>{{mb_substr((\App\Models\Customer::find($v->customer_id)->name ?? ''), 0, 1)}}</span>OO</strong>님</p>
+                                <p class="item-subject">{{$v->origin_product->name ?? ''}}</p>
                             </div>
                         </div>
                     </div>

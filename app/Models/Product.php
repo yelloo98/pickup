@@ -17,7 +17,7 @@ class Product extends Model implements ModelAdminInterface
 
     public function origin_product()
     {
-        return $this->hasOne('App\Models\OriginProduct', 'id', 'product_id');
+    return $this->belongsTo('App\Models\OriginProduct', 'product_id');
     }
 
     /**
