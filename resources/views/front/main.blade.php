@@ -164,8 +164,8 @@
         </div>
         <div class="swiper-wrapper">
             @forelse($ProductReview as $k=>$v)
-            @if($k % 2 == 0) <div class="swiper-slide"> @endif
-                <div class="review-list">
+                @if($k % 2 == 0) <div class="swiper-slide"> @endif
+                    <div class="review-list">
                         <div class="img-box"></div>
                         <div class="word-box">
                             <img src="/front/dist/img/icon_review.png" alt="">
@@ -177,8 +177,7 @@
                             </div>
                         </div>
                     </div>
-            <!-- $k 마지막일 경우 추가 -->
-            @if($k % 2 == 1) </div> @endif
+                @if($k % 2 == 1 || $loop->last == true) </div> @endif
             @empty
             @endforelse
         </div>

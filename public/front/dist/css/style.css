@@ -462,12 +462,16 @@
 }
 
 .content-body.ppMain-content .reviewSlide-container .swiper-wrapper .swiper-slide .review-list {
-	padding-bottom: 15px;
+	padding: 15px 0;
+	border-bottom: 1px solid #eee;
 }
 
 .content-body.ppMain-content .reviewSlide-container .swiper-wrapper .swiper-slide .review-list:last-of-type {
-	padding-top: 15px;
-	border-top: 1px solid #eee;
+	border-bottom: 0;
+}
+
+.content-body.ppMain-content .reviewSlide-container .swiper-wrapper .swiper-slide .review-list:first-of-type {
+	padding-top: 0;
 }
 
 .content-body.ppMain-content .reviewSlide-container .swiper-wrapper .swiper-slide .review-list:after {
@@ -984,24 +988,28 @@
 	width: 8px;
 }
 
-.fullPopup-wrapper > p {
-	position: relative;
+.fullPopup-wrapper .list-section {
+	padding: 0 15px;
 }
 
-.fullPopup-wrapper > p > span {
+.fullPopup-wrapper .list-section > p {
 	margin-bottom: 5px;
+}
+
+.fullPopup-wrapper .list-section > p:after {
+	content: "";
+	display: block;
+	clear: both;
+}
+
+.fullPopup-wrapper .list-section > p > span {
+	float: right;
 	font-size: 10px;
 	font-weight: 300;
 	line-height: 15px;
 	color: #999;
-	position: absolute;
 	right: 15px;
 	top: 0;
-}
-
-.fullPopup-wrapper .list-section {
-	margin-top: 20px;
-	padding: 0 15px;
 }
 
 .fullPopup-wrapper .list-section > ul > li {
