@@ -41,9 +41,7 @@ class MainController extends Controller
         //# 임시 유저 아이디
         $view->customer_id = 399;
         //# 관심매장 여부
-        if(StoreLikes::where([['store_id', $id], ['customer_id', $view->customer_id]])->count() > 0){
-            $view->store_like = '/front/dist/img/icon_star_on.png';
-        }
+        $view->store_like = StoreLikes::where([['store_id', $id], ['customer_id', $view->customer_id]])->get();
 
         return $view;
     }
