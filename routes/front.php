@@ -26,7 +26,7 @@ Route::group(['namespace' => 'Front', 'middleware' => 'front', 'prefix' => 'fron
      * -----------------------------------------------------------------------------------------------------------------
      */
     //메인화면
-    Route::get('/{id?}', 'MainController@getIndex')->name('index');
+    Route::get('/main/{id?}', 'MainController@getIndex')->name('index');
     /**
      * Product
      * -----------------------------------------------------------------------------------------------------------------

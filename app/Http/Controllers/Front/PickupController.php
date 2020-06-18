@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Front;
 
+use App\Helper\Codes;
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
+use App\Models\Store;
 use App\Models\StoreLikes;
 use Illuminate\Http\Request;
 
@@ -26,7 +28,8 @@ class PickupController extends Controller
             $storeLike->store_id =  $res['store_id'];
             $storeLike->customer_id =  $res['customer_id'];
             $storeLike->save();
-            return response()->json(['code' => 200, 'msg' => '관심매장 등록']);
+            $store = Store::find($res['store_id']);
+            return response()->json(['code' => 200, 'msg' => '관심매장 등록', 'store_id' => $store->id, 'store_name' => $store->fcTrader->companyName, 'store_address' => $store->fcTrader->address, 'store_tel' => Codes::formatPhone($store->fcTrader->tel)]);
         }
     }
 }
