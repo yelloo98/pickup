@@ -16,6 +16,11 @@ class StoreLikes extends Model implements ModelAdminInterface
     protected $table = 'store_likes';
     public $timestamps = false;
 
+    public function store()
+    {
+        return $this->belongsTo('App\Models\Store', 'store_id');
+    }
+
     /**
      * Override : DataTableList
      * -----------------------------------------------------------------------------------------------------------------

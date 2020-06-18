@@ -8,8 +8,12 @@ var PickupCommon = {
             }
             if(res.code == 200){
                 $('.clicking-btn').children('img').attr('src','/front/dist/img/icon_star_on.png');
+                var html = '';
+
+                $('.enjoyStore-list ul').append('<li>'+html+'</li>');
             }else{
                 $('.clicking-btn').children('img').attr('src','/front/dist/img/icon_star.png');
+                $('.store_' + store).remove();
             }
         });
     }

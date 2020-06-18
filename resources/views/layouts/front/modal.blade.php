@@ -82,18 +82,22 @@
             <div class="tabTarget ">
                 <div class="enjoyStore-list">
                     <ul>
-                        <li>
-                            <div class="store-info">
-                                <div class="store-header">
-                                    <span>군자점</span>
+                        @if(isset($store_like) && $store_like->count() > 0)
+                            @foreach($store_like as $k=>$v)
+                            <li onclick="location.href='/front/{{$v->store->id ?? 0}}'" class="store_{{$v->store->id ?? 0}}">
+                                <div class="store-info">
+                                    <div class="store-header">
+                                        <span>{{$v->store->fcTrader->companyName ?? ''}}</span>
+                                    </div>
+                                    <div class="store-address">
+                                        <p>{{$v->store->fcTrader->address ?? ''}}</p>
+                                        <small>{{\App\Helper\Codes::formatPhone($v->store->fcTrader->tel ?? '')}}</small>
+                                    </div>
                                 </div>
-                                <div class="store-address">
-                                    <p>경상남도 경기도 성남시 중현구 양원2로 11번길 21345호21345호</p>
-                                    <small>02)234-1234</small>
-                                </div>
-                            </div>
-                            <img src="/front/dist/img/icon_arrow_MR.png" alt="">
-                        </li>
+                                <img src="/front/dist/img/icon_arrow_MR.png" alt="">
+                            </li>
+                            @endforeach
+                        @endif
                     </ul>
                 </div>
             </div>
