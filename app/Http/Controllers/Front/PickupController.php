@@ -62,12 +62,12 @@ class PickupController extends Controller
             $cart = new PickupCart();
             $cart->product_id = $res['product_id'];
             $cart->customer_id = $res['customer_id'];
-            $cart->cnt = $res['cnt'];
+            $cart->count = $res['cnt'];
             $cart->save();
             return response()->json(['code' => 200, 'msg' => '장바구니 등록']);
         }else{
             //# 장바구니 등록 취소
-            PickupCart::where([['product_id', $res['product_id']], ['customer_id', $res['customer_id']]])->first()->delete();
+            PickupCart::where([['product_id', $res['product_id']], ['customer_id', $res['customer_id']], ['count', $res['cnt']]])->first()->delete();
             return response()->json(['code' => 400, 'msg' => '장바구니 취소']);
         }
     }
