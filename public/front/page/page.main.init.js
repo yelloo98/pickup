@@ -1,3 +1,16 @@
+var pageMain = {
+    _config : {},
+
+    selProduct : function (product_id) {
+        var $target = $(event.target);
+        if($target.is("img")) {
+            PickupCommon.cartSel(product_id);
+        }else{
+            location.href = '/front/product/detail/' + product_id;
+        }
+    }
+};
+
 $(document).ready(function(){
     var swiperMain = new Swiper('.swiper-container.mainSlide-container', {
         loop: true,

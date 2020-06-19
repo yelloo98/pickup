@@ -12,7 +12,7 @@
                 <img src="/front/dist/img/icon_search.png" alt="">
                 <img class="black-img" src="/front/dist/img/icon_search_B.png" alt="">
             </button>
-            <button>
+            <button onclick="location.href='/front/cart'">
                 <img src="/front/dist/img/icon_cart.png" alt="">
                 <img class="black-img" src="/front/dist/img/icon_cart_B.png" alt="">
             </button>

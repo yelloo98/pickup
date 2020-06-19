@@ -14,6 +14,11 @@ class PickupProductLikes extends Model implements ModelAdminInterface
 
     protected $table = 'pickup_product_likes';
 
+    public function product()
+    {
+        return $this->belongsTo('App\Models\Product', 'product_id');
+    }
+
     /**
      * Override : DataTableList
      * -----------------------------------------------------------------------------------------------------------------

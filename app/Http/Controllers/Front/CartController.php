@@ -10,7 +10,7 @@ class CartController extends Controller
 
 	public function getIndex()
 	{
-        $view = view('front.cart');
+        $view = view('front.cart.cart');
         return $view;
 	}
 }

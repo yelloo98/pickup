@@ -60,7 +60,7 @@
     <div class="storeTitle-container">
         <div class="ico-wrapper">
             <button class="clicking-btn" onclick="PickupCommon.storeLike('{{$store->id ?? 0}}', '{{$customer_id ?? 0}}')">
-                @if($store_like->where('store_id', $store->id)->count() > 0)
+                @if(!empty($store_like) && $store_like->where('store_id', $store->id)->count() > 0)
                 <img src="/front/dist/img/icon_star_on.png" alt="">
                 @else
                 <img src="/front/dist/img/icon_star.png" alt="">
@@ -97,7 +97,7 @@
         </div>
         <div class="swiper-wrapper">
             @forelse($newProduct as $k=>$v)
-            <div class="swiper-slide" onclick="location.href='/front/product/detail/{{$v->product_id ?? 0}}'">
+            <div class="swiper-slide" onclick="pageMain.selProduct({{$v->product_id ?? 0}})">
                 <div class="img-box" @if($v->product->origin_product->image_path != null) style="background-image: url('{{env('IMAGE_URL').$v->product->origin_product->image_path}}')" @endif>
                     <img src="/front/dist/img/icon_cart_box.png" alt="">
                 </div>
@@ -188,7 +188,7 @@
                             <img src="/front/dist/img/icon_review.png" alt="">
                             <p class="user-word" style="-webkit-box-orient: vertical;">{{$v->contents ?? ''}}</p>
                             <div class="toBottom">
-                                <p class="user-name"><strong><span>{{mb_substr((\App\Models\Customer::find($v->customer_id)->name ?? ''), 0, 1)}}</span>OO</strong>님</p>
+                                <p class="user-name"><strong><span>{{mb_substr(($customer_name ?? ''), 0, 1)}}</span>OO</strong>님</p>
                                 <p class="item-subject">{{$v->product->origin_product->name ?? ''}}</p>
                             </div>
                         </div>

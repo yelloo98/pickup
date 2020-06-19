@@ -8,12 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
 
-class PickupOrdersProduct extends Model implements ModelAdminInterface
+class PickupCart extends Model implements ModelAdminInterface
 {
-    use SoftDeletes, ModelFunction;
+    use ModelFunction;
 
     protected $connection = 'mysql';
-    protected $table = 'pickup_orders_product';
+    protected $table = 'pickup_cart';
 
     public function product()
     {

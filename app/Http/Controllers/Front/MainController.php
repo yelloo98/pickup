@@ -24,24 +24,24 @@ class MainController extends Controller
 	{
         $view = view('front.main');
         $view->div_class = 'ppMain-content';
-        if($id <= 0) $id = 1;
+        if($id <= 0) $id = 498;
         $view->store = Store::find($id);
-        //# 신규 상품
+        //# 신규 상품 / 슬롯에 새로 들어온 상품
         $view->newProduct = ProductStock::leftjoin('product','product.id','product_stock.product_id')->where('product.store_id', $id)->select('product_stock.*')->orderBy('id','DESC')->limit(10)->get();
-        //# 인기 상품
+        //# 인기 상품 / 구매량이 많은 상품
         $view->bestProduct = PickupOrdersProduct::leftjoin('product','product.id','pickup_orders_product.product_id')->where('product.store_id', $id)->select('pickup_orders_product.*')->orderBy('id','DESC')->limit(10)->get();
-        //# 상품 리뷰 / 좋아요 순 정렬 필요함
+        //# 상품 리뷰 / 최신 순
         $view->ProductReview = PickupProductReview::leftjoin('product','product.id','pickup_product_review.product_id')->where('product.store_id', $id)->select('pickup_product_review.*')->orderBy('created_at','DESC')->limit(6)->get();
-
-        if(auth()->guard()->check()){
-            //# 최근 본 상품 / 유저 where 추가해야됨
-            $view->historyProduct = PickupProductViews::leftjoin('product','product.id','pickup_product_views.product_id')->where('product.store_id', $id)->select('pickup_product_views.*')->orderBy('id','DESC')->limit(10)->get();
-        }
 
         //# 임시 유저 아이디
         $view->customer_id = 399;
-        //# 관심매장 여부
-        $view->store_like = StoreLikes::where('customer_id', $view->customer_id)->get();
+        if(Customer::find($view->customer_id) != null){
+            $view->customer_name = Customer::find($view->customer_id)->name;
+            //# 최근 본 상품 / 유저 where 추가해야됨
+            $view->historyProduct = PickupProductViews::leftjoin('product','product.id','pickup_product_views.product_id')->where('product.store_id', $id)->select('pickup_product_views.*')->where('customer_id', $view->customer_id)->orderBy('id','DESC')->limit(10)->get();
+            //# 관심매장 여부
+            $view->store_like = StoreLikes::where('customer_id', $view->customer_id)->get();
+        }
 
         return $view;
     }
