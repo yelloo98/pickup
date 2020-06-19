@@ -1,5 +1,7 @@
 var PickupCommon = {
     _config : {},
+
+    //# 관심매장 추가 / 삭제
     storeLike : function(store, customer){
         $.get('/front/add/store', {'store_id':store, 'customer_id':customer}, function(res) {
             if(res.code == 600){
@@ -34,16 +36,23 @@ var PickupCommon = {
         });
     },
 
+    //# 장바구니 선택
     cartSel : function (product_id) {
         $.get('/front/sel/cart', {'product_id':product_id}, function(res) {
             if(res.code == 200){
                 $('.purchase-wrapper .header-section p').html(res.name);
                 $('.purchase-wrapper .totalNum span').html(res.price);
+                $('.purchase-wrapper .goodsAmount').text(1);
+                $('.purchase-wrapper .up-btn').attr('onclick', 'pageModal.cntNum(' + res.cnt + ', \'plus\',' + res.price.replace(/,/gi,'') + ')');
+                $('.purchase-wrapper .down-btn').attr('onclick', 'pageModal.cntNum(' + res.cnt + ', \'minus\',' + res.price.replace(/,/gi,'') + ')');
                 pageModal.cartPopup();
+            }else{
+                alert(res.msg);
             }
         });
     },
 
+    //# 장바구니 추가 / 삭제
     cartAdd : function (product_id, customer_id) {
         $.get('/front/add/cart', {'product_id':product_id, 'customer_id':customer_id}, function(res) {
             if(res.code == 600){

@@ -127,7 +127,7 @@
         </div>
         <div class="swiper-wrapper">
             @forelse($bestProduct as $k=>$v)
-            <div class="swiper-slide" onclick="location.href='/front/product/detail/{{$v->product_id ?? 0}}'">
+            <div class="swiper-slide" onclick="pageMain.selProduct({{$v->product_id ?? 0}})">
                 <div class="img-box" @if($v->product->origin_product->image_path != null) style="background-image: url('{{env('IMAGE_URL').$v->product->origin_product->image_path}}')" @endif>
                     <img src="/front/dist/img/icon_cart_box.png" alt="">
                 </div>
@@ -159,7 +159,7 @@
         </div>
         <div class="cubeBox-wrapper">
             @forelse($historyProduct as $k=>$v)
-            <div class="cubeItem" onclick="location.href='/front/product/detail/{{$v->product_id ?? 0}}'">
+            <div class="cubeItem" onclick="pageMain.selProduct({{$v->product_id ?? 0}})">
                 <div class="img-box" @if($v->product->origin_product->image_path != null) style="background-image: url('{{env('IMAGE_URL').$v->product->origin_product->image_path}}')" @endif>
                     <img src="/front/dist/img/icon_cart_box.png" alt="">
                 </div>

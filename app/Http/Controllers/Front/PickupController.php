@@ -41,10 +41,13 @@ class PickupController extends Controller
     {
         $res = $request->all();
         $productList = ProductStock::where('product_id', $res['product_id'])->where('slot_status','DP-COMPLETE')->whereColumn('inserted_amount', '>', 'sale_amount');
-        $productCnt = $productList->sum('inserted_amount') - $productList->sum('sale_amount');
-        $product = $productList->first()->product;
-        return response()->json(['code' => 200, 'msg' => '장바구니 정보', 'cnt' => $productCnt ?? 0, 'name' => $product->origin_product->name ?? '', 'price' => number_format($product->price) ?? '']);
-
+        if($productList->count() > 0){
+            $productCnt = $productList->sum('inserted_amount') - $productList->sum('sale_amount');
+            $product = $productList->first()->product;
+            return response()->json(['code' => 200, 'msg' => '장바구니 정보', 'cnt' => $productCnt ?? 0, 'name' => $product->origin_product->name ?? '', 'price' => number_format($product->price) ?? '']);
+        }else{
+            return response()->json(['code' => 400, 'msg' => '해당 상품의 재고가 없습니다']);
+        }
     }
 
     //# 장바구니 등록/삭제
