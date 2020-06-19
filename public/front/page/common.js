@@ -2,8 +2,10 @@ var PickupCommon = {
     _config : {},
 
     //# 관심매장 추가 / 삭제
-    storeLike : function(store, customer){
-        $.get('/front/add/store', {'store_id':store, 'customer_id':customer}, function(res) {
+    storeLike : function(store_id){
+        var customer_id = $("input[name='customer_id']").val();
+
+        $.get('/front/add/store', {'store_id':store_id, 'customer_id':customer_id}, function(res) {
             if(res.code == 600){
                 alert("로그인 해주세요.");
                 return false;
@@ -28,7 +30,7 @@ var PickupCommon = {
                 $('.enjoyStore-list ul').append(html);
             }else{
                 $('.clicking-btn').children('img').attr('src','/front/dist/img/icon_star.png');
-                $('.store_' + store).remove();
+                $('.store_' + store_id).remove();
                 if( $('.enjoyStore-list ul li').length == 0 ) {
                     $('.enjoyStore-list').append('<p class="none-list">관심매장이 없습니다.</p>');
                 }
@@ -37,7 +39,7 @@ var PickupCommon = {
     },
 
     //# 장바구니 선택
-    cartSel : function (product_id) {
+    selCart : function (product_id) {
         $.get('/front/sel/cart', {'product_id':product_id}, function(res) {
             if(res.code == 200){
                 $('.purchase-wrapper .header-section p').html(res.name);
@@ -45,6 +47,7 @@ var PickupCommon = {
                 $('.purchase-wrapper .goodsAmount').text(1);
                 $('.purchase-wrapper .up-btn').attr('onclick', 'pageModal.cntNum(' + res.cnt + ', \'plus\',' + res.price.replace(/,/gi,'') + ')');
                 $('.purchase-wrapper .down-btn').attr('onclick', 'pageModal.cntNum(' + res.cnt + ', \'minus\',' + res.price.replace(/,/gi,'') + ')');
+                $('.purchase-wrapper .footer-section').attr('onclick', 'PickupCommon.addCart('+ product_id + ', \'add\')');
                 pageModal.cartPopup();
             }else{
                 alert(res.msg);
@@ -53,8 +56,11 @@ var PickupCommon = {
     },
 
     //# 장바구니 추가 / 삭제
-    cartAdd : function (product_id, customer_id) {
-        $.get('/front/add/cart', {'product_id':product_id, 'customer_id':customer_id}, function(res) {
+    addCart : function (product_id, status) {
+        var cnt = $('.purchase-wrapper .goodsAmount').text();
+        var customer_id = $("input[name='customer_id']").val();
+
+        $.get('/front/add/cart', {'product_id':product_id, 'status':status, 'cnt':cnt, 'customer_id':customer_id}, function(res) {
             if(res.code == 600){
                 alert("로그인 해주세요.");
                 return false;

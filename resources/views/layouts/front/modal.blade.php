@@ -331,7 +331,7 @@
                 </div>
             </div>
             <div class="footer-section">
-                <button onclick="location.href=''">장바구니 추가하기</button>
+                <button>장바구니 추가하기</button>
             </div>
         </div>
     </div>

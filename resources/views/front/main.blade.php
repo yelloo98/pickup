@@ -59,7 +59,7 @@
 
     <div class="storeTitle-container">
         <div class="ico-wrapper">
-            <button class="clicking-btn" onclick="PickupCommon.storeLike('{{$store->id ?? 0}}', '{{$customer_id ?? 0}}')">
+            <button class="clicking-btn" onclick="PickupCommon.storeLike({{$store->id ?? 0}})">
                 @if(!empty($store_like) && $store_like->where('store_id', $store->id)->count() > 0)
                 <img src="/front/dist/img/icon_star_on.png" alt="">
                 @else

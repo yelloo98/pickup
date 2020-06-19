@@ -22,6 +22,7 @@
 <div class="wrapper">
     @yield('header')
     <div class="content-body {{$div_class ?? ''}}">
+        <input type="hidden" name="customer_id" value="{{$customer_id ?? 0}}">
         @include('layouts.front.error')
         @include('layouts.front.sidebar')
         @yield('content')

@@ -4,7 +4,7 @@ var pageMain = {
     selProduct : function (product_id) {
         var $target = $(event.target);
         if($target.is("img")) {
-            PickupCommon.cartSel(product_id);
+            PickupCommon.selCart(product_id);
         }else{
             location.href = '/front/product/detail/' + product_id;
         }
