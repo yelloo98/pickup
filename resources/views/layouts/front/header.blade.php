@@ -35,23 +35,14 @@
             구매한 픽업상품
         @elseif(($page ?? '') == 'latest')
             최신 픽업상품
+         @elseif(($page ?? '') == 'order')
+            구매한 픽업상품
         @elseif(($page ?? '') == 'detail')
             구매한 픽업상품
         @elseif(($page ?? '') == 'mypage')
             마이 페이지
         @endif
         </p>
-        <div class="btns-wrap">
-            <button>
-                <img class="black-img" src="/front/dist/img/icon_search_B.png" alt="">
-            </button>
-            <button>
-                <img class="black-img" src="/front/dist/img/icon_cart_B.png" alt="">
-            </button>
-            <button>
-                <img class="black-img" src="/front/dist/img/icon_menu_B.png" alt="">
-            </button>
-        </div>
     </div>
     @endif
 </header>

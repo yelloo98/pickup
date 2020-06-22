@@ -14,7 +14,7 @@ class MypageController extends Controller
     public function getOrderList()
 	{
         $view = view('front.mypage.order');
-        $view->page = 'mypage';
+        $view->page = 'order';
         return $view;
 	}
 
