@@ -11,7 +11,7 @@ class SearchController extends Controller
 	public function getIndex()
 	{
         $view = view('front.search.search');
-        $view->div_class = 'productSearch';
+        $view->page = 'search';
         return $view;
 	}
 }

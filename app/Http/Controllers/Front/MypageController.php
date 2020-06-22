@@ -14,7 +14,7 @@ class MypageController extends Controller
     public function getOrderList()
 	{
         $view = view('front.mypage.order');
-        $view->div_class = 'ppGoods-content';
+        $view->page = 'mypage';
         return $view;
 	}
 
@@ -101,7 +101,7 @@ class MypageController extends Controller
     public function getQna()
     {
         $view = view('front.mypage.qna');
-        $view->div_class = 'write-content';
+        $view->page = 'mypage';
         return $view;
     }
 
@@ -135,7 +135,7 @@ class MypageController extends Controller
     public function getStoreQna()
     {
         $view = view('front.mypage.storeQna');
-        $view->div_class = 'write-content';
+        $view->page = 'mypage';
         return $view;
     }
 
@@ -186,7 +186,7 @@ class MypageController extends Controller
     public function getTermList()
     {
         $view = view('front.mypage.term');
-        $view->div_class='listUp-detailContent';
+        $view->page = 'mypage';
         return $view;
     }
 
@@ -196,7 +196,7 @@ class MypageController extends Controller
     public function getNoticeList()
     {
         $view = view('front.mypage.notice');
-        $view->div_class='listUp-content';
+        $view->page = 'mypage';
         return $view;
     }
 

@@ -23,7 +23,7 @@ class MainController extends Controller
 	public function getIndex($id)
 	{
         $view = view('front.main');
-        $view->div_class = 'ppMain-content';
+        $view->page = 'main';
         if($id <= 0) $id = 498;
         $view->store = Store::find($id);
         //# 신규 상품 / 슬롯에 새로 들어온 상품

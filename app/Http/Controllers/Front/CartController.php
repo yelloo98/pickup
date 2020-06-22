@@ -11,6 +11,7 @@ class CartController extends Controller
 	public function getIndex()
 	{
         $view = view('front.cart.cart');
+        $view->page = 'cart';
         return $view;
 	}
 }

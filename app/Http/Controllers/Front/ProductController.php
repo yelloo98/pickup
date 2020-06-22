@@ -23,14 +23,14 @@ class ProductController extends Controller
     public function getLatestProduct()
     {
         $view = view('front.product.latest');
-        $view->div_class = 'allPickup-content';
+        $view->page = 'latest';
         return $view;
     }
 
     public function getProduct($id)
     {
         $view = view('front.product.detail');
-        $view->div_class = 'ppGoodsDetail-content';
+        $view->page = 'detail';
         return $view;
     }
 }

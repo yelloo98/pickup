@@ -25,13 +25,14 @@
     </header>
 @endsection
 @section('content')
-    <div class="listUp-container">
-        <div class="listUp-header">
-            <p class="listUp-title">서비스 구매회원 이용약관 프래쉬스토어 인터넷 개인정보통신 관련 사용하는 용어의 정의는 다음과 같습니다.</p>
-            <small class="listUp-date">2020-04-13</small>
-        </div>
-        <div class="listUp-text">
-            <pre>이용 약관
+    <div class="content-body listUp-detailContent">
+        <div class="listUp-container">
+            <div class="listUp-header">
+                <p class="listUp-title">서비스 구매회원 이용약관 프래쉬스토어 인터넷 개인정보통신 관련 사용하는 용어의 정의는 다음과 같습니다.</p>
+                <small class="listUp-date">2020-04-13</small>
+            </div>
+            <div class="listUp-text">
+                <pre>이용 약관
 
 제 1조 (목적)
 서비스 이용약관(이하 “약관”이라 합니다)은 (주)프래
@@ -59,6 +60,7 @@ ID와 PASSWORD를 발급 받았으며 회사가 제공하는
 위하여 회원이 선정하고 회사가 승인하는 문자와 숫자의
 조합을 말합니다. 본 서비스에서는 E-mail
 주소를 ID로 사용합니다.</pre>
+            </div>
         </div>
     </div>
 @endsection
