@@ -74,8 +74,46 @@ var PickupCommon = {
                 alert(res.msg);
             }
         });
+    },
+
+    //# 문의하기
+    qnaStore : function () {
+        var data = new FormData();
+        data.append('customer_id', $("input[name='customer_id']").val());
+        data.append('store_id', $("input[name='store_id']").val());
+        data.append('category', $('select[name="category"]').val());
+        data.append('contents', $('[name=contents]').val());
+        $.ajax({
+            type: 'POST',
+            url: "/front/mypage/qna/store",
+            data: data,
+            contentType: false,
+            processData: false,
+            success: function (res) {
+                if(res.code == 600){
+                    alert("로그인 해주세요.");
+                    return false;
+                }
+
+                if (res.code == 200) {
+                    alert(res.msg);
+                    location.href='/front/main/' + res.store_id;
+                }else{
+                    alert(res.msg);
+                }
+            }
+        });
     }
 }
+
+$.ajaxSetup({
+    //ajax IE, Edge 통신을 위한 cache 세팅
+    cache : false,
+    //ajax 중복 호출 방지
+    async : false,
+    //ajax 통신을 위한 csrf-token 세팅
+    headers : {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
+});
 
 
 

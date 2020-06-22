@@ -5,7 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1"/>
     <meta name="format-detection" content="telephone=no">
-
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{$title ?? ''}}</title>
 
     <link rel="stylesheet" type="text/css" href="/front/dist/plugin/vendor.min.css">

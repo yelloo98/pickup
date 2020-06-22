@@ -46,7 +46,7 @@
                 <div class="main-title">
                     <p>{{$store->fcTrader->companyName ?? ''}}</p>
                     <ul>
-                        <li class="gray-link" onclick="location.href='/front/mypage/qna/store';">문의하기</li>
+                        <li class="gray-link" onclick="location.href='/front/mypage/qna/store/{{$store->id ?? 0}}';">문의하기</li>
                         <li class="red-link">매장변경</li>
                     </ul>
                 </div>

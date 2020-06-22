@@ -2,20 +2,21 @@
 @section('title', $title ?? '')
 @section('content')
     <div class="content-body write-content">
+        <input type="hidden" name="store_id" value="{{$store->id ?? 0}}">
         <div class="goodsSelect-container">
-            <select name="" id="" class="noneVal">
+            <select name="category" class="noneVal">
                 <option value="" hidden>문의유형을 선택해주세요.</option>
-                <option value="">매장문의</option>
-                <option value="">기기문의</option>
-                <option value="">기타문의</option>
+                <option value="store">매장문의</option>
+                <option value="device">기기문의</option>
+                <option value="etc">기타문의</option>
             </select>
             <img class="fake-arrow" src="/front/dist/img/icon_select01.png" alt="">
         </div>
         <div class="goodsWord-container">
-            <textarea class="noneCheck" name="" id="" cols="30" rows="10"></textarea>
+            <textarea class="noneCheck" name="contents" cols="30" rows="10"></textarea>
         </div>
         <div class="fixed-footer full-btn">
-            <button>Q&A 등록하기</button>
+            <button onclick="PickupCommon.qnaStore()">Q&A 등록하기</button>
         </div>
     </div>
 @endsection

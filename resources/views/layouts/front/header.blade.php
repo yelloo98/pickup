@@ -41,6 +41,8 @@
             구매한 픽업상품
         @elseif(($page ?? '') == 'mypage')
             마이 페이지
+        @elseif(($page ?? '') == 'storeQna')
+            {{$store->fcTrader->companyName ?? '매장'}}에 문의하기
         @endif
         </p>
     </div>

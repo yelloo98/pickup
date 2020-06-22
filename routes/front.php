@@ -102,7 +102,7 @@ Route::group(['namespace' => 'Front', 'middleware' => 'front', 'prefix' => 'fron
             //# 매장의 Q&A
             Route::group(['prefix' => 'store'], function () {
                 //매장의 Q&A 리스트
-                Route::get('/', 'MypageController@getStoreQna');
+                Route::get('/{id?}', 'MypageController@getStoreQna');
                 //매장의 Q&A 등록
                 Route::post('/', 'MypageController@postStoreQna');
                 //매장의 Q&A 수정

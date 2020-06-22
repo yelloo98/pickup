@@ -3,7 +3,11 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
+use App\Models\Customer;
+use App\Models\PickupQna;
+use App\Models\Store;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class MypageController extends Controller
 {
@@ -130,21 +134,51 @@ class MypageController extends Controller
     }
 
     /**
+     * @param int $id
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application|\Illuminate\View\View
      */
-    public function getStoreQna()
+    public function getStoreQna($id = 0)
     {
         $view = view('front.mypage.storeQna');
-        $view->page = 'mypage';
+        $view->store = Store::find($id);
+        $view->page = 'storeQna';
+        //# 임시 유저 아이디
+        $view->customer_id = 399;
         return $view;
     }
 
     /**
-     *
+     * @param Request $request
+     * @return mixed
      */
-    public function postStoreQna()
+    public function postStoreQna(Request $request)
     {
+        return DB::transaction(function() use ($request){
+            try{
+                $res = $request->all();
+                $customer = Customer::find($res['customer_id']);
+                if($customer == null){
+                    DB::rollback();
+                    return response()->json(['code'=>600, 'msg'=>'로그인해주세요']);
+                }
 
+                $qna = new PickupQna();
+                $qna->customer_id = $res['customer_id'];
+                $qna->store_id = $res['store_id'];
+                $qna->category = $res['category'];
+                $qna->contents = $res['contents'];
+                $qna->type = 'store';
+                $qna->save();
+
+                return response()->json(['code'=>200, 'msg'=>'문의 등록 성공', 'store_id'=>$res['store_id']]);
+            }catch(\Exception $ex){
+                DB::rollBack();
+                return response()->json(['code'=>400, 'msg'=>'등록에 실패하였습니다.']);
+            }catch(\Throwable $throwable){
+                DB::rollBack();
+                return response()->json(['code'=>400, 'msg'=>'등록에 실패하였습니다.']);
+            }
+        });
     }
 
     /**
