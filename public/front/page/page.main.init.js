@@ -68,7 +68,7 @@ $(document).ready(function(){
 
     $('.full-close').click(function(){
         $(this).closest('.fullPopup-wrapper').removeClass('slideIn').addClass('slideOut');
-        $(this).closest('.content-body').removeClass('fixed-scroll');
+        $('.content-body').removeClass('fixed-scroll');
     });
 
 

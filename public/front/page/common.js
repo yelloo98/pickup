@@ -66,7 +66,8 @@ var PickupCommon = {
                 return false;
             }
             if(res.code == 200){
-                alert(res.msg);
+                $('.popup-wrapper').removeClass('active');
+                pageModal.cartSavePopup();
             }else{
                 alert(res.msg);
             }

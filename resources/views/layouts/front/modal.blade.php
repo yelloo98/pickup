@@ -147,7 +147,7 @@
 </div>
 
 <div class="index-box">
-    <div class="popup-wrapper basic-wrapper">
+    <div class="popup-wrapper basic-wrapper cart-save-wrapper">
         <div class="popup-inner">
             <button class="close-box"><img src="/front/dist/img/icon_popup_x01.png" alt=""></button>
             <div class="content-section">
@@ -155,7 +155,7 @@
             </div>
             <div class="footer-section">
                 <button class="continue">계속쇼핑하기</button>
-                <button class="go" onclick="location.href='연결링크.html'">장바구니 보러가기</button>
+                <button class="go" onclick="location.href='/front/cart'">장바구니 보러가기</button>
             </div>
         </div>
     </div>
