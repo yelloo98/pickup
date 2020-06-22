@@ -12,6 +12,7 @@ use App\Models\PickupProductViews;
 use App\Models\Product;
 use App\Models\ProductStock;
 use App\Models\Store;
+use App\Models\StoreEvent;
 use App\Models\StoreLikes;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
@@ -26,6 +27,8 @@ class MainController extends Controller
         $view->page = 'main';
         if($id <= 0) $id = 498;
         $view->store = Store::find($id);
+        //# 이벤트
+        $view->storeEvent = StoreEvent::where('store_id', $id)->get();
         //# 신규 상품 / 슬롯에 새로 들어온 상품
         $view->newProduct = ProductStock::leftjoin('product','product.id','product_stock.product_id')->where('product.store_id', $id)->select('product_stock.*')->orderBy('id','DESC')->limit(10)->get();
         //# 인기 상품 / 구매량이 많은 상품

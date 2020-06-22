@@ -4,51 +4,25 @@
     <div class="content-body ppMain-content">
         <div class="mainSlide-container swiper-container">
             <div class="swiper-wrapper">
+                @forelse($storeEvent as $k=>$v)
+                <div class="swiper-slide" @if($v->img != null) style="background-image: url('{{env('IMAGE_URL').$v->img}}')" @endif>
+                    <div class="slogun-box">
+                        <ul>
+                            <li>{{$v->title ?? ''}}</li>
+                        </ul>
+                        <p>{{$v->content ?? ''}}</p>
+                    </div>
+                </div>
+                @empty
                 <div class="swiper-slide">
                     <div class="slogun-box">
                         <ul>
-                            <li>쉽고 빠른</li>
-                            <li>프레시 스토어 OPEN</li>
+                            <li>현재 진행중인</li>
+                            <li>이벤트가 없습니다.</li>
                         </ul>
-                        <p>오픈기념 픽업제품 1+1 증정 이벤트</p>
                     </div>
                 </div>
-                <div class="swiper-slide">
-                    <div class="slogun-box">
-                        <ul>
-                            <li>쉽고 빠른</li>
-                            <li>프레시 스토어 OPEN</li>
-                        </ul>
-                        <p>오픈기념 픽업제품 1+1 증정 이벤트</p>
-                    </div>
-                </div>
-                <div class="swiper-slide">
-                    <div class="slogun-box">
-                        <ul>
-                            <li>쉽고 빠른</li>
-                            <li>프레시 스토어 OPEN</li>
-                        </ul>
-                        <p>오픈기념 픽업제품 1+1 증정 이벤트</p>
-                    </div>
-                </div>
-                <div class="swiper-slide">
-                    <div class="slogun-box">
-                        <ul>
-                            <li>쉽고 빠른</li>
-                            <li>프레시 스토어 OPEN</li>
-                        </ul>
-                        <p>오픈기념 픽업제품 1+1 증정 이벤트</p>
-                    </div>
-                </div>
-                <div class="swiper-slide">
-                    <div class="slogun-box">
-                        <ul>
-                            <li>쉽고 빠른</li>
-                            <li>프레시 스토어 OPEN</li>
-                        </ul>
-                        <p>오픈기념 픽업제품 1+1 증정 이벤트</p>
-                    </div>
-                </div>
+                @endforelse
             </div>
             <!-- Add Pagination -->
             <div class="swiper-pagination"></div>
