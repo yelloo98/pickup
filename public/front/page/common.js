@@ -40,7 +40,9 @@ var PickupCommon = {
 
     //# 장바구니 선택
     selCart : function (product_id) {
-        $.get('/front/sel/cart', {'product_id':product_id}, function(res) {
+        var customer_id = $("input[name='customer_id']").val();
+
+        $.get('/front/sel/cart', {'product_id':product_id, 'customer_id':customer_id}, function(res) {
             if(res.code == 200){
                 $('.purchase-wrapper .header-section p').html(res.name);
                 $('.purchase-wrapper .totalNum span').html(res.price);

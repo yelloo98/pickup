@@ -30,7 +30,7 @@
         </button>
         <p class="headerTitle">
         @if(($page ?? '') == 'cart')
-            구매한 픽업상품
+            장바구니
         @elseif(($page ?? '') == 'search')
             구매한 픽업상품
         @elseif(($page ?? '') == 'latest')

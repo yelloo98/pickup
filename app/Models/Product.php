@@ -20,6 +20,11 @@ class Product extends Model implements ModelAdminInterface
     return $this->belongsTo('App\Models\OriginProduct', 'product_id');
     }
 
+    public function store()
+    {
+        return $this->belongsTo('App\Models\Store', 'store_id');
+    }
+
     /**
      * Override : DataTableList
      * -----------------------------------------------------------------------------------------------------------------
