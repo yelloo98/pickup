@@ -2730,8 +2730,8 @@
 }
 
 .index-box .popup-wrapper.login-wrapper .popup-inner .close-box {
-	width: 49px;
-	height: 49px;
+	width: 54px;
+	height: 54px;
 }
 
 .index-box .popup-wrapper.login-wrapper .popup-inner .close-box img {
@@ -2831,6 +2831,15 @@
 	display: none;
 }
 
+.index-box .popup-wrapper.login-wrapper .popup-inner .content-section .target-wrap {
+	position: fixed;
+	width: 100%;
+	top: 97px;
+	height: calc( 100vh - 97px);
+	overflow: scroll;
+	background: #fff;
+}
+
 .index-box .popup-wrapper.login-wrapper .popup-inner .content-section .target-wrap .tabTarget {
 	display: none;
 }
@@ -2842,14 +2851,15 @@
 .index-box .popup-wrapper.login-wrapper .popup-inner .content-section .target-wrap .tabTarget .user-area {
 	padding-top: 19px;
 	position: relative;
+	height: calc( 100vh - 91px);
 }
 
 .index-box .popup-wrapper.login-wrapper .popup-inner .content-section .target-wrap .tabTarget .user-area.logout-form {
-	height: 513px;
+	min-height: 513px;
 }
 
 .index-box .popup-wrapper.login-wrapper .popup-inner .content-section .target-wrap .tabTarget .user-area.login-form {
-	height: 595px;
+	min-height: 595px;
 }
 
 .index-box .popup-wrapper.login-wrapper .popup-inner .content-section .target-wrap .tabTarget .user-area .user-header {
@@ -2957,6 +2967,12 @@
 	width: 38px;
 }
 
+.index-box .popup-wrapper.login-wrapper .popup-inner .content-section .target-wrap .tabTarget .user-area .user-items button p {
+	font-size: 11px;
+	font-weight: 400;
+	line-height: 17px;
+}
+
 .index-box .popup-wrapper.login-wrapper .popup-inner .content-section .target-wrap .tabTarget .user-area .userBar-items ul li {
 	font-size: 12px;
 	font-weight: 500;
@@ -3029,10 +3045,7 @@
 }
 
 .index-box .popup-wrapper.login-wrapper .popup-inner .content-section .target-wrap .tabTarget .user-area .telephone-item {
-	position: absolute;
-	bottom: 33px;
-	width: 100%;
-	padding-left: 15px;
+	padding: 32px 0 32px 15px;
 }
 
 .index-box .popup-wrapper.login-wrapper .popup-inner .content-section .target-wrap .tabTarget .user-area .telephone-item .phoneNum {
@@ -3078,7 +3091,7 @@
 	border: none;
 	height: 35px;
 	border: 1px solid #eee;
-	width: calc( 100% - 30px);
+	width: calc( 100% - 15px);
 }
 
 .index-box .popup-wrapper.basic-wrapper .popup-inner .content-section p {
@@ -3519,8 +3532,8 @@
 }
 
 .index-box .popup-wrapper.payment-wrapper .popup-inner .close-box {
-	width: 49px;
-	height: 49px;
+	width: 54px;
+	height: 54px;
 }
 
 .index-box .popup-wrapper.payment-wrapper .popup-inner .close-box img {
@@ -3740,6 +3753,194 @@
 	color: #ee5322;
 	font-size: 14px;
 	font-weight: 700;
+}
+
+/* 카테고리 proc/_category_all.html */
+.prd_cate {
+	padding: 0 0 5px 0;
+}
+
+.brand_cate {
+	padding: 15px 0 30px 0;
+}
+
+.category_side {
+	width: 100%;
+}
+
+.category_side > li {
+	position: relative;
+	border-top: 1px solid #eee;
+}
+
+.category_side > li:last-child {
+	border-bottom: 1px solid #eee;
+	position: relative;
+}
+
+.category_side > li:last-child:after {
+	content: "";
+	width: 100%;
+	background: #f6f6f6;
+	height: 5px;
+	position: absolute;
+	bottom: -6px;
+}
+
+.category_side > li ul {
+	display: none;
+}
+
+.category_side > li a {
+	display: block;
+	font-size: 12px;
+	color: #333;
+	-webkit-text-decoration-line: none;
+	        text-decoration-line: none;
+}
+
+.category_side > li a > img {
+	max-width: 100%;
+}
+
+/* 1차 카테고리 타이틀 */
+.category_side > li > a {
+	color: #333;
+	font-weight: 700;
+	padding: 13px 20px;
+	position: relative;
+	line-height: 18px;
+}
+
+/* 2차 카테고리 타이틀 */
+.category_side > li > ul > li {
+	position: relative;
+}
+
+.category_side > li > ul > li > a {
+	font-size: 11px;
+	font-weight: 500;
+	color: #333;
+	padding: 6px 30px;
+	position: relative;
+}
+
+.category_side > li > ul > li > a:first-child {
+	padding-top: 12px;
+}
+
+.category_side > li > ul > li > a:last-child {
+	padding-bottom: 12px;
+}
+
+.category_side > li > ul > li > a.on {
+	color: #666666;
+}
+
+/* 3차 카테고리 타이틀 */
+.category_side > li > ul > li > ul > li > a {
+	font-size: 11px;
+	font-weight: 400;
+	color: #666666;
+	padding: 6px 40px;
+	position: relative;
+}
+
+.category_side > li > ul > li > ul > li > a.on {
+	color: #666666;
+}
+
+/* 4차 카테고리 타이틀 */
+.category_side > li > ul > li > ul > li > ul > li > a {
+	background: #f7f7f7;
+	font-size: 11px;
+	font-weight: 300;
+	color: #666666;
+	padding: 6px 50px;
+	position: relative;
+}
+
+.category_side > li > ul > li > ul > li > ul > li > a.on {
+	color: #666666;
+}
+
+/* 하위카테고리가 있을경우 아이콘 */
+.category_side li a span.icon_plus {
+	position: absolute;
+	top: 18px;
+	right: 15px;
+	display: block;
+	width: 10px;
+	height: 8px;
+	background: url("../img/icon_select01.png") no-repeat center;
+	font-size: 0;
+	vertical-align: middle;
+	background-size: cover;
+}
+
+.category_side li a.on span.icon_plus {
+	position: absolute;
+	top: 18px;
+	right: 15px;
+	display: block;
+	width: 10px;
+	height: 8px;
+	background: url("../img/icon_select02.png") no-repeat center;
+	font-size: 0;
+	vertical-align: middle;
+	background-size: cover;
+}
+
+.category_side li ul li a span.icon_plus {
+	position: absolute;
+	top: 10px;
+	right: 15px;
+	display: block;
+	width: 10px;
+	height: 8px;
+	background: url("../img/icon_select01.png") no-repeat center;
+	font-size: 0;
+	vertical-align: middle;
+	background-size: cover;
+}
+
+.category_side li ul li a.on span.icon_plus {
+	position: absolute;
+	top: 10px;
+	right: 15px;
+	display: block;
+	width: 10px;
+	height: 8px;
+	background: url("../img/icon_select02.png") no-repeat center;
+	font-size: 0;
+	vertical-align: middle;
+	background-size: cover;
+}
+
+.category_side li ul li ul li a span.icon_plus {
+	position: absolute;
+	top: 10px;
+	right: 15px;
+	display: block;
+	width: 10px;
+	height: 8px;
+	background: url("../img/icon_select01.png") no-repeat center;
+	font-size: 0;
+	vertical-align: middle;
+	background-size: cover;
+}
+
+.category_side li ul li ul li a.on span.icon_plus {
+	position: absolute;
+	top: 10px;
+	right: 15px;
+	display: block;
+	width: 10px;
+	height: 8px;
+	background: url("../img/icon_select02.png") no-repeat center;
+	font-size: 0;
+	vertical-align: middle;
+	background-size: cover;
 }
 
 .content-body.orderDetail {

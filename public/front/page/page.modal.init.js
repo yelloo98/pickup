@@ -18,4 +18,12 @@ $(document).ready(function(){
             },
         });
     });
+
+    /* 카테고리 메뉴 */
+    $('.category_side li a').on({
+        'click':function(){
+            $(this).siblings('ul').slideToggle(300);
+            $(this).toggleClass('on');
+        }
+    });
 });

@@ -424,6 +424,77 @@
                                     <button class="joinBtn">회원가입</button>
                                 </div>
                             </div>
+                            <div class="nav_category">
+                                <div class="nav_tabmenu_box">
+                                    <div class="tab_menu0">
+                                        <div class="prd_cate">
+                                            <ul class="category_side">
+                                                <li>
+                                                    <a href="#;">축산물<span class="icon_plus">ICON</span></a>
+                                                    <ul>
+                                                        <li><a href="../goods/goods_list.php?cateCd=001" class="icon_arrow">전체보기</a></li>
+                                                        <li>
+                                                            <a href="#;">돼지고기<span class="icon_plus">ICON</span> </a>
+                                                            <ul>
+                                                                <li><a href="../goods/goods_list.php?cateCd=001001" class="icon_arrow">전체보기</a></li>
+                                                                <li>
+                                                                    <a href="#;">앞다리<span class="icon_plus">ICON</span> </a>
+                                                                    <ul>
+                                                                        <li><a href="../goods/goods_list.php?cateCd=001001001" class="icon_arrow"> - 전체보기</a></li>
+                                                                        <li>
+                                                                            <a href="../goods/goods_list.php?cateCd=001001001001" class="icon_arrow"> - 테스트1</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="../goods/goods_list.php?cateCd=001001002" class="icon_arrow">뒷다리</a>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                        <li>
+                                                            <a href="../goods/goods_list.php?cateCd=001002" class="icon_arrow">소고기</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <li>
+                                                    <a href="#;">가공품<span class="icon_plus">ICON</span></a>
+                                                    <ul>
+                                                        <li><a href="../goods/goods_list.php?cateCd=002" class="icon_arrow">전체보기</a></li>
+                                                        <li>
+                                                            <a href="../goods/goods_list.php?cateCd=002001" class="icon_arrow">냉동</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="../goods/goods_list.php?cateCd=002002" class="icon_arrow">냉장</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <li>
+                                                    <a href="#;">농산물<span class="icon_plus">ICON</span></a>
+                                                    <ul>
+                                                        <li><a href="../goods/goods_list.php?cateCd=003" class="icon_arrow">전체보기</a></li>
+                                                        <li>
+                                                            <a href="../goods/goods_list.php?cateCd=003001" class="icon_arrow">채소</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <li>
+                                                    <a href="#;">수산물<span class="icon_plus">ICON</span></a>
+                                                    <ul>
+                                                        <li><a href="../goods/goods_list.php?cateCd=004" class="icon_arrow">전체보기</a></li>
+                                                        <li>
+                                                            <a href="../goods/goods_list.php?cateCd=004001" class="icon_arrow">냉동</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="../goods/goods_list.php?cateCd=004002" class="icon_arrow">냉장</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <!-- //prd_cate -->
+                                    </div>
+                                </div>
+                            </div>
                             <div class="userBar-items">
                                 <ul>
                                     <li>비회원 주문 조회<img src="/front/dist/img/icon_arrow_MR.png" height="13px" width="8px" alt=""></li>

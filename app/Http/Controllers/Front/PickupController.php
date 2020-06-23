@@ -77,4 +77,11 @@ class PickupController extends Controller
             return response()->json(['code' => 400, 'msg' => '장바구니 취소']);
         }
     }
+
+
+    //# 장바구니 등록/삭제
+    public function appTest(Request $request)
+    {
+        return response()->json(['code' => 200, 'msg' => 'API 성공']);
+    }
 }
