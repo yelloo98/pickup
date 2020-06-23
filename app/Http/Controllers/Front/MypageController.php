@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
+use App\Models\PickupCouponCustomer;
 use App\Models\PickupQna;
 use App\Models\Store;
 use Illuminate\Http\Request;
@@ -29,6 +30,8 @@ class MypageController extends Controller
     {
         $view = view('front.mypage.coupon');
         $view->page = 'my_coupon';
+        $view->customer_id = 399;
+        $view->couponList = PickupCouponCustomer::where('customer_id', $view->customer_id)->where('status', 'N')->get();
         return $view;
     }
 

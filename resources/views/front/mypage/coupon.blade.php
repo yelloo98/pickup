@@ -4,7 +4,7 @@
     <div class="content-body coupon-content">
         <div class="content-wrapper">
             <div class="title-section">
-                <p class="word-box">보유쿠폰<strong><span class="">0</span>장</strong></p>
+                <p class="word-box">보유쿠폰<strong><span class="colorNum">{{$couponList->count() ?? 0}}</span>장</strong></p>
                 <div class="btn-box">
                     <div class="order-item">
                         <input id="coupon" type="number" value="" placeholder="쿠폰번호를 입력해주세요">
@@ -13,6 +13,7 @@
                 </div>
             </div>
             <div class="coupon-container">
+            @forelse($couponList as $k => $v)
                 <div class="coupon-section">
                     <div class="sale-box">
                         <div class="word-item">
@@ -31,21 +32,15 @@
                         </div>
                     </div>
                 </div>
+            @empty
+                <p class="none-list">쿠폰이 없습니다.</p>
+            @endforelse
             </div>
         </div>
     </div>
 @endsection
 @section('script')
     <script>
-        var couponNum = $('.coupon-section:last-child').index();
-
-        if( $('.coupon-content .coupon-section').length == 0 ) {
-            $('.coupon-content .coupon-container').append('<p class="none-list">쿠폰이 없습니다.</p>');
-        } else {
-            $('.coupon-content .word-box span').addClass('colorNum');
-            $('.coupon-content .word-box span').text(couponNum + 1);
-        }
-
         $("#coupon").on("propertychange change keyup paste input", function() {
             if ($(this).val() != "") {
                 $('.btn-box button').addClass('active');
