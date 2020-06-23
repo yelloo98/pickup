@@ -103,6 +103,32 @@ var PickupCommon = {
                 }
             }
         });
+    },
+
+    //# 쿠폰 등록하기
+    addCoupon : function () {
+        var data = new FormData();
+        data.append('customer_id', $("input[name='customer_id']").val());
+        data.append('coupon_num', $('input[name="coupon"]').val());
+        $.ajax({
+            type: 'POST',
+            url: "/front/mypage/coupon",
+            data: data,
+            contentType: false,
+            processData: false,
+            success: function (res) {
+                if(res.code == 600){
+                    alert("로그인 해주세요.");
+                    return false;
+                }
+
+                if (res.code == 200) {
+                    alert(res.msg);
+                }else{
+                    alert(res.msg);
+                }
+            }
+        });
     }
 }
 

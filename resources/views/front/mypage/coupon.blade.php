@@ -7,9 +7,9 @@
                 <p class="word-box">보유쿠폰<strong><span class="colorNum">{{$couponList->count() ?? 0}}</span>장</strong></p>
                 <div class="btn-box">
                     <div class="order-item">
-                        <input id="coupon" type="number" value="" placeholder="쿠폰번호를 입력해주세요">
+                        <input id="coupon" type="text" name="coupon" placeholder="쿠폰번호를 입력해주세요">
                     </div>
-                    <button>쿠폰등록</button>
+                    <button onclick="">쿠폰등록</button>
                 </div>
             </div>
             <div class="coupon-container">
@@ -18,8 +18,8 @@
                     <div class="sale-box">
                         <div class="word-item">
                             <div class="toTop">
-                                <p class="storeName"><span>군자점</span></p>
-                                <p class="couponTerm">2020-04-01~2020-04-07</p>
+                                <p class="storeName"><span>{{$v->coupon->store->fcTrader->companyName ?? ''}}</span></p>
+                                <p class="couponTerm">{{date('Y-m-d', strtotime($v->coupon->start_at ?? now()))}}~{{date('Y-m-d', strtotime($v->coupon->end_at ?? now()))}}</p>
                             </div>
                             <div class="mainTxt"><span>20,000</span>원 할인</div>
                             <div class="subTxt">40,000원 이상 구매시 사용가능</div>
@@ -44,8 +44,10 @@
         $("#coupon").on("propertychange change keyup paste input", function() {
             if ($(this).val() != "") {
                 $('.btn-box button').addClass('active');
+                $('.btn-box button').attr('onclick', "PickupCommon.addCoupon()");
             } else {
                 $('.btn-box button').removeClass('active');
+                $('.btn-box button').attr('onclick', "");
             }
         });
     </script>

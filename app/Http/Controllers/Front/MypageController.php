@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
+use App\Models\PickupCoupon;
 use App\Models\PickupCouponCustomer;
 use App\Models\PickupQna;
 use App\Models\Store;
@@ -40,7 +41,34 @@ class MypageController extends Controller
      */
     public function postCoupon(Request $request)
     {
+        return DB::transaction(function() use ($request){
+            try{
+                $res = $request->all();
+                if(empty(Customer::find($res['customer_id']))) return response()->json(['code'=>600, 'msg'=>'로그인해주세요']);
 
+                $coupon = PickupCoupon::where('coupon_num',$res['coupon_num'])->first();
+                if(empty($coupon)) return response()->json(['code'=>400, 'msg'=>'쿠폰번호가 잘못되었습니다.']);
+                if($coupon->amount <= 0) return response()->json(['code'=>400, 'msg'=>'쿠폰 수량이 없습니다.']);
+                if($coupon->end_at < now()) return response()->json(['code'=>400, 'msg'=>'기간이 만료된 쿠폰입니다.']);
+                if(!empty(PickupCouponCustomer::where([['pickup_coupon_id',$coupon->id],['customer_id',$res['customer_id']]])->first())) return response()->json(['code'=>400, 'msg'=>'이미 등록된 쿠폰입니다.']);
+
+                $coupon->amount = $coupon->amount - 1;
+                $coupon->save();
+
+                $couponCustomer = new PickupCouponCustomer();
+                $couponCustomer->pickup_coupon_id = $coupon->id;
+                $couponCustomer->customer_id = $res['customer_id'];
+                $couponCustomer->save();
+
+                return response()->json(['code'=>200, 'msg'=>'쿠폰 등록 성공']);
+            }catch(\Exception $ex){
+                DB::rollBack();
+                return response()->json(['code'=>400, 'msg'=>'등록에 실패하였습니다.']);
+            }catch(\Throwable $throwable){
+                DB::rollBack();
+                return response()->json(['code'=>400, 'msg'=>'등록에 실패하였습니다.']);
+            }
+        });
     }
 
     /**
@@ -166,7 +194,6 @@ class MypageController extends Controller
                 $res = $request->all();
                 $customer = Customer::find($res['customer_id']);
                 if($customer == null){
-                    DB::rollback();
                     return response()->json(['code'=>600, 'msg'=>'로그인해주세요']);
                 }
 

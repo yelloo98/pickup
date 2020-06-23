@@ -13,6 +13,7 @@ class PickupCouponCustomer extends Model implements ModelAdminInterface
     use ModelFunction;
 
     protected $table = 'pickup_coupon_customer';
+    public $timestamps = false;
 
     public function coupon()
     {

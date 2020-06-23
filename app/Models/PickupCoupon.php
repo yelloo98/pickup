@@ -14,6 +14,11 @@ class PickupCoupon extends Model implements ModelAdminInterface
 
     protected $table = 'pickup_coupon';
 
+    public function store()
+    {
+        return $this->belongsTo('App\Models\Store', 'store_id');
+    }
+
     /**
      * Override : DataTableList
      * -----------------------------------------------------------------------------------------------------------------
