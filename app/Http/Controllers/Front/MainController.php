@@ -39,7 +39,7 @@ class MainController extends Controller
         //# 임시 유저 아이디
         $view->customer_id = 399;
         if(Customer::find($view->customer_id) != null){
-            $view->customer_name = Customer::find($view->customer_id)->name;
+            $view->customer = Customer::find($view->customer_id);
             //# 최근 본 상품 / 유저 where 추가해야됨
             $view->historyProduct = PickupProductViews::leftjoin('product','product.id','pickup_product_views.product_id')->where('product.store_id', $id)->select('pickup_product_views.*')->where('customer_id', $view->customer_id)->orderBy('id','DESC')->limit(10)->get();
             //# 관심매장 여부

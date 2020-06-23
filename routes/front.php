@@ -85,23 +85,28 @@ Route::group(['namespace' => 'Front', 'middleware' => 'front', 'prefix' => 'fron
             //상품의 리뷰 등록
             Route::post('/', 'MypageController@postReview');
             //상품의 리뷰 수정
-            Route::put('/{id?}', 'MypageController@updateReview');
+            Route::get('/{id?}', 'MypageController@updateReview');
             //상품의 리뷰 삭제
             Route::delete('/', 'MypageController@deleteReview');
         });
-        //# 상품 Q&A
+        //# Q&A
         Route::group(['prefix' => 'qna', 'as' => 'qna.'], function () {
-            //상품 Q&A 리스트
+            //Q&A 리스트
             Route::get('/', 'MypageController@getQna');
-            //상품 Q&A 등록
-            Route::post('/', 'MypageController@postQna');
-            //상품 Q&A 수정
-            Route::put('/', 'MypageController@updateQna');
-            //상품 Q&A 삭제
-            Route::delete('/', 'MypageController@deleteQna');
+            //# 상품 Q&A
+            Route::group(['prefix' => 'product'], function () {
+                //상품 Q&A 등록 화면
+                Route::get('/', 'MypageController@getProductQna');
+                //상품 Q&A 등록
+                Route::post('/', 'MypageController@postProductQna');
+                //상품 Q&A 수정
+                Route::put('/', 'MypageController@updateProductQna');
+                //상품 Q&A 삭제
+                Route::delete('/', 'MypageController@deleteProductQna');
+            });
             //# 매장의 Q&A
             Route::group(['prefix' => 'store'], function () {
-                //매장의 Q&A 리스트
+                //매장의 Q&A 등록 화면
                 Route::get('/{id?}', 'MypageController@getStoreQna');
                 //매장의 Q&A 등록
                 Route::post('/', 'MypageController@postStoreQna');
@@ -127,6 +132,7 @@ Route::group(['namespace' => 'Front', 'middleware' => 'front', 'prefix' => 'fron
         Route::group(['prefix' => 'notice', 'as' => 'notice.'], function () {
             //관리자가 등록한  픽업상품 공지사항 페이지
             Route::get('/', 'MypageController@getNoticeList');
+            Route::get('/{id?}', 'MypageController@getNoticeDetail');
         });
     });
 

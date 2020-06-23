@@ -1,30 +1,33 @@
 @extends('layouts.front')
 @section('title', $title ?? '')
-@section('header')
-    <header>
-        <div class="default-header">
-            <button class="back-btn" onclick="javascript:history.back()">
-                <img src="/front/dist/img/icon_gnbBack.png" alt="">
-            </button>
-            <p class="headerTitle">매장 문의</p>
-        </div>
-    </header>
-@endsection
 @section('content')
-    <div class="goodsSelect-container">
-        <select name="" id="" class="noneVal">
-            <option value="" hidden>문의유형을 선택해주세요.</option>
-            <option value="">매장문의</option>
-            <option value="">기기문의</option>
-            <option value="">기타문의</option>
-        </select>
-        <img class="fake-arrow" src="/front/dist/img/icon_select01.png" alt="">
-    </div>
-    <div class="goodsWord-container">
-        <textarea class="noneCheck" name="" id="" cols="30" rows="10"></textarea>
-    </div>
-    <div class="fixed-footer full-btn">
-        <button>Q&A 등록하기</button>
+    <div class="content-body attention-content">
+        <div class="storeList-container">
+            <div class="list-wrapper">
+                <button class="delete-list"><img src="/front/dist/img/icon_x_S.png" alt=""></button>
+                <div class="word-box">
+                    <div class="store-category">
+                        <span>군자점</span>
+                    </div>
+                    <div class="store-address">
+                        <p>경기도 성남시 중현구 양원로 111번길</p>
+                    </div>
+                    <small>02)234-1234</small>
+                </div>
+            </div>
+            <div class="list-wrapper">
+                <button class="delete-list"><img src="/front/dist/img/icon_x_S.png" alt=""></button>
+                <div class="word-box">
+                    <div class="store-category">
+                        <span>군자점</span>
+                    </div>
+                    <div class="store-address">
+                        <p>부산광역시 강서구 녹산산단382로14번가길 10~29번지(송정동)</p>
+                    </div>
+                    <small>02)234-1234</small>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection
 @section('script')

@@ -350,49 +350,59 @@
                 <div class="target-wrap">
                     <div class="tabTarget active">
                         <div class="user-area login-form">
+                        @if(!empty($customer))
                             <div class="user-header">
-                                <p class="user-name"><strong><span>신유미</span>님</strong>환영합니다.</p>
-                                <button class="edit-info">내 정보 수정하기 <img src="/front/dist/img/icon_arrow_S.png" alt=""></button>
+                                <p class="user-name"><strong><span>{{$customer->name ?? ''}}</span>님</strong>환영합니다.</p>
+                                <button class="edit-info" onclick="location.href=''">내 정보 수정하기 <img src="/front/dist/img/icon_arrow_S.png" alt=""></button>
                             </div>
                             <div class="user-items">
-                                <button>
+                                <button onclick="location.href='/front/mypage/order'">
                                     <img src="/front/dist/img/icon_menu01.png" alt="">
                                     <p>주문내역</p>
                                 </button>
-                                <button>
+                                <button onclick="location.href='/front/mypage/coupon'">
                                     <img src="/front/dist/img/icon_menu02.png" alt="">
                                     <p>쿠폰함</p>
                                 </button>
-                                <button>
+                                <button onclick="location.href='/front/mypage/point'">
                                     <img src="/front/dist/img/icon_menu03.png" alt="">
                                     <p>적립금</p>
                                 </button>
-                                <button>
+                                <button onclick="location.href='/front/mypage/store'">
                                     <img src="/front/dist/img/icon_menu04.png" alt="">
                                     <p>관심매장</p>
                                 </button>
-                                <button>
+                                <button onclick="location.href='/front/mypage/product'">
                                     <img src="/front/dist/img/icon_menu05.png" alt="">
                                     <p>관심상품</p>
                                 </button>
-                                <button>
+                                <button onclick="location.href='/front/mypage/review'">
                                     <img src="/front/dist/img/icon_menu06.png" alt="">
                                     <p>상품후기</p>
                                 </button>
-                                <button>
+                                <button onclick="location.href='/front/mypage/qna'">
                                     <img src="/front/dist/img/icon_menu07.png" alt="">
                                     <p>Q&A</p>
                                 </button>
-                                <button>
+                                <button onclick="location.href='/front/cart'">
                                     <img src="/front/dist/img/icon_menu08.png" alt="">
                                     <p>장바구니</p>
                                 </button>
                             </div>
+                        @else
+                            <div class="user-header logOut">
+                                <pre>로그인하셔서 더 많은<br>혜택을 만나보세요!</pre>
+                                <div class="btn-area">
+                                    <button class="loginBtn">로그인</button>
+                                    <button class="joinBtn">회원가입</button>
+                                </div>
+                            </div>
+                        @endif
                             <div class="userBar-items">
                                 <ul>
                                     <li>알림 수신 동의<div class="custom-box"><input type="checkbox" id="toggleing01"><label for="toggleing01" class="radio"><span class="checkbox-custom"></span></label></div></li>
-                                    <li>이용약관<img src="/front/dist/img/icon_arrow_MR.png" height="13px" width="8px" alt=""></li>
-                                    <li>공지사항<img src="/front/dist/img/icon_arrow_MR.png" height="13px" width="8px" alt=""></li>
+                                    <li onclick="location.href='/front/mypage/term'">이용약관<img src="/front/dist/img/icon_arrow_MR.png" height="13px" width="8px" alt=""></li>
+                                    <li onclick="location.href='/front/mypage/notice'">공지사항<img src="/front/dist/img/icon_arrow_MR.png" height="13px" width="8px" alt=""></li>
                                 </ul>
                             </div>
                             <div class="telephone-item">

@@ -29,20 +29,34 @@
             <img src="/front/dist/img/icon_gnbBack.png" alt="">
         </button>
         <p class="headerTitle">
-        @if(($page ?? '') == 'cart')
-            장바구니
-        @elseif(($page ?? '') == 'search')
+        @if(($page ?? '') == 'search')
             구매한 픽업상품
         @elseif(($page ?? '') == 'latest')
             최신 픽업상품
-         @elseif(($page ?? '') == 'order')
-            구매한 픽업상품
         @elseif(($page ?? '') == 'detail')
-            구매한 픽업상품
-        @elseif(($page ?? '') == 'mypage')
-            마이 페이지
+            픽업상품
+        @elseif(($page ?? '') == 'my_order')
+            픽업 주문내역
+        @elseif(($page ?? '') == 'my_coupon')
+            픽업 쿠폰함
+        @elseif(($page ?? '') == 'my_point')
+            픽업 적립금
+        @elseif(($page ?? '') == 'my_store')
+            픽업 관심매장
+        @elseif(($page ?? '') == 'my_product')
+            픽업 관심상품
+        @elseif(($page ?? '') == 'my_review')
+            픽업 상품후기
+        @elseif(($page ?? '') == 'my_qna')
+            Q&A
+        @elseif(($page ?? '') == 'cart')
+            장바구니
         @elseif(($page ?? '') == 'storeQna')
             {{$store->fcTrader->companyName ?? '매장'}}에 문의하기
+        @elseif(($page ?? '') == 'term')
+            이용약관
+        @elseif(($page ?? '') == 'notice')
+            공지사항
         @endif
         </p>
     </div>

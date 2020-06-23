@@ -13,21 +13,22 @@ class MypageController extends Controller
 {
 
     /**
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application|\Illuminate\View\View
+     *  주문내역 리스트
      */
     public function getOrderList()
 	{
         $view = view('front.mypage.order');
-        $view->page = 'order';
+        $view->page = 'my_order';
         return $view;
 	}
 
     /**
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application|\Illuminate\View\View
+     *  쿠폰 리스트
      */
     public function getCouponList()
     {
         $view = view('front.mypage.coupon');
+        $view->page = 'my_coupon';
         return $view;
     }
 
@@ -40,38 +41,42 @@ class MypageController extends Controller
     }
 
     /**
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application|\Illuminate\View\View
+     * 적립금
      */
     public function getPointList()
     {
         $view = view('front.mypage.point');
+        $view->page = 'my_point';
         return $view;
     }
 
     /**
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application|\Illuminate\View\View
+     * 관심매장 리스트
      */
     public function getStoreList()
     {
         $view = view('front.mypage.store');
+        $view->page = 'my_store';
         return $view;
     }
 
     /**
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application|\Illuminate\View\View
+     * 관심상품 리스트
      */
     public function getProductList()
     {
         $view = view('front.mypage.product');
+        $view->page = 'my_product';
         return $view;
     }
 
     /**
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application|\Illuminate\View\View
+     *  상품후기 리스트
      */
     public function getReviewList()
     {
         $view = view('front.mypage.review');
+        $view->page = 'my_review';
         return $view;
     }
 
@@ -84,11 +89,13 @@ class MypageController extends Controller
     }
 
     /**
-     * @param $id
+     *  상품후기 수정
      */
     public function updateReview($id)
     {
-
+        $view = view('front.mypage.reviewUpdate');
+        $view->page = 'my_review';
+        return $view;
     }
 
     /**
@@ -100,12 +107,12 @@ class MypageController extends Controller
     }
 
     /**
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application|\Illuminate\View\View
+     * Q&A 리스트
      */
     public function getQna()
     {
         $view = view('front.mypage.qna');
-        $view->page = 'mypage';
+        $view->page = 'my_qna';
         return $view;
     }
 
@@ -134,8 +141,7 @@ class MypageController extends Controller
     }
 
     /**
-     * @param int $id
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application|\Illuminate\View\View
+     * 매장 Q&A 등록 화면
      */
     public function getStoreQna($id = 0)
     {
@@ -148,8 +154,7 @@ class MypageController extends Controller
     }
 
     /**
-     * @param Request $request
-     * @return mixed
+     * 매장 Q&A 등록
      */
     public function postStoreQna(Request $request)
     {
@@ -215,22 +220,32 @@ class MypageController extends Controller
     }
 
     /**
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application|\Illuminate\View\View
+     * 이용약관
      */
     public function getTermList()
     {
         $view = view('front.mypage.term');
-        $view->page = 'mypage';
+        $view->page = 'term';
         return $view;
     }
 
     /**
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application|\Illuminate\View\View
+     * 공지사항
      */
     public function getNoticeList()
     {
         $view = view('front.mypage.notice');
-        $view->page = 'mypage';
+        $view->page = 'notice';
+        return $view;
+    }
+
+    /**
+     * 공지사항 상세
+     */
+    public function getNoticeDetail()
+    {
+        $view = view('front.mypage.noticeDetail');
+        $view->page = 'notice';
         return $view;
     }
 

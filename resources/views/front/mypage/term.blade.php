@@ -1,29 +1,5 @@
 @extends('layouts.front')
 @section('title', $title ?? '')
-@section('header')
-    <header>
-        <div class="default-header">
-            <button class="back-btn" onclick="javascript:history.back()">
-                <img src="/front/dist/img/icon_gnbBack.png" alt="">
-            </button>
-            <p class="headerTitle">이용약관</p>
-            <!-- <div class="btns-wrap">
-                <button>
-                    <img src="img/icon_search.png" alt="">
-                    <img class="black-img" src="img/icon_search_B.png" alt="">
-                </button>
-                <button>
-                    <img src="img/icon_cart.png" alt="">
-                    <img class="black-img" src="img/icon_cart_B.png" alt="">
-                </button>
-                <button>
-                    <img src="img/icon_menu.png" alt="">
-                    <img class="black-img" src="img/icon_menu_B.png" alt="">
-                </button>
-            </div> -->
-        </div>
-    </header>
-@endsection
 @section('content')
     <div class="content-body listUp-detailContent">
         <div class="listUp-container">
@@ -32,7 +8,7 @@
                 <small class="listUp-date">2020-04-13</small>
             </div>
             <div class="listUp-text">
-                <pre>이용 약관
+            <pre>이용 약관
 
 제 1조 (목적)
 서비스 이용약관(이하 “약관”이라 합니다)은 (주)프래
