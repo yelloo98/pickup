@@ -167,7 +167,7 @@
                 <p>기본 팝업</p>
             </div>
             <div class="footer-section one-btn">
-                <button class="go" onclick="">확인</button>
+                <button class="go close-btn">확인</button>
             </div>
         </div>
     </div>

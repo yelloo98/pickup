@@ -18,16 +18,18 @@
                     <div class="sale-box">
                         <div class="word-item">
                             <div class="toTop">
-                                <p class="storeName"><span>{{$v->coupon->store->fcTrader->companyName ?? ''}}</span></p>
-                                <p class="couponTerm">{{date('Y-m-d', strtotime($v->coupon->start_at ?? now()))}}~{{date('Y-m-d', strtotime($v->coupon->end_at ?? now()))}}</p>
+                                <p class="storeName"><span>{{$v->coupon->name ?? ''}}</span></p>
+                                <p class="couponTerm">{{$v->coupon->start_at.'~'.$v->coupon->end_at}}</p>
                             </div>
-                            <div class="mainTxt"><span>20,000</span>원 할인</div>
-                            <div class="subTxt">40,000원 이상 구매시 사용가능</div>
+                            <div class="mainTxt"><span>{{number_format($v->coupon->price ?? 0)}}</span>원 할인</div>
+                            @if($v->coupon->price_min > 0)
+                            <div class="subTxt">{{number_format($v->coupon->price_min)}}원 이상 구매시 사용가능</div>
+                            @endif
                         </div>
                     </div>
                     <div class="dDay-box">
                         <div class="dDay-item">
-                            <div class="countNumber">D-6</div>
+                            <div class="countNumber">D-{{$v->coupon->day_rem}}</div>
                             <div class="countDate">남은기간</div>
                         </div>
                     </div>

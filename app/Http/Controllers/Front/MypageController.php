@@ -8,6 +8,7 @@ use App\Models\PickupCoupon;
 use App\Models\PickupCouponCustomer;
 use App\Models\PickupQna;
 use App\Models\Store;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -32,12 +33,18 @@ class MypageController extends Controller
         $view = view('front.mypage.coupon');
         $view->page = 'my_coupon';
         $view->customer_id = 399;
-        $view->couponList = PickupCouponCustomer::where('customer_id', $view->customer_id)->where('status', 'N')->get();
+        $couponList = PickupCouponCustomer::where('customer_id', $view->customer_id)->where('status', 'N')->leftjoin('pickup_coupon','pickup_coupon.id','pickup_coupon_customer.pickup_coupon_id')->select('pickup_coupon_customer.*','pickup_coupon.end_at')->where('end_at','>',now())->get();
+        foreach ($couponList as $k => $v){
+            $v->coupon->start_at = Carbon::createFromDate($v->coupon->start_at)->toDateString();
+            $v->coupon->end_at = Carbon::createFromDate($v->coupon->end_at)->toDateString();
+            $v->coupon->day_rem = Carbon::createFromDate($v->coupon->end_at)->diffInDays(now())+1;
+        }
+        $view->couponList = $couponList;
         return $view;
     }
 
     /**
-     * @param Request $request
+     *  쿠폰 발급
      */
     public function postCoupon(Request $request)
     {
@@ -51,7 +58,6 @@ class MypageController extends Controller
                 if($coupon->amount <= 0) return response()->json(['code'=>400, 'msg'=>'쿠폰 수량이 없습니다.']);
                 if($coupon->end_at < now()) return response()->json(['code'=>400, 'msg'=>'기간이 만료된 쿠폰입니다.']);
                 if(!empty(PickupCouponCustomer::where([['pickup_coupon_id',$coupon->id],['customer_id',$res['customer_id']]])->first())) return response()->json(['code'=>400, 'msg'=>'이미 등록된 쿠폰입니다.']);
-
                 $coupon->amount = $coupon->amount - 1;
                 $coupon->save();
 
@@ -60,7 +66,8 @@ class MypageController extends Controller
                 $couponCustomer->customer_id = $res['customer_id'];
                 $couponCustomer->save();
 
-                return response()->json(['code'=>200, 'msg'=>'쿠폰 등록 성공']);
+                $date = Carbon::createFromDate($coupon->start_at)->toDateString().'~'.Carbon::createFromDate($coupon->end_at)->toDateString();
+                return response()->json(['code'=>200, 'msg'=>'쿠폰 등록 성공', 'name'=>$coupon->name, 'price'=>number_format($coupon->price), 'price_min'=>number_format($coupon->price_min), 'date'=>$date]);
             }catch(\Exception $ex){
                 DB::rollBack();
                 return response()->json(['code'=>400, 'msg'=>'등록에 실패하였습니다.']);

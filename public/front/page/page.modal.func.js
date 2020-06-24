@@ -10,6 +10,11 @@ var pageModal = {
         $('.purchase-wrapper').addClass('active');
     },
 
+    alertPopup : function(msg){
+        $('.content-section p').text(msg);
+        $('.alert-wrapper').addClass('active');
+    },
+
     cartSavePopup : function(){
         $('.cart-save-wrapper').addClass('active');
     },

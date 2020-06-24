@@ -4,6 +4,10 @@ $(document).ready(function(){
         $('.content-body').removeClass('fixed-scroll');
     });
 
+    $('.close-btn').click(function(){
+        $(this).parents('.popup-wrapper').removeClass('active');
+    });
+
     $('.continue').click(function(){
         $(this).parents('.popup-wrapper').removeClass('active');
     });

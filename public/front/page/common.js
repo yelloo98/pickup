@@ -117,15 +117,43 @@ var PickupCommon = {
             contentType: false,
             processData: false,
             success: function (res) {
-                if(res.code == 600){
+                if (res.code == 600) {
                     alert("로그인 해주세요.");
                     return false;
                 }
 
                 if (res.code == 200) {
-                    alert(res.msg);
-                }else{
-                    alert(res.msg);
+                    var html = '';
+                    html    += '<div class="coupon-section">';
+                    html    += '    <div class="sale-box">';
+                    html    += '        <div class="word-item">';
+                    html    += '            <div class="toTop">';
+                    html    += '                <p class="storeName"><span>' + res.name + '</span></p>';
+                    html    += '                <p class="couponTerm">' + res.date + '</p>';
+                    html    += '            </div>';
+                    html    += '            <div class="mainTxt"><span>' + res.price + '</span>원 할인</div>';
+                    html    += '            <div class="subTxt">' + res.price_min + '원 이상 구매시 사용가능</div>';
+                    html    += '        </div>';
+                    html    += '    </div>';
+                    html    += '    <div class="dDay-box">';
+                    html    += '        <div class="dDay-item">';
+                    html    += '            <div class="countNumber">D-6</div>';
+                    html    += '            <div class="countDate">남은기간</div>';
+                    html    += '        </div>';
+                    html    += '    </div>';
+                    html    += '</div>';
+                    $('.coupon-container').append(html);
+                    $('.none-list').remove();
+                    $('.word-box .colorNum').text(Number($('.word-box .colorNum').text())+1);
+                    $('input[name="coupon"]').val('');
+                    $('.btn-box button').removeClass('active');
+                    $('.btn-box button').attr('onclick', "");
+                    pageModal.alertPopup(res.msg);
+                    return false;
+                } else {
+                    $('input[name="coupon"]').val('');
+                    pageModal.alertPopup(res.msg);
+                    return false;
                 }
             }
         });
