@@ -160,14 +160,14 @@
         </div>
     </div>
 
-    <div class="popup-wrapper basic-wrapper">
+    <div class="popup-wrapper basic-wrapper alert-wrapper">
         <div class="popup-inner">
             <button class="close-box"><img src="/front/dist/img/icon_popup_x01.png" alt=""></button>
             <div class="content-section">
-                <p>장바구니에 담았습니다.</p>
+                <p>기본 팝업</p>
             </div>
             <div class="footer-section one-btn">
-                <button class="go" onclick="location.href='연결링크.html'">장바구니 보러가기</button>
+                <button class="go" onclick="">확인</button>
             </div>
         </div>
     </div>
