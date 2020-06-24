@@ -26,7 +26,7 @@
     @else
     <div class="default-header">
         <button class="back-btn" onclick="javascript:history.back()">
-            <img src="/front/dist/img/icon_gnbBack.png" alt="">
+            <img src="/front/dist/img/icon_gnbback.png" alt="">
         </button>
         <p class="headerTitle">
         @if(($page ?? '') == 'search')
