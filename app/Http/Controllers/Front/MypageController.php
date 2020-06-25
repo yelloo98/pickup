@@ -7,6 +7,7 @@ use App\Models\Customer;
 use App\Models\PickupCoupon;
 use App\Models\PickupCouponCustomer;
 use App\Models\PickupQna;
+use App\Models\PointUser;
 use App\Models\Store;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -85,6 +86,17 @@ class MypageController extends Controller
     {
         $view = view('front.mypage.point');
         $view->page = 'my_point';
+
+        $view->customer_id = 399;
+        $view->customer = Customer::find($view->customer_id);
+
+        //# 총 사용 포인트
+        $view->use_point = PointUser::where('customer_id',$view->customer_id)->where('type', 'use')->sum('point');
+        //# 소멸 포인트 / 정책상 : 2년 (소멸 예정은 1개월 전 노출)
+        $view->dis_point = PointUser::where('customer_id',$view->customer_id)->whereBetween('created_at', [now()->subYears(2), now()->subMonths(23)])->sum('point');
+        //# 포인트 내역 / 소멸되기 전 모든 포인트 내역
+        $view->pointList = PointUser::where('customer_id',$view->customer_id)->where('created_at','>', now()->subYears(2))->orderBy('created_at','DESC')->get();
+
         return $view;
     }
 
