@@ -2,16 +2,18 @@ var PickupCommon = {
     _config : {},
 
     //# 관심매장 추가 / 삭제
-    storeLike : function(store_id){
+    storeLike : function(store_id, status){
         var customer_id = $("input[name='customer_id']").val();
 
-        $.get('/front/add/store', {'store_id':store_id, 'customer_id':customer_id}, function(res) {
+        $.get('/front/add/store', {'store_id':store_id, 'customer_id':customer_id, 'status':status}, function(res) {
             if(res.code == 600){
-                alert("로그인 해주세요.");
+                pageModal.alertPopup(res.msg);
                 return false;
             }
             if(res.code == 200){
-                $('.clicking-btn').children('img').attr('src','/front/dist/img/icon_star_on.png');
+                //# 메인 관심매장 등록
+                $('.storeTitle-container .clicking-btn').attr('onclick', "PickupCommon.storeLike('" + res.store_id + "', 'delete')");
+                $('.storeTitle-container .clicking-btn').children('img').attr('src','/front/dist/img/icon_star_on.png');
                 if( $('.enjoyStore-list ul li').length == 0 ) {
                     $('.enjoyStore-list p').remove();
                 }
@@ -28,12 +30,22 @@ var PickupCommon = {
                 html    += '    <img src="/front/dist/img/icon_arrow_MR.png" alt="">';
                 html    += '</li>';
                 $('.enjoyStore-list ul').append(html);
-            }else{
-                $('.clicking-btn').children('img').attr('src','/front/dist/img/icon_star.png');
+            }else if(res.code == 300){
+                //# 메인 관심매장 취소
+                $('.storeTitle-container .clicking-btn').attr('onclick', "PickupCommon.storeLike('" + res.store_id + "', 'add')");
+                $('.storeTitle-container .clicking-btn').children('img').attr('src','/front/dist/img/icon_star.png');
                 $('.store_' + store_id).remove();
                 if( $('.enjoyStore-list ul li').length == 0 ) {
                     $('.enjoyStore-list').append('<p class="none-list">관심매장이 없습니다.</p>');
                 }
+                //# 마이페이지 관심매장 취소
+                $('.attention-content .storeList-'+res.store_id).remove();
+                if( $('.attention-content .storeList-container').length == 0 ) {
+                    $('.attention-content').append('<div class="storeList-container"><p class="none-list">관심매장이 없습니다.</p></div>');
+                }
+            }else{
+                pageModal.alertPopup(res.msg);
+                return false;
             }
         });
     },
@@ -52,7 +64,8 @@ var PickupCommon = {
                 $('.purchase-wrapper .footer-section').attr('onclick', 'PickupCommon.addCart('+ product_id + ', \'add\')');
                 pageModal.cartPopup();
             }else{
-                alert(res.msg);
+                pageModal.alertPopup(res.msg);
+                return false;
             }
         });
     },
@@ -64,14 +77,15 @@ var PickupCommon = {
 
         $.get('/front/add/cart', {'product_id':product_id, 'status':status, 'cnt':cnt, 'customer_id':customer_id}, function(res) {
             if(res.code == 600){
-                alert("로그인 해주세요.");
+                pageModal.alertPopup(res.msg);
                 return false;
             }
             if(res.code == 200){
                 $('.popup-wrapper').removeClass('active');
                 pageModal.cartSavePopup();
             }else{
-                alert(res.msg);
+                pageModal.alertPopup(res.msg);
+                return false;
             }
         });
     },
@@ -91,15 +105,16 @@ var PickupCommon = {
             processData: false,
             success: function (res) {
                 if(res.code == 600){
-                    alert("로그인 해주세요.");
+                    pageModal.alertPopup(res.msg);
                     return false;
                 }
 
                 if (res.code == 200) {
-                    alert(res.msg);
+                    pageModal.alertPopup(res.msg);
                     location.href='/front/main/' + res.store_id;
                 }else{
-                    alert(res.msg);
+                    pageModal.alertPopup(res.msg);
+                    return false;
                 }
             }
         });

@@ -9,6 +9,7 @@ use App\Models\PickupCouponCustomer;
 use App\Models\PickupQna;
 use App\Models\PointUser;
 use App\Models\Store;
+use App\Models\StoreLikes;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -107,6 +108,9 @@ class MypageController extends Controller
     {
         $view = view('front.mypage.store');
         $view->page = 'my_store';
+
+        $view->customer_id = 399;
+        $view->store_like = StoreLikes::where('customer_id', $view->customer_id)->get();
         return $view;
     }
 

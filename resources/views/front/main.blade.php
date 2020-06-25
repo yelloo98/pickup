@@ -30,13 +30,15 @@
 
         <div class="storeTitle-container">
             <div class="ico-wrapper">
-                <button class="clicking-btn" onclick="PickupCommon.storeLike({{$store->id ?? 0}})">
-                    @if(!empty($store_like) && $store_like->where('store_id', $store->id)->count() > 0)
+                @if(!empty($store_like) && $store_like->where('store_id', $store->id)->count() > 0)
+                <button class="clicking-btn" onclick="PickupCommon.storeLike('{{$store->id ?? 0}}', 'delete')">
                     <img src="/front/dist/img/icon_star_on.png" alt="">
-                    @else
-                    <img src="/front/dist/img/icon_star.png" alt="">
-                    @endif
                 </button>
+                @else
+                <button class="clicking-btn" onclick="PickupCommon.storeLike('{{$store->id ?? 0}}', 'add')">
+                    <img src="/front/dist/img/icon_star.png" alt="">
+                </button>
+                @endif
                 <button class="counting-btn alarm-btn">
                     <img src="/front/dist/img/icon_notion.png" alt="">
                     <span>1</span>

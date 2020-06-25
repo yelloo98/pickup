@@ -2,32 +2,24 @@
 @section('title', $title ?? '')
 @section('content')
     <div class="content-body attention-content">
-        <div class="storeList-container">
+        @forelse($store_like as $k=>$v)
+        <div class="storeList-container storeList-{{$v->store->id ?? 0}}">
             <div class="list-wrapper">
-                <button class="delete-list"><img src="/front/dist/img/icon_x_S.png" alt=""></button>
+                <button class="delete-list" onclick="PickupCommon.storeLike('{{$v->store->id ?? 0}}', 'delete')"><img src="/front/dist/img/icon_x_S.png" alt=""></button>
                 <div class="word-box">
                     <div class="store-category">
-                        <span>군자점</span>
+                        <span>{{$v->store->fcTrader->companyName ?? ''}}</span>
                     </div>
-                    <div class="store-address">
-                        <p>경기도 성남시 중현구 양원로 111번길</p>
-                    </div>
-                    <small>02)234-1234</small>
-                </div>
-            </div>
-            <div class="list-wrapper">
-                <button class="delete-list"><img src="/front/dist/img/icon_x_S.png" alt=""></button>
-                <div class="word-box">
-                    <div class="store-category">
-                        <span>군자점</span>
-                    </div>
-                    <div class="store-address">
-                        <p>부산광역시 강서구 녹산산단382로14번가길 10~29번지(송정동)</p>
-                    </div>
-                    <small>02)234-1234</small>
+                    <div class="store-address">{{$v->store->fcTrader->address ?? ''}}</div>
+                    <small>{{\App\Helper\Codes::formatPhone($v->store->fcTrader->tel ?? '')}}</small>
                 </div>
             </div>
         </div>
+        @empty
+        <div class="storeList-container">
+            <p class="none-list">관심매장이 없습니다.</p>
+        </div>
+        @endforelse
     </div>
 @endsection
 @section('script')
