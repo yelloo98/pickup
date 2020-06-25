@@ -6,6 +6,7 @@ use App\Helper\Codes;
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
 use App\Models\PickupCart;
+use App\Models\PickupProductLikes;
 use App\Models\Product;
 use App\Models\ProductStock;
 use App\Models\Store;
@@ -43,6 +44,41 @@ class PickupController extends Controller
             }catch(\Throwable $throwable){
                 DB::rollBack();
                 return response()->json(['code'=>400, 'msg'=>'관심매장 처리 중 실패하였습니다.']);
+            }
+        });
+    }
+    //# 관심상품 등록/삭제
+    public function addProduct(Request $request)
+    {
+        return DB::transaction(function() use ($request){
+            try{
+                $res = $request->all();
+                $customer = Customer::find($res['customer_id']);
+                if($customer == null) return response()->json(['code'=>600, 'msg'=>'로그인해주세요']);
+
+                if($res['status'] == 'delete_all'){
+                    //# 관심상품 전체 취소
+                    PickupProductLikes::where('customer_id', $res['customer_id'])->delete();
+                    return response()->json(['code' => 301, 'msg' => '관심상품 전체 취소']);
+                }elseif($res['status'] == 'delete'){
+                    //# 관심상품 취소
+                    PickupProductLikes::where([['product_id', $res['product_id']], ['customer_id', $res['customer_id']]])->delete();
+                    return response()->json(['code' => 300, 'msg' => '관심상품 취소', 'product_id' => $res['product_id']]);
+                }else{
+                    //# 관심상품 등록
+                    $productLike = new PickupProductLikes();
+                    $productLike->product_id =  $res['product_id'];
+                    $productLike->customer_id =  $res['customer_id'];
+                    $productLike->save();
+                    $product = Product::find($res['product_id']);
+                    return response()->json(['code' => 200, 'msg' => '관심상품 등록', 'product_id' => $product->id]);
+                }
+            }catch(\Exception $ex){
+                DB::rollBack();
+                return response()->json(['code'=>400, 'msg'=>'관심상품 처리 중 실패하였습니다.']);
+            }catch(\Throwable $throwable){
+                DB::rollBack();
+                return response()->json(['code'=>400, 'msg'=>'관심상품 처리 중 실패하였습니다.']);
             }
         });
     }

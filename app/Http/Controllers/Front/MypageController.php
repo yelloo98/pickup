@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Customer;
 use App\Models\PickupCoupon;
 use App\Models\PickupCouponCustomer;
+use App\Models\PickupProductLikes;
 use App\Models\PickupQna;
 use App\Models\PointUser;
 use App\Models\Store;
@@ -121,6 +122,9 @@ class MypageController extends Controller
     {
         $view = view('front.mypage.product');
         $view->page = 'my_product';
+
+        $view->customer_id = 399;
+        $view->product_like = PickupProductLikes::where('customer_id', $view->customer_id)->get();
         return $view;
     }
 

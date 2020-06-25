@@ -12,7 +12,9 @@ class PickupProductLikes extends Model implements ModelAdminInterface
 {
     use ModelFunction;
 
+    protected $connection = 'mysql';
     protected $table = 'pickup_product_likes';
+    public $timestamps = false;
 
     public function product()
     {

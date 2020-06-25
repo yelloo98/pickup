@@ -50,6 +50,43 @@ var PickupCommon = {
         });
     },
 
+    //# 관심상품 추가 / 삭제
+    productLike : function(product_id, status){
+        var customer_id = $("input[name='customer_id']").val();
+
+        $.get('/front/add/product', {'product_id':product_id, 'customer_id':customer_id, 'status':status}, function(res) {
+            //# 로그인 요청
+            if(res.code == 600){
+                pageModal.alertPopup(res.msg);
+                return false;
+            }
+            //# 추가
+            if(res.code == 200){
+
+            }
+            //# 삭제
+            else if(res.code == 300){
+                $('.wishList-container .wish-wrapper-'+res.product_id).remove();
+                $('.wish-content .total-info span').text(Number($('.wish-content .total-info span').text())-1);
+                if( $('.wishList-container .wish-wrapper').length == 0 ) {
+                    $('.wishList-container').append('<p class="none-list">등록된 상품이 없습니다.</p>');
+                    $('.wish-content .total-info span').text(0).removeClass('colorNum');
+                }
+            }
+            //# 전체 삭제
+            else if(res.code == 301){
+                $('.wishList-container').empty();
+                $('.wishList-container').append('<p class="none-list">등록된 상품이 없습니다.</p>');
+                $('.wish-content .total-info span').text(0).removeClass('colorNum');
+            }
+            //# 에러
+            else{
+                pageModal.alertPopup(res.msg);
+                return false;
+            }
+        });
+    },
+
     //# 장바구니 선택
     selCart : function (product_id) {
         var customer_id = $("input[name='customer_id']").val();
