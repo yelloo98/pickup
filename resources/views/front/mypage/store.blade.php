@@ -3,7 +3,7 @@
 @section('content')
     <div class="content-body attention-content">
         @forelse($store_like as $k=>$v)
-        <div class="storeList-container storeList-{{$v->store->id ?? 0}}">
+        <div class="storeList-container storeList-{{$v->store->id ?? 0}}" onclick="location.href='/front/main/{{$v->store->id ?? 0}}'" >
             <div class="list-wrapper">
                 <button class="delete-list" onclick="PickupCommon.storeLike('{{$v->store->id ?? 0}}', 'delete')"><img src="/front/dist/img/icon_x_S.png" alt=""></button>
                 <div class="word-box">
