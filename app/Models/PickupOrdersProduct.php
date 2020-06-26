@@ -15,6 +15,11 @@ class PickupOrdersProduct extends Model implements ModelAdminInterface
     protected $connection = 'mysql';
     protected $table = 'pickup_orders_product';
 
+    public function order()
+    {
+        return $this->belongsTo('App\Models\Order', 'pickup_orders_id');
+    }
+
     public function product()
     {
         return $this->belongsTo('App\Models\Product', 'product_id');

@@ -209,6 +209,36 @@ var PickupCommon = {
                 }
             }
         });
+    },
+
+    //# 상품후기 등록 / 수정
+    addReview : function(status='add'){
+        var data = new FormData();
+        data.append('customer_id', $("input[name='customer_id']").val());
+        data.append('product_id', $('input[name="product_id"]').val());
+        data.append('score', $("input:radio[name='star-input']:checked").val());
+        data.append('contents', $('[name=contents]').val());
+        data.append('status', status);
+        $.ajax({
+            type: 'POST',
+            url: "/front/mypage/review/save",
+            data: data,
+            contentType: false,
+            processData: false,
+            success: function (res) {
+                if(res.code == 600){
+                    pageModal.alertPopup(res.msg);
+                    return false;
+                }
+                if (res.code == 200) {
+                    pageModal.alertPopup(res.msg);
+                    location.href='/front/mypage/review';
+                }else{
+                    pageModal.alertPopup(res.msg);
+                    return false;
+                }
+            }
+        });
     }
 }
 

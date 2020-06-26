@@ -6,9 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Models\Customer;
 use App\Models\PickupCoupon;
 use App\Models\PickupCouponCustomer;
+use App\Models\PickupOrders;
+use App\Models\PickupOrdersProduct;
 use App\Models\PickupProductLikes;
+use App\Models\PickupProductReview;
 use App\Models\PickupQna;
 use App\Models\PointUser;
+use App\Models\Product;
 use App\Models\Store;
 use App\Models\StoreLikes;
 use Carbon\Carbon;
@@ -135,25 +139,47 @@ class MypageController extends Controller
     {
         $view = view('front.mypage.review');
         $view->page = 'my_review';
+
+        $view->customer_id = 399;
+        //# 후기 미작성 리스트
+        $view->unreviewList = PickupOrdersProduct::leftjoin('pickup_orders', '.pickup_orders.id', 'pickup_orders_product.pickup_orders_id')
+            ->leftjoin('product', 'product.id', 'pickup_orders_product.product_id')
+            ->leftjoin('pickup_product_review', 'pickup_product_review.product_id', 'product.id')
+            ->select('pickup_orders_product.*', 'pickup_product_review.id as pickup_product_review_id')
+            ->orderBy('pickup_orders_product.id', 'desc')
+            ->where('pickup_orders.customer_id', $view->customer_id)->whereNull('pickup_product_review.id')->get();
+        //# 내가 쓴 후기
+        $view->review_list = PickupProductReview::where('customer_id', $view->customer_id)->get();
+
         return $view;
     }
 
     /**
-     *
+     *  상품후기 뷰
      */
-    public function postReview()
+    public function getReviewDetail(Request $request, $id = 0)
     {
-
-    }
-
-    /**
-     *  상품후기 수정
-     */
-    public function updateReview($id)
-    {
-        $view = view('front.mypage.reviewUpdate');
+        $view = view('front.mypage.reviewDetail');
         $view->page = 'my_review';
+        $view->customer_id = 399;
+
+        $view->review = PickupProductReview::find($id);
+        if(!empty($view->review)){
+            $view->product = Product::find($view->review->product_id);
+        }else{
+            $view->product = Product::find($request->input('product_id', null));
+        }
+
         return $view;
+    }
+
+    /**
+     * 상품의 리뷰 등록 / 수정
+     */
+    public function postReview(Request $request)
+    {
+        $res = $request->all();
+        dd($res);
     }
 
     /**

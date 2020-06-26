@@ -84,10 +84,10 @@ Route::group(['namespace' => 'Front', 'middleware' => 'front', 'prefix' => 'fron
         Route::group(['prefix' => 'review', 'as' => 'review.'], function () {
             //상품의 리뷰 리스트
             Route::get('/', 'MypageController@getReviewList');
-            //상품의 리뷰 등록
-            Route::post('/', 'MypageController@postReview');
-            //상품의 리뷰 수정
-            Route::get('/{id?}', 'MypageController@updateReview');
+            //상품의 리뷰 뷰
+            Route::get('/{id?}', 'MypageController@getReviewDetail');
+            //상품의 리뷰 등록 / 수정
+            Route::post('/save', 'MypageController@postReview');
             //상품의 리뷰 삭제
             Route::delete('/', 'MypageController@deleteReview');
         });
