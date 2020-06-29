@@ -21,6 +21,12 @@ class PickupProductReview extends Model implements ModelAdminInterface
         return $this->belongsTo('App\Models\Product', 'product_id');
     }
 
+
+    public function customer()
+    {
+        return $this->belongsTo('App\Models\Customer', 'customer_id');
+    }
+
     /**
      * Override : DataTableList
      * -----------------------------------------------------------------------------------------------------------------

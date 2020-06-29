@@ -202,12 +202,15 @@ var PickupCommon = {
         });
     },
 
-    //# 상품후기 등록 / 수정
-    addReview : function(status='add'){
+    //# 상품후기 등록 / 수정 / 삭제
+    addReview : function(review_id, status='add'){
         var data = new FormData();
-        data.append('product_id', $('input[name="product_id"]').val());
-        data.append('score', $("input:radio[name='star-input']:checked").val());
-        data.append('contents', $('[name=contents]').val());
+        if(status != 'delete'){
+            data.append('product_id', $('input[name="product_id"]').val());
+            data.append('score', $("input:radio[name='star-input']:checked").val());
+            data.append('contents', $('[name=contents]').val());
+        }
+        data.append('review_id', review_id);
         data.append('status', status);
         $.ajax({
             type: 'POST',
@@ -222,6 +225,11 @@ var PickupCommon = {
                 }
                 if (res.code == 200) {
                     location.href='/front/mypage/review';
+                }else if (res.code == 300) {
+                    $('.review_' + res.review_id).remove();
+                    if( $('.delete-list').closest('.has-review').children().length == 0 ) {
+                        $('.review-content .has-review').append('<p class="none-list">내가쓴 후기가 없습니다.</p>');
+                    }
                 }else{
                     pageModal.alertPopup(res.msg);
                     return false;

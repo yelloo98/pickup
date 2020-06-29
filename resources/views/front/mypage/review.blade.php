@@ -33,29 +33,35 @@
                 <!-- 내가쓴 후기 -->
                 <div class="tabTarget has-review">
                     @forelse($review_list as $k => $v)
-                    <div class="list-item none-img">
+                    <div class="list-item review_{{$v->id}} @if($v->img1 == null) none-img @endif">
                         <div class="custom-bar">
                             <ul>
-                                <li>수정</li>
-                                <li class="delete-list">삭제</li>
+                                <li onclick="location.href='/front/mypage/review/{{$v->id}}'">수정</li>
+                                <li class="delete-list" onclick="PickupCommon.addReview('{{$v->id ?? 0}}', 'delete')">삭제</li>
                             </ul>
                         </div>
-                        {{--<div class="img-box"></div>--}}
+                        @if($v->img1 != null)<div class="img-box" style="background-image: url('{{env('IMAGE_URL').$v->img1}}'); background-size:cover;"></div>@endif
                         <div class="word-box">
                             <img src="/front/dist/img/icon_review.png" alt="">
-                            <p class="user-word" style="-webkit-box-orient: vertical;">두번째 주문입니다. 보기엔 생각보다 작아보이는데 먹어보니 은근 양이 꽤 많아요 ㅎㅎ 쫀쫀하고 고소해서 그냥 먹어도 괜찮을듯괜찮을듯괜찮을듯괜찮을듯괜찮을듯</p>
+                            <p class="user-word" style="-webkit-box-orient: vertical;">{{$v->contents ?? ''}}</p>
                             <div class="toBottom">
                                 <div class="user-info">
-                                    <p class="user-name"><strong><span>신</span>OO</strong>님</p>
+                                    <p class="user-name"><strong><span>{{mb_substr(($v->customer->name ?? ''), 0, 1)}}</span>OO</strong>님</p>
                                     <ul class="user-score">
-                                        <li><img src="/front/dist/img/icon_star_on_B.png" alt=""></li>
-                                        <li><img src="/front/dist/img/icon_star_on_B.png" alt=""></li>
-                                        <li><img src="/front/dist/img/icon_star_on_B.png" alt=""></li>
-                                        <li><img src="/front/dist/img/icon_star_on_B.png" alt=""></li>
-                                        <li><img src="/front/dist/img/icon_star_off_B.png" alt=""></li>
+                                    @for($i=1; $i<=5; $i++)
+                                        <li>
+                                        @if($v->score >= $i)
+                                            <img src="/front/dist/img/icon_star_on_B.png" alt="">
+                                        @elseif($i-$v->score == 0.5)
+                                            <img src="/front/dist/img/icon_star_harf_B.png" alt="">
+                                        @else
+                                            <img src="/front/dist/img/icon_star_off_B.png" alt="">
+                                        @endif
+                                        </li>
+                                    @endfor
                                     </ul>
                                 </div>
-                                <p class="item-subject">[국내산] 한돈 설깃살 모듬 구이용 500G</p>
+                                <p class="item-subject">{{$v->product->origin_product->name ?? ''}}</p>
                                 <button class="more-btn"><img src="/front/dist/img/icon_arrow_MD.png" alt=""></button>
                             </div>
                         </div>
@@ -72,13 +78,6 @@
     <script>
         $('.more-btn').click(function(){
             $(this).closest('.word-box').toggleClass('showing');
-        });
-
-        $('.delete-list').click(function(){
-            $(this).closest('.list-item').remove();
-            if( $('.delete-list').closest('.has-review').children().length == 0 ) {
-                $('.review-content .has-review').append('<p class="none-list">내가쓴 후기가 없습니다.</p>');
-            }
         });
     </script>
 @endsection

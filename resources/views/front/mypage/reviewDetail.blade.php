@@ -36,11 +36,11 @@
         @if(!empty($review))
         <div class="fixed-footer">
             <button class="cancel" onclick="javascript:history.back()">취소</button>
-            <button onclick="PickupCommon.addReview('update')">수정</button>
+            <button onclick="PickupCommon.addReview('{{$review->id ?? 0}}', 'update')">수정</button>
         </div>
         @else
         <div class="fixed-footer full-btn">
-            <button onclick="PickupCommon.addReview()">상품후기 등록하기</button>
+            <button onclick="PickupCommon.addReview('{{$review->id ?? 0}}')">상품후기 등록하기</button>
         </div>
         @endif
     </div>

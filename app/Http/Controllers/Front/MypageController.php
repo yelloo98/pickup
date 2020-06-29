@@ -186,19 +186,33 @@ class MypageController extends Controller
                 if(empty(Customer::find($shopAuth->user()->id))) return response()->json(['code'=>600, 'msg'=>'로그인해주세요']);
 
                 $res = $request->all();
-                if(empty(Product::find($res['product_id']))) return response()->json(['code'=>400, 'msg'=>'상품이 없습니다']);
-                if($res['score'] == 'undefined' || $res['contents'] == null) return response()->json(['code'=>400, 'msg'=>'내용을 입력해주세요']);
+                if($res['status'] == 'delete'){
+                    //# 삭제
+                    $review = PickupProductReview::find($res['review_id']);
+                    $review->delete();
 
-                if($res['status'] == 'add'){
-                    $review = new PickupProductReview();
-                    $review->product_id = $res['product_id'];
-                    $review->customer_id = $shopAuth->user()->id;
-                    $review->score = $res['score'];
-                    $review->contents = $res['contents'];
-                    $review->save();
+                    return response()->json(['code'=>300, 'msg'=>'후기 삭제 성공', 'review_id'=>$res['review_id']]);
                 }
+                else {
+                    if(empty(Product::find($res['product_id']))) return response()->json(['code'=>400, 'msg'=>'상품이 없습니다']);
+                    if($res['score'] == 'undefined' || $res['contents'] == null) return response()->json(['code'=>400, 'msg'=>'내용을 입력해주세요']);
+                    //# 등록 / 수정
+                    if($res['status'] == 'update'){
+                        $review = PickupProductReview::find($res['review_id']);
+                        $review->score = $res['score'];
+                        $review->contents = $res['contents'];
+                        $review->save();
+                    }else{
+                        $review = new PickupProductReview();
+                        $review->product_id = $res['product_id'];
+                        $review->customer_id = $shopAuth->user()->id;
+                        $review->score = $res['score'];
+                        $review->contents = $res['contents'];
+                        $review->save();
+                    }
 
-                return response()->json(['code'=>200, 'msg'=>'후기 등록 성공']);
+                    return response()->json(['code'=>200, 'msg'=>'후기 등록 성공']);
+                }
             }catch(\Exception $ex){
                 DB::rollBack();
                 return response()->json(['code'=>400, 'msg'=>'등록에 실패하였습니다.']);
