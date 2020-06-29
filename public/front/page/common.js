@@ -3,9 +3,7 @@ var PickupCommon = {
 
     //# 관심매장 추가 / 삭제
     storeLike : function(store_id, status){
-        var customer_id = $("input[name='customer_id']").val();
-
-        $.get('/front/add/store', {'store_id':store_id, 'customer_id':customer_id, 'status':status}, function(res) {
+        $.get('/front/add/store', {'store_id':store_id, 'status':status}, function(res) {
             if(res.code == 600){
                 pageModal.alertPopup(res.msg);
                 return false;
@@ -52,9 +50,7 @@ var PickupCommon = {
 
     //# 관심상품 추가 / 삭제
     productLike : function(product_id, status){
-        var customer_id = $("input[name='customer_id']").val();
-
-        $.get('/front/add/product', {'product_id':product_id, 'customer_id':customer_id, 'status':status}, function(res) {
+        $.get('/front/add/product', {'product_id':product_id, 'status':status}, function(res) {
             //# 로그인 요청
             if(res.code == 600){
                 pageModal.alertPopup(res.msg);
@@ -89,9 +85,7 @@ var PickupCommon = {
 
     //# 장바구니 선택
     selCart : function (product_id) {
-        var customer_id = $("input[name='customer_id']").val();
-
-        $.get('/front/sel/cart', {'product_id':product_id, 'customer_id':customer_id}, function(res) {
+        $.get('/front/sel/cart', {'product_id':product_id}, function(res) {
             if(res.code == 200){
                 $('.purchase-wrapper .header-section p').html(res.name);
                 $('.purchase-wrapper .totalNum span').html(res.price);
@@ -110,9 +104,8 @@ var PickupCommon = {
     //# 장바구니 추가 / 삭제
     addCart : function (product_id, status) {
         var cnt = $('.purchase-wrapper .goodsAmount').text();
-        var customer_id = $("input[name='customer_id']").val();
 
-        $.get('/front/add/cart', {'product_id':product_id, 'status':status, 'cnt':cnt, 'customer_id':customer_id}, function(res) {
+        $.get('/front/add/cart', {'product_id':product_id, 'status':status, 'cnt':cnt}, function(res) {
             if(res.code == 600){
                 pageModal.alertPopup(res.msg);
                 return false;
@@ -130,7 +123,6 @@ var PickupCommon = {
     //# 문의하기
     qnaStore : function () {
         var data = new FormData();
-        data.append('customer_id', $("input[name='customer_id']").val());
         data.append('store_id', $("input[name='store_id']").val());
         data.append('category', $('select[name="category"]').val());
         data.append('contents', $('[name=contents]').val());
@@ -160,7 +152,6 @@ var PickupCommon = {
     //# 쿠폰 등록하기
     addCoupon : function () {
         var data = new FormData();
-        data.append('customer_id', $("input[name='customer_id']").val());
         data.append('coupon_num', $('input[name="coupon"]').val());
         $.ajax({
             type: 'POST',
@@ -214,7 +205,6 @@ var PickupCommon = {
     //# 상품후기 등록 / 수정
     addReview : function(status='add'){
         var data = new FormData();
-        data.append('customer_id', $("input[name='customer_id']").val());
         data.append('product_id', $('input[name="product_id"]').val());
         data.append('score', $("input:radio[name='star-input']:checked").val());
         data.append('contents', $('[name=contents]').val());

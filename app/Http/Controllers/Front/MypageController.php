@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Front;
 
+use App\Helper\ShopAuth;
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
 use App\Models\PickupCoupon;
@@ -35,12 +36,12 @@ class MypageController extends Controller
     /**
      *  쿠폰 리스트
      */
-    public function getCouponList()
+    public function getCouponList(Request $request)
     {
         $view = view('front.mypage.coupon');
         $view->page = 'my_coupon';
-        $view->customer_id = 399;
-        $couponList = PickupCouponCustomer::where('customer_id', $view->customer_id)->where('status', 'N')->leftjoin('pickup_coupon','pickup_coupon.id','pickup_coupon_customer.pickup_coupon_id')->select('pickup_coupon_customer.*','pickup_coupon.end_at')->where('end_at','>',now())->get();
+        $shopAuth = new ShopAuth($request);
+        $couponList = PickupCouponCustomer::where('customer_id', $shopAuth->user()->id)->where('status', 'N')->leftjoin('pickup_coupon','pickup_coupon.id','pickup_coupon_customer.pickup_coupon_id')->select('pickup_coupon_customer.*','pickup_coupon.end_at')->where('end_at','>',now())->get();
         foreach ($couponList as $k => $v){
             $v->coupon->start_at = Carbon::createFromDate($v->coupon->start_at)->toDateString();
             $v->coupon->end_at = Carbon::createFromDate($v->coupon->end_at)->toDateString();
@@ -57,20 +58,21 @@ class MypageController extends Controller
     {
         return DB::transaction(function() use ($request){
             try{
-                $res = $request->all();
-                if(empty(Customer::find($res['customer_id']))) return response()->json(['code'=>600, 'msg'=>'로그인해주세요']);
+                $shopAuth = new ShopAuth($request);
+                if(empty(Customer::find($shopAuth->user()->id))) return response()->json(['code'=>600, 'msg'=>'로그인해주세요']);
 
+                $res = $request->all();
                 $coupon = PickupCoupon::where('coupon_num',$res['coupon_num'])->first();
                 if(empty($coupon)) return response()->json(['code'=>400, 'msg'=>'쿠폰번호가 잘못되었습니다.']);
                 if($coupon->amount <= 0) return response()->json(['code'=>400, 'msg'=>'쿠폰 수량이 없습니다.']);
                 if($coupon->end_at < now()) return response()->json(['code'=>400, 'msg'=>'기간이 만료된 쿠폰입니다.']);
-                if(!empty(PickupCouponCustomer::where([['pickup_coupon_id',$coupon->id],['customer_id',$res['customer_id']]])->first())) return response()->json(['code'=>400, 'msg'=>'이미 등록된 쿠폰입니다.']);
+                if(!empty(PickupCouponCustomer::where([['pickup_coupon_id',$coupon->id],['customer_id',$shopAuth->user()->id]])->first())) return response()->json(['code'=>400, 'msg'=>'이미 등록된 쿠폰입니다.']);
                 $coupon->amount = $coupon->amount - 1;
                 $coupon->save();
 
                 $couponCustomer = new PickupCouponCustomer();
                 $couponCustomer->pickup_coupon_id = $coupon->id;
-                $couponCustomer->customer_id = $res['customer_id'];
+                $couponCustomer->customer_id = $shopAuth->user()->id;
                 $couponCustomer->save();
 
                 $date = Carbon::createFromDate($coupon->start_at)->toDateString().'~'.Carbon::createFromDate($coupon->end_at)->toDateString();
@@ -88,20 +90,20 @@ class MypageController extends Controller
     /**
      * 적립금
      */
-    public function getPointList()
+    public function getPointList(Request $request)
     {
         $view = view('front.mypage.point');
         $view->page = 'my_point';
 
-        $view->customer_id = 399;
-        $view->customer = Customer::find($view->customer_id);
+        $shopAuth = new ShopAuth($request);
+        $view->customer = Customer::find($shopAuth->user()->id);
 
         //# 총 사용 포인트
-        $view->use_point = PointUser::where('customer_id',$view->customer_id)->where('type', 'use')->sum('point');
+        $view->use_point = PointUser::where('customer_id',$shopAuth->user()->id)->where('type', 'use')->sum('point');
         //# 소멸 포인트 / 정책상 : 2년 (소멸 예정은 1개월 전 노출)
-        $view->dis_point = PointUser::where('customer_id',$view->customer_id)->whereBetween('created_at', [now()->subYears(2), now()->subMonths(23)])->sum('point');
+        $view->dis_point = PointUser::where('customer_id',$shopAuth->user()->id)->whereBetween('created_at', [now()->subYears(2), now()->subMonths(23)])->sum('point');
         //# 포인트 내역 / 소멸되기 전 모든 포인트 내역
-        $view->pointList = PointUser::where('customer_id',$view->customer_id)->where('created_at','>', now()->subYears(2))->orderBy('created_at','DESC')->get();
+        $view->pointList = PointUser::where('customer_id',$shopAuth->user()->id)->where('created_at','>', now()->subYears(2))->orderBy('created_at','DESC')->get();
 
         return $view;
     }
@@ -109,47 +111,47 @@ class MypageController extends Controller
     /**
      * 관심매장 리스트
      */
-    public function getStoreList()
+    public function getStoreList(Request $request)
     {
         $view = view('front.mypage.store');
         $view->page = 'my_store';
 
-        $view->customer_id = 399;
-        $view->store_like = StoreLikes::where('customer_id', $view->customer_id)->get();
+        $shopAuth = new ShopAuth($request);
+        $view->store_like = StoreLikes::where('customer_id', $shopAuth->user()->id)->get();
         return $view;
     }
 
     /**
      * 관심상품 리스트
      */
-    public function getProductList()
+    public function getProductList(Request $request)
     {
         $view = view('front.mypage.product');
         $view->page = 'my_product';
 
-        $view->customer_id = 399;
-        $view->product_like = PickupProductLikes::where('customer_id', $view->customer_id)->get();
+        $shopAuth = new ShopAuth($request);
+        $view->product_like = PickupProductLikes::where('customer_id', $shopAuth->user()->id)->get();
         return $view;
     }
 
     /**
      *  상품후기 리스트
      */
-    public function getReviewList()
+    public function getReviewList(Request $request)
     {
         $view = view('front.mypage.review');
         $view->page = 'my_review';
 
-        $view->customer_id = 399;
+        $shopAuth = new ShopAuth($request);
         //# 후기 미작성 리스트
         $view->unreviewList = PickupOrdersProduct::leftjoin('pickup_orders', '.pickup_orders.id', 'pickup_orders_product.pickup_orders_id')
             ->leftjoin('product', 'product.id', 'pickup_orders_product.product_id')
             ->leftjoin('pickup_product_review', 'pickup_product_review.product_id', 'product.id')
             ->select('pickup_orders_product.*', 'pickup_product_review.id as pickup_product_review_id')
             ->orderBy('pickup_orders_product.id', 'desc')
-            ->where('pickup_orders.customer_id', $view->customer_id)->whereNull('pickup_product_review.id')->get();
+            ->where('pickup_orders.customer_id', $shopAuth->user()->id)->whereNull('pickup_product_review.id')->get();
         //# 내가 쓴 후기
-        $view->review_list = PickupProductReview::where('customer_id', $view->customer_id)->get();
+        $view->review_list = PickupProductReview::where('customer_id', $shopAuth->user()->id)->get();
 
         return $view;
     }
@@ -161,7 +163,7 @@ class MypageController extends Controller
     {
         $view = view('front.mypage.reviewDetail');
         $view->page = 'my_review';
-        $view->customer_id = 399;
+        $shopAuth = new ShopAuth($request);
 
         $view->review = PickupProductReview::find($id);
         if(!empty($view->review)){
@@ -180,15 +182,17 @@ class MypageController extends Controller
     {
         return DB::transaction(function() use ($request){
             try{
+                $shopAuth = new ShopAuth($request);
+                if(empty(Customer::find($shopAuth->user()->id))) return response()->json(['code'=>600, 'msg'=>'로그인해주세요']);
+
                 $res = $request->all();
-                if(empty(Customer::find($res['customer_id']))) return response()->json(['code'=>600, 'msg'=>'로그인해주세요']);
                 if(empty(Product::find($res['product_id']))) return response()->json(['code'=>400, 'msg'=>'상품이 없습니다']);
                 if($res['score'] == 'undefined' || $res['contents'] == null) return response()->json(['code'=>400, 'msg'=>'내용을 입력해주세요']);
 
                 if($res['status'] == 'add'){
                     $review = new PickupProductReview();
                     $review->product_id = $res['product_id'];
-                    $review->customer_id = $res['customer_id'];
+                    $review->customer_id = $shopAuth->user()->id;
                     $review->score = $res['score'];
                     $review->contents = $res['contents'];
                     $review->save();
@@ -255,8 +259,6 @@ class MypageController extends Controller
         $view = view('front.mypage.storeQna');
         $view->store = Store::find($id);
         $view->page = 'storeQna';
-        //# 임시 유저 아이디
-        $view->customer_id = 399;
         return $view;
     }
 
@@ -267,14 +269,12 @@ class MypageController extends Controller
     {
         return DB::transaction(function() use ($request){
             try{
-                $res = $request->all();
-                $customer = Customer::find($res['customer_id']);
-                if($customer == null){
-                    return response()->json(['code'=>600, 'msg'=>'로그인해주세요']);
-                }
+                $shopAuth = new ShopAuth($request);
+                if(empty(Customer::find($shopAuth->user()->id))) return response()->json(['code'=>600, 'msg'=>'로그인해주세요']);
 
+                $res = $request->all();
                 $qna = new PickupQna();
-                $qna->customer_id = $res['customer_id'];
+                $qna->customer_id = $shopAuth->user()->id;
                 $qna->store_id = $res['store_id'];
                 $qna->category = $res['category'];
                 $qna->contents = $res['contents'];

@@ -21,7 +21,6 @@
 </head>
 <body class="{{$body_class ?? '@@class'}}">
 <div class="wrapper">
-    <input type="hidden" name="customer_id" value="{{$customer_id ?? 0}}">
     @include('layouts.front.header')
     @yield('content')
     @include('layouts.front.modal')
