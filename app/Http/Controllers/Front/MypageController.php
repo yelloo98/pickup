@@ -178,8 +178,31 @@ class MypageController extends Controller
      */
     public function postReview(Request $request)
     {
-        $res = $request->all();
-        dd($res);
+        return DB::transaction(function() use ($request){
+            try{
+                $res = $request->all();
+                if(empty(Customer::find($res['customer_id']))) return response()->json(['code'=>600, 'msg'=>'로그인해주세요']);
+                if(empty(Product::find($res['product_id']))) return response()->json(['code'=>400, 'msg'=>'상품이 없습니다']);
+                if($res['score'] == 'undefined' || $res['contents'] == null) return response()->json(['code'=>400, 'msg'=>'내용을 입력해주세요']);
+
+                if($res['status'] == 'add'){
+                    $review = new PickupProductReview();
+                    $review->product_id = $res['product_id'];
+                    $review->customer_id = $res['customer_id'];
+                    $review->score = $res['score'];
+                    $review->contents = $res['contents'];
+                    $review->save();
+                }
+
+                return response()->json(['code'=>200, 'msg'=>'후기 등록 성공']);
+            }catch(\Exception $ex){
+                DB::rollBack();
+                return response()->json(['code'=>400, 'msg'=>'등록에 실패하였습니다.']);
+            }catch(\Throwable $throwable){
+                DB::rollBack();
+                return response()->json(['code'=>400, 'msg'=>'등록에 실패하였습니다.']);
+            }
+        });
     }
 
     /**

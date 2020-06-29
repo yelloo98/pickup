@@ -231,7 +231,6 @@ var PickupCommon = {
                     return false;
                 }
                 if (res.code == 200) {
-                    pageModal.alertPopup(res.msg);
                     location.href='/front/mypage/review';
                 }else{
                     pageModal.alertPopup(res.msg);
