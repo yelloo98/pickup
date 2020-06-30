@@ -24,7 +24,8 @@ class MainController extends Controller
         if($id <= 0) $id = 498;
         $view->store = Store::find($id);
         //# 이벤트
-        $view->storeEvent = StoreEvent::where('store_id', $id)->get();
+        $event = StoreEvent::where([['type', 'store_owner'],['store_id', $id]])->orderBy('created_at', 'desc')->limit(3);
+        $view->storeEvent = StoreEvent::where('type', 'admin')->orderBy('created_at', 'desc')->limit(2)->union($event)->get();
         //# 신규 상품 / 슬롯에 새로 들어온 상품
         $view->newProduct = ProductStock::leftjoin('product','product.id','product_stock.product_id')->where('product.store_id', $id)->select('product_stock.*')->orderBy('id','DESC')->limit(10)->get();
         //# 인기 상품 / 구매량이 많은 상품
