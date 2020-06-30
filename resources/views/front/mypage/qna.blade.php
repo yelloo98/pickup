@@ -4,11 +4,11 @@
     <div class="content-body goodsQA-content">
         <div class="tab-section">
             <ul class="tab-list2">
-                <li class="tabItem active">상품 Q&A</li>
-                <li class="tabItem ">매장 Q&A</li>
+                <li class="tabItem @if(!isset($_GET['store'])) active @endif">상품 Q&A</li>
+                <li class="tabItem @if(isset($_GET['store'])) active @endif">매장 Q&A</li>
             </ul>
             <div class="target-wrap">
-                <div class="tabTarget active">
+                <div class="tabTarget @if(!isset($_GET['store'])) active @endif">
                     <div class="goodsData-container">
                     @forelse($productQna as $k => $v)
                         <div class="list-item">
@@ -16,15 +16,15 @@
                             <div class="custom-bar complete">
                                 <p><span>답변완료</span></p>
                                 <ul>
-                                    <li class="delete-list">삭제</li>
+                                    <li class="delete-list" onclick="PickupCommon.qnaProduct('{{$v->id}}', 'delete')">삭제</li>
                                 </ul>
                             </div>
                             @else
                             <div class="custom-bar">
                                 <p><span>답변대기</span></p>
                                 <ul>
-                                    <li>수정</li>
-                                    <li class="delete-list">삭제</li>
+                                    <li onclick="location.href='/front/mypage/qna/product/{{$v->id}}'">수정</li>
+                                    <li class="delete-list" onclick="PickupCommon.qnaProduct('{{$v->id}}', 'delete')">삭제</li>
                                 </ul>
                             </div>
                             @endif
@@ -57,7 +57,7 @@
                     @endforelse
                     </div>
                 </div>
-                <div class="tabTarget">
+                <div class="tabTarget @if(isset($_GET['store'])) active @endif">
                     <div class="goodsData-container">
                     @forelse($storeQna as $k => $v)
                         <div class="list-item">
@@ -65,15 +65,15 @@
                             <div class="custom-bar complete">
                                 <p><span>답변완료</span></p>
                                 <ul>
-                                    <li class="delete-list">삭제</li>
+                                    <li class="delete-list" onclick="PickupCommon.qnaStore('{{$v->id}}', 'delete')">삭제</li>
                                 </ul>
                             </div>
                             @else
                             <div class="custom-bar">
                                 <p><span>답변대기</span></p>
                                 <ul>
-                                    <li>수정</li>
-                                    <li class="delete-list">삭제</li>
+                                    <li onclick="location.href='/front/mypage/qna/store/{{$v->id}}'">수정</li>
+                                    <li class="delete-list" onclick="PickupCommon.qnaStore('{{$v->id}}', 'delete')">삭제</li>
                                 </ul>
                             </div>
                             @endif

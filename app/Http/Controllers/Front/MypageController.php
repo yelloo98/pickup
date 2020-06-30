@@ -191,9 +191,7 @@ class MypageController extends Controller
                     $review->delete();
 
                     return response()->json(['code'=>300, 'msg'=>'후기 삭제 성공', 'review_id'=>$res['review_id']]);
-                }
-                else {
-                    if(empty(Product::find($res['product_id']))) return response()->json(['code'=>400, 'msg'=>'상품이 없습니다']);
+                } else {
                     if($res['score'] == 'undefined' || $res['contents'] == null) return response()->json(['code'=>400, 'msg'=>'내용을 입력해주세요']);
                     //# 등록 / 수정
                     if($res['status'] == 'update'){
@@ -202,6 +200,8 @@ class MypageController extends Controller
                         $review->contents = $res['contents'];
                         $review->save();
                     }else{
+                        if(empty(Product::find($res['product_id']))) return response()->json(['code'=>400, 'msg'=>'상품이 없습니다']);
+
                         $review = new PickupProductReview();
                         $review->product_id = $res['product_id'];
                         $review->customer_id = $shopAuth->user()->id;
@@ -245,37 +245,87 @@ class MypageController extends Controller
     }
 
     /**
-     *
+     *  상품 Q&A 뷰
      */
-    public function postQna()
+    public function getProductQna(Request $request, $id = 0)
     {
+        $view = view('front.mypage.productQna');
+        $view->page = 'my_qna';
 
+        $view->productQna = PickupQna::find($id);
+        if(!empty($view->productQna)){
+            $view->product = Product::find($view->productQna->product_id);
+        }else{
+            $view->product = Product::find($request->input('product_id', null));
+        }
+        return $view;
     }
 
     /**
-     * @param $id
+     * 상품 Q&A 등록
      */
-    public function updateQna($id)
+    public function postProductQna(Request $request)
     {
+        return DB::transaction(function() use ($request){
+            try{
+                $shopAuth = new ShopAuth($request);
+                if(empty(Customer::find($shopAuth->user()->id))) return response()->json(['code'=>600, 'msg'=>'로그인해주세요']);
 
-    }
+                $res = $request->all();
+                if($res['status'] == 'delete') {
+                    //# 삭제
+                    $qna = PickupQna::find($res['qna_id']);
+                    $qna->delete();
 
-    /**
-     *
-     */
-    public function deleteQna()
-    {
+                    return response()->json(['code'=>300, 'msg'=>'Q&A 삭제 성공']);
+                } else {
+                    if($res['category'] == null || $res['contents'] == null) return response()->json(['code'=>400, 'msg'=>'내용을 입력해주세요']);
+                    //# 등록 / 수정
+                    if($res['status'] == 'update'){
+                        $qna = PickupQna::find($res['qna_id']);
+                        $qna->category = $res['category'];
+                        $qna->contents = $res['contents'];
+                        $qna->secret = ($res['secret'] == 'on')? 'Y' : 'N';
+                        $qna->save();
+                    }else{
+                        if(empty(Product::find($res['product_id']))) return response()->json(['code'=>400, 'msg'=>'상품이 없습니다']);
+                        $qna = new PickupQna();
+                        $qna->customer_id = $shopAuth->user()->id;
+                        $qna->store_id = $res['store_id'];
+                        $qna->product_id = $res['product_id'];
+                        $qna->category = $res['category'];
+                        $qna->contents = $res['contents'];
+                        $qna->secret = ($res['secret'] == 'on')? 'Y' : 'N';
+                        $qna->type = 'product';
+                        $qna->save();
+                    }
 
+                    return response()->json(['code'=>200, 'msg'=>'Q&A 등록 성공']);
+                }
+            }catch(\Exception $ex){
+                DB::rollBack();
+                return response()->json(['code'=>400, 'msg'=>'등록에 실패하였습니다.']);
+            }catch(\Throwable $throwable){
+                DB::rollBack();
+                return response()->json(['code'=>400, 'msg'=>'등록에 실패하였습니다.']);
+            }
+        });
     }
 
     /**
      * 매장 Q&A 등록 화면
      */
-    public function getStoreQna($id = 0)
+    public function getStoreQna(Request $request, $id = 0)
     {
         $view = view('front.mypage.storeQna');
-        $view->store = Store::find($id);
         $view->page = 'storeQna';
+
+        $view->productQna = PickupQna::find($id);
+        if(!empty($view->productQna)){
+            $view->store = Store::find($view->productQna->store_id);
+        }else{
+            $view->store = Store::find($request->input('store_id', null));
+        }
         return $view;
     }
 
@@ -290,15 +340,32 @@ class MypageController extends Controller
                 if(empty(Customer::find($shopAuth->user()->id))) return response()->json(['code'=>600, 'msg'=>'로그인해주세요']);
 
                 $res = $request->all();
-                $qna = new PickupQna();
-                $qna->customer_id = $shopAuth->user()->id;
-                $qna->store_id = $res['store_id'];
-                $qna->category = $res['category'];
-                $qna->contents = $res['contents'];
-                $qna->type = 'store';
-                $qna->save();
+                if($res['status'] == 'delete') {
+                    //# 삭제
+                    $qna = PickupQna::find($res['qna_id']);
+                    $qna->delete();
 
-                return response()->json(['code'=>200, 'msg'=>'문의 등록 성공', 'store_id'=>$res['store_id']]);
+                    return response()->json(['code'=>300, 'msg'=>'Q&A 삭제 성공']);
+                } else {
+                    if($res['category'] == null || $res['contents'] == null) return response()->json(['code'=>400, 'msg'=>'내용을 입력해주세요']);
+                    //# 등록 / 수정
+                    if($res['status'] == 'update'){
+                        $qna = PickupQna::find($res['qna_id']);
+                        $qna->category = $res['category'];
+                        $qna->contents = $res['contents'];
+                        $qna->save();
+                    }else{
+                        $qna = new PickupQna();
+                        $qna->customer_id = $shopAuth->user()->id;
+                        $qna->store_id = $res['store_id'];
+                        $qna->category = $res['category'];
+                        $qna->contents = $res['contents'];
+                        $qna->type = 'store';
+                        $qna->save();
+                    }
+
+                    return response()->json(['code'=>200, 'msg'=>'Q&A 등록 성공']);
+                }
             }catch(\Exception $ex){
                 DB::rollBack();
                 return response()->json(['code'=>400, 'msg'=>'등록에 실패하였습니다.']);

@@ -39,6 +39,10 @@ class Codes extends Model
             $type = '상품문의';
         }elseif($type == 'etc'){
             $type = '기타문의';
+        }elseif($type == 'pay'){
+            $type = '결제문의';
+        }elseif($type == 'delivery'){
+            $type = '배송문의';
         }
 
         return $type;

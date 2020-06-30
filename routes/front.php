@@ -98,7 +98,7 @@ Route::group(['namespace' => 'Front', 'middleware' => 'front', 'prefix' => 'fron
             //# 상품 Q&A
             Route::group(['prefix' => 'product'], function () {
                 //상품 Q&A 등록 화면
-                Route::get('/', 'MypageController@getProductQna');
+                Route::get('/{id?}', 'MypageController@getProductQna');
                 //상품 Q&A 등록
                 Route::post('/', 'MypageController@postProductQna');
                 //상품 Q&A 수정

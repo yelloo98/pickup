@@ -120,12 +120,14 @@ var PickupCommon = {
         });
     },
 
-    //# 문의하기
-    qnaStore : function () {
+    //# 매장 문의하기
+    qnaStore : function (qna_id = '0', status = 'add') {
         var data = new FormData();
         data.append('store_id', $("input[name='store_id']").val());
         data.append('category', $('select[name="category"]').val());
         data.append('contents', $('[name=contents]').val());
+        data.append('qna_id', qna_id);
+        data.append('status', status);
         $.ajax({
             type: 'POST',
             url: "/front/mypage/qna/store",
@@ -139,8 +141,39 @@ var PickupCommon = {
                 }
 
                 if (res.code == 200) {
+                    location.href='/front/mypage/qna?store';
+                }else{
                     pageModal.alertPopup(res.msg);
-                    location.href='/front/main/' + res.store_id;
+                    return false;
+                }
+            }
+        });
+    },
+
+    //# 상품 문의하기
+    qnaProduct : function (qna_id = '0', status = 'add') {
+        var data = new FormData();
+        data.append('store_id', $("input[name='store_id']").val());
+        data.append('product_id', $("input[name='product_id']").val());
+        data.append('category', $('select[name="category"]').val());
+        data.append('contents', $('[name=contents]').val());
+        data.append('secret', $('input[name=secret]:checked').val());
+        data.append('qna_id', qna_id);
+        data.append('status', status);
+        $.ajax({
+            type: 'POST',
+            url: "/front/mypage/qna/product",
+            data: data,
+            contentType: false,
+            processData: false,
+            success: function (res) {
+                if(res.code == 600){
+                    pageModal.alertPopup(res.msg);
+                    return false;
+                }
+
+                if (res.code == 200) {
+                    location.href='/front/mypage/qna';
                 }else{
                     pageModal.alertPopup(res.msg);
                     return false;
