@@ -4,11 +4,11 @@
     <div class="content-body listUp-detailContent">
         <div class="listUp-container">
             <div class="listUp-header">
-                <p class="listUp-title">[공지사항] 타이틀타이틀타이틀타이틀타이틀타이틀</p>
-                <small class="listUp-date">2020-04-13</small>
+                <p class="listUp-title">[{{$notice->category ?? ''}}] {{$notice->title ?? ''}}</p>
+                <small class="listUp-date">{{($notice->created_at)? date_format($notice->created_at,'Y-m-d') : ''}}</small>
             </div>
             <div class="listUp-text">
-            <pre>내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용</pre>
+            <pre>{{$notice->contents ?? ''}}</pre>
             </div>
         </div>
     </div>

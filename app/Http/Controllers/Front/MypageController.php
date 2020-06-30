@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Customer;
 use App\Models\PickupCoupon;
 use App\Models\PickupCouponCustomer;
+use App\Models\PickupNotice;
 use App\Models\PickupOrders;
 use App\Models\PickupOrdersProduct;
 use App\Models\PickupProductLikes;
@@ -426,16 +427,20 @@ class MypageController extends Controller
     {
         $view = view('front.mypage.notice');
         $view->page = 'notice';
+
+        $view->noticeList = PickupNotice::orderBy('created_at','desc')->get();
         return $view;
     }
 
     /**
      * 공지사항 상세
      */
-    public function getNoticeDetail()
+    public function getNoticeDetail($id = 0)
     {
         $view = view('front.mypage.noticeDetail');
         $view->page = 'notice';
+
+        $view->notice = PickupNotice::find($id);
         return $view;
     }
 
