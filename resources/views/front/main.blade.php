@@ -87,7 +87,7 @@
             <div class="moreTitle-wrapper">
                 <img src="/front/dist/img/m_hot.png" alt="">
                 <p>지금 핫한 인기 상품은?</p>
-                <button onclick="location.href='';"><img src="/front/dist/img/icon_mainarrow.png" alt=""></button>
+                <button onclick="location.href='/front/product/latest?searchSort=hit';"><img src="/front/dist/img/icon_mainarrow.png" alt=""></button>
             </div>
             <div class="swiper-wrapper">
                 @forelse($bestProduct as $k=>$v)
@@ -119,7 +119,6 @@
             <div class="moreTitle-wrapper">
                 <img src="/front/dist/img/m_pick.png" alt="">
                 <p>최근 본 상품을 확인하세요.</p>
-                <button onclick="location.href='';"><img src="/front/dist/img/icon_mainarrow.png" alt=""></button>
             </div>
             <div class="cubeBox-wrapper">
                 @forelse($historyProduct as $k=>$v)

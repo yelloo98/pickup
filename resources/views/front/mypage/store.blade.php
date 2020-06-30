@@ -6,7 +6,7 @@
         <div class="storeList-container storeList-{{$v->store->id ?? 0}}">
             <div class="list-wrapper">
                 <button class="delete-list" onclick="PickupCommon.storeLike('{{$v->store->id ?? 0}}', 'delete')"><img src="/front/dist/img/icon_x_S.png" alt=""></button>
-                <div class="word-box" onclick="location.href='/front/main/{{$v->store->id ?? 0}}'">
+                <div class="word-box" onclick="location.href='/front/main?store_id={{$v->store->id ?? 0}}'">
                     <div class="store-category">
                         <span>{{$v->store->fcTrader->companyName ?? ''}}</span>
                     </div>

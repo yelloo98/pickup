@@ -15,7 +15,7 @@ var PickupCommon = {
                 if( $('.enjoyStore-list ul li').length == 0 ) {
                     $('.enjoyStore-list p').remove();
                 }
-                var html = '<li onclick="location.href=\'/front/main/' + res.store_id + '\'" class="store_' + res.store_id + '">';
+                var html = '<li onclick="location.href=\'/front/main?store_id=' + res.store_id + '\'" class="store_' + res.store_id + '">';
                 html    += '    <div class="store-info">';
                 html    += '        <div class="store-header">';
                 html    += '            <span>' + res.store_name + '</span>';

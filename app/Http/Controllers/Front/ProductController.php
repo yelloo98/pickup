@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Auth;
 class ProductController extends Controller
 {
 
-    public function getLatestProduct()
+    public function getLatestProduct(Request $request)
     {
         $view = view('front.product.latest');
         $view->page = 'latest';

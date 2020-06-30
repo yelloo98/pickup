@@ -32,9 +32,9 @@
         @if(($page ?? '') == 'search')
             구매한 픽업상품
         @elseif(($page ?? '') == 'latest')
-            최신 픽업상품
-        @elseif(($page ?? '') == 'detail')
             픽업상품
+        @elseif(($page ?? '') == 'detail')
+            픽업상품 상세
         @elseif(($page ?? '') == 'my_order')
             픽업 주문내역
         @elseif(($page ?? '') == 'my_coupon')
