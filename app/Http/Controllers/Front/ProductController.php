@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
+use App\Models\Device;
 use App\Models\OriginProduct;
 use App\Models\PickupOrders;
 use App\Models\PickupOrdersProduct;
@@ -20,10 +21,17 @@ use Illuminate\Support\Facades\Auth;
 class ProductController extends Controller
 {
 
-    public function getLatestProduct(Request $request)
+    public function getProductList(Request $request)
     {
-        $view = view('front.product.latest');
+        $view = view('front.product.list');
         $view->page = 'latest';
+        $store = $request->input('store_id', 498);
+        $device = $request->input('device_id', null);
+        $searchSort = $request->input('searchSort', null);
+
+        $view->deviceList = Device::where('store_id', $store)->orderBy('id','desc')->get();
+        $view->productList = ProductStock::leftjoin('device','device.id','product_stock.device_id')
+            ->select('product_stock.*','device.store_id')->where('device.store_id', $store)->orderBy('id','desc')->get();
         return $view;
     }
 
