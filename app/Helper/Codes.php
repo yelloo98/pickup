@@ -25,4 +25,22 @@ class Codes extends Model
 
         return $phone;
     }
+
+    /**
+     * 20200630
+     * Q&A 카테고리
+     */
+    public static function qnaCategory($type) {
+        if($type == 'store'){
+            $type = '매장문의';
+        }elseif($type == 'device'){
+            $type = '기기문의';
+        }elseif($type == 'product'){
+            $type = '상품문의';
+        }elseif($type == 'etc'){
+            $type = '기타문의';
+        }
+
+        return $type;
+    }
 }

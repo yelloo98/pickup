@@ -15,6 +15,16 @@ class PickupQna extends Model implements ModelAdminInterface
     protected $connection = 'mysql';
     protected $table = 'pickup_qna';
 
+    public function product()
+    {
+        return $this->belongsTo('App\Models\Product', 'product_id');
+    }
+
+    public function store()
+    {
+        return $this->belongsTo('App\Models\Store', 'store_id');
+    }
+
     /**
      * Override : DataTableList
      * -----------------------------------------------------------------------------------------------------------------

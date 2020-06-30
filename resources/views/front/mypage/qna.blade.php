@@ -10,7 +10,16 @@
             <div class="target-wrap">
                 <div class="tabTarget active">
                     <div class="goodsData-container">
+                    @forelse($productQna as $k => $v)
                         <div class="list-item">
+                            @if(!empty($v->re_contents))
+                            <div class="custom-bar complete">
+                                <p><span>답변완료</span></p>
+                                <ul>
+                                    <li class="delete-list">삭제</li>
+                                </ul>
+                            </div>
+                            @else
                             <div class="custom-bar">
                                 <p><span>답변대기</span></p>
                                 <ul>
@@ -18,76 +27,82 @@
                                     <li class="delete-list">삭제</li>
                                 </ul>
                             </div>
+                            @endif
                             <div class="user-section">
                                 <div class="info-bar">
                                     <div class="user-info">
-                                        <p><span class="store">군자점</span><span class="
-                                        questionKinds">[배송문의]</span><span class="date">2020.03.12</span></p>
+                                        <p>
+                                            <span class="store">{{$v->store->fcTrader->companyName ?? ''}}</span>
+                                            <span class="questionKinds">{{\App\Helper\Codes::qnaCategory($v->category ?? '')}}</span>
+                                            <span class="date">{{($v->created_at)? date_format($v->created_at,'Y-m-d') : ''}}</span>
+                                        </p>
                                     </div>
+                                    @if(!empty($v->re_contents))
                                     <button class="more-btn"><img src="/front/dist/img/icon_arrow_MD.png" alt=""></button>
+                                    @endif
                                 </div>
-                                <div class="title-bar">국내산 생생 삼겹살 250g</div>
-                                <div class="content-bar"><pre>15일에 도착할 수 있을까요?
-오늘 주문하면 3월 15일에 도착할 수 있는지 궁금해요</pre>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="list-item">
-                            <div class="custom-bar complete">
-                                <p><span>답변완료</span></p>
-                                <ul>
-                                    <li class="delete-list">삭제</li>
-                                </ul>
-                            </div>
-                            <div class="user-section">
-                                <div class="info-bar">
-                                    <div class="user-info">
-                                        <p><span class="store">군자점</span><span class="
-                                        questionKinds">[배송문의]</span><span class="date">2020.03.12</span></p>
-                                    </div>
-                                    <button class="more-btn"><img src="/front/dist/img/icon_arrow_MD.png" alt=""></button>
-                                </div>
-                                <div class="title-bar">국내산 생생 삼겹살 250g</div>
-                                <div class="content-bar"><pre>15일에 도착할 수 있을까요?
-오늘 주문하면 3월 15일에 도착할 수 있는지 궁금해요</pre>
+                                <div class="title-bar">{{$v->product->origin_product->name ?? ''}}</div>
+                                <div class="content-bar"><pre>{{$v->contents}}</pre>
                                 </div>
                             </div>
+                            @if(!empty($v->re_contents))
                             <div class="manager-section">
                                 <p class="answer">답변.</p>
-                                <pre class="contenttxt">안녕하세요 고객님!
-2022년 5월 30일까지 입니다.</pre>
+                                <pre class="contenttxt">{{$v->re_contents}}</pre>
                             </div>
+                            @endif
                         </div>
-                        <div class="list-item">
-                            <div class="custom-bar complete">
-                                <p><span>답변완료</span></p>
-                                <ul>
-                                    <li class="delete-list">삭제</li>
-                                </ul>
-                            </div>
-                            <div class="user-section">
-                                <div class="info-bar">
-                                    <div class="user-info">
-                                        <p><span class="store">군자점</span><span class="
-                                        questionKinds">[배송문의]</span><span class="date">2020.03.12</span></p>
-                                    </div>
-                                    <button class="more-btn"><img src="/front/dist/img/icon_arrow_MD.png" alt=""></button>
-                                </div>
-                                <div class="title-bar">국내산 생생 삼겹살 250g</div>
-                                <div class="content-bar"><pre>15일에 도착할 수 있을까요?
-오늘 주문하면 3월 15일에 도착할 수 있는지 궁금해요</pre>
-                                </div>
-                            </div>
-                            <div class="manager-section">
-                                <p class="answer">답변.</p>
-                                <pre class="contenttxt">안녕하세요 고객님!
-2022년 5월 30일까지 입니다.</pre>
-                            </div>
-                        </div>
+                    @empty
+                        <p class="none-list">Q&A가 없습니다.</p>
+                    @endforelse
                     </div>
                 </div>
                 <div class="tabTarget">
                     <div class="goodsData-container">
+                    @forelse($storeQna as $k => $v)
+                        <div class="list-item">
+                            @if(!empty($v->re_contents))
+                            <div class="custom-bar complete">
+                                <p><span>답변완료</span></p>
+                                <ul>
+                                    <li class="delete-list">삭제</li>
+                                </ul>
+                            </div>
+                            @else
+                            <div class="custom-bar">
+                                <p><span>답변대기</span></p>
+                                <ul>
+                                    <li>수정</li>
+                                    <li class="delete-list">삭제</li>
+                                </ul>
+                            </div>
+                            @endif
+                            <div class="user-section">
+                                <div class="info-bar">
+                                    <div class="user-info">
+                                        <p>
+                                            <span class="store">{{$v->store->fcTrader->companyName ?? ''}}</span>
+                                            <span class="questionKinds">{{\App\Helper\Codes::qnaCategory($v->category ?? '')}}</span>
+                                            <span class="date">{{($v->created_at)? date_format($v->created_at,'Y-m-d') : ''}}</span>
+                                        </p>
+                                    </div>
+                                    @if(!empty($v->re_contents))
+                                    <button class="more-btn"><img src="/front/dist/img/icon_arrow_MD.png" alt=""></button>
+                                    @endif
+                                </div>
+                                <div class="content-bar"><pre>{{$v->contents}}</pre>
+                                </div>
+                            </div>
+                            @if(!empty($v->re_contents))
+                            <div class="manager-section">
+                                <p class="answer">답변.</p>
+                                <pre class="contenttxt">{{$v->re_contents}}</pre>
+                            </div>
+                            @endif
+                        </div>
+                    @empty
+                        <p class="none-list">Q&A가 없습니다.</p>
+                    @endforelse
                     </div>
                 </div>
             </div>
@@ -96,20 +111,6 @@
 @endsection
 @section('script')
     <script>
-        $('.tabTarget').each(function(){
-            if( $(this).find('.list-item').length == 0 ) {
-                $(this).find('.goodsData-container').append('<p class="none-list">Q&A가 없습니다.</p>');
-            }
-        });
-
-        $('.more-btn').click(function(){
-            $(this).closest('.word-box').toggleClass('showing');
-        });
-
-        $('.list-item .more-btn').hide();
-
-        $('.manager-section').siblings('.user-section').find('.more-btn').show();
-
         $('.more-btn').click(function(){
             $(this).toggleClass('active');
             $(this).closest('.list-item').toggleClass('questionOpen').children('.manager-section').slideToggle(300);
@@ -122,8 +123,6 @@
                     $(this).find('.goodsData-container').append('<p class="none-list">Q&A가 없습니다.</p>');
                 }
             });
-
         });
-
     </script>
 @endsection

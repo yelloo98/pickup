@@ -163,7 +163,6 @@ class MypageController extends Controller
     {
         $view = view('front.mypage.reviewDetail');
         $view->page = 'my_review';
-        $shopAuth = new ShopAuth($request);
 
         $view->review = PickupProductReview::find($id);
         if(!empty($view->review)){
@@ -234,10 +233,14 @@ class MypageController extends Controller
     /**
      * Q&A 리스트
      */
-    public function getQna()
+    public function getQna(Request $request)
     {
         $view = view('front.mypage.qna');
         $view->page = 'my_qna';
+
+        $shopAuth = new ShopAuth($request);
+        $view->productQna = PickupQna::where([['customer_id', $shopAuth->user()->id],['type','product']])->orderBy('created_at','desc')->get();
+        $view->storeQna = PickupQna::where([['customer_id', $shopAuth->user()->id],['type','store']])->orderBy('created_at','desc')->get();
         return $view;
     }
 
