@@ -14,20 +14,11 @@
                     </div>
                 </div>
                 @empty
-                <div class="swiper-slide">
-                    <div class="slogun-box">
-                        <ul>
-                            <li>현재 진행중인</li>
-                            <li>이벤트가 없습니다.</li>
-                        </ul>
-                    </div>
-                </div>
                 @endforelse
             </div>
             <!-- Add Pagination -->
             <div class="swiper-pagination"></div>
         </div>
-
         <div class="storeTitle-container">
             <div class="ico-wrapper">
                 @if(!empty($store_like) && $store_like->where('store_id', $store->id)->count() > 0)
