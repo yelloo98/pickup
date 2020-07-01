@@ -12,7 +12,7 @@
                 <div class="tabTarget none-review active">
                     @forelse($unreviewList as $k => $v)
                     <div class="review-wrapper">
-                        <div class="img-box" @if($v->product->origin_product->image_path != null) style="background-image: url('{{env('IMAGE_URL').$v->product->origin_product->image_path}}'); background-size:cover;" @endif></div>
+                        <div class="img-box" @if(!empty($v->product->origin_product->image_path)) style="background-image: url('{{env('IMAGE_URL').$v->product->origin_product->image_path}}'); background-size:cover;" @endif></div>
                         <div class="word-box">
                             <div class="toTop">
                                 <p><span>{{$v->product->store->fcTrader->companyName ?? ''}}</span></p>
@@ -50,13 +50,13 @@
                                     <ul class="user-score">
                                     @for($i=1; $i<=5; $i++)
                                         <li>
-                                        @if($v->score >= $i)
+                                            @if($v->score >= $i)
                                             <img src="/front/dist/img/icon_star_on_B.png" alt="">
-                                        @elseif($i-$v->score == 0.5)
+                                            @elseif($i-$v->score <= 0.5 && $i-$v->score < 1)
                                             <img src="/front/dist/img/icon_star_harf_B.png" alt="">
-                                        @else
+                                            @else
                                             <img src="/front/dist/img/icon_star_off_B.png" alt="">
-                                        @endif
+                                            @endif
                                         </li>
                                     @endfor
                                     </ul>

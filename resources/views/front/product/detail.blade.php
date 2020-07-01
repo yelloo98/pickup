@@ -4,33 +4,41 @@
     <div class="content-body ppGoodsDetail-content">
         <div class="swiper-container goods-img">
             <div class="swiper-wrapper">
-                <div class="swiper-slide"></div>
-                <div class="swiper-slide"></div>
-                <div class="swiper-slide"></div>
-                <div class="swiper-slide"></div>
-                <div class="swiper-slide"></div>
+                @if(!empty($product->origin_product->image_path))
+                <div class="swiper-slide" style="background: url('{{env('IMAGE_URL').$product->origin_product->image_path}}') center center; background-size: cover;"></div>
+                @endif
             </div>
             <!-- Add Pagination -->
             <div class="swiper-pagination"></div>
         </div>
         <div class="goodsInfo-container">
-            <span>군자점</span>
-            <p class="goods-subject">미트박스 1인용 루꼴라 에그토마토 200G</p>
+            <span>{{$product->store->fcTrader->companyName ?? ''}}</span>
+            <p class="goods-subject">{{$product->origin_product->name ?? ''}}</p>
             <div class="goods-price">
                 <p>
-                    <strong class="percent"><span>30</span>%</strong><strong class="price"><span>22,950</span>원</strong><small>29,000</small>
+                    @if(($product->price ?? '') == ($product->origin_product->price_cost ?? '') || ($product->price ?? '') > ($product->origin_product->price_cost ?? ''))
+                    <strong class="price"><span>{{number_format($product->price ?? 0)}}</span>원</strong>
+                    @else
+                    <strong class="percent"><span>{{$productSale}}</span>%</strong><strong class="price"><span>{{number_format($product->price ?? 0)}}</span>원</strong><small>{{number_format($product->origin_product->price_cost ?? 0)}}</small>
+                    @endif
                 </p>
             </div>
             <div class="goods-count">
-                <p>현재 매장 재고는 <span>5</span>개 입니다.</p>
+                <p>현재 매장 재고는 <span>{{$productCnt}}</span>개 입니다.</p>
             </div>
             <ul class="star-score">
-                <li class="counting">3.5</li>
-                <li><img src="/front/dist/img/icon_star_on_B.png" alt=""></li>
-                <li><img src="/front/dist/img/icon_star_on_B.png" alt=""></li>
-                <li><img src="/front/dist/img/icon_star_on_B.png" alt=""></li>
-                <li><img src="/front/dist/img/icon_star_harf_B.png" alt=""></li>
-                <li><img src="/front/dist/img/icon_star_off_B.png" alt=""></li>
+                <li class="counting">{{number_format($reviewScore, 1)}}</li>
+                @for($i=1; $i<=5; $i++)
+                <li>
+                    @if($reviewScore >= $i)
+                    <img src="/front/dist/img/icon_star_on_B.png" alt="">
+                    @elseif($i-$reviewScore <= 0.5 && $i-$reviewScore < 1)
+                    <img src="/front/dist/img/icon_star_harf_B.png" alt="">
+                    @else
+                    <img src="/front/dist/img/icon_star_off_B.png" alt="">
+                    @endif
+                </li>
+                @endfor
             </ul>
         </div>
         <div class="goodsTab-container tab-section">

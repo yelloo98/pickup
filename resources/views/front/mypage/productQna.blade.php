@@ -5,7 +5,7 @@
         <input type="hidden" name="product_id" value="{{$_GET['product_id'] ?? 0}}">
         <input type="hidden" name="store_id" value="{{$_GET['store_id'] ?? 0}}">
         <div class="goodsHeader-container">
-            <div class="img-box" @if(($product->origin_product->image_path ?? '') != null) style="background-image: url('{{env('IMAGE_URL').$product->origin_product->image_path}}'); background-size:cover;" @endif></div>
+            <div class="img-box" @if(!empty($product->origin_product->image_path)) style="background-image: url('{{env('IMAGE_URL').$product->origin_product->image_path}}'); background-size:cover;" @endif></div>
             <div class="word-box">
                 <p class="goods-subject">{{$product->origin_product->name ?? ''}}</p>
                 <div class="goods-price"><p><span>{{number_format($product->price ?? 0)}}</span>원</p></div>

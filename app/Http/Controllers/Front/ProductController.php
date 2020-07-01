@@ -39,6 +39,15 @@ class ProductController extends Controller
     {
         $view = view('front.product.detail');
         $view->page = 'detail';
+
+        $view->product = Product::find($id);
+        //# 세일율
+        $view->productSale = floor((1 - (($view->product->price ?? 0) / ($view->product->origin_product->price_cost ?? 1))) * 100);
+        //# 재고량
+        $productList = ProductStock::where('product_id', $id)->where('slot_status','DP-COMPLETE')->where('use_status','use')->whereColumn('inserted_amount', '>', 'sale_amount');
+        $view->productCnt = $productList->sum('inserted_amount') - $productList->sum('sale_amount');
+        //# 리뷰 평점
+        $view->reviewScore = round(PickupProductReview::where('product_id',$id)->avg('score'), 1);
         return $view;
     }
 }

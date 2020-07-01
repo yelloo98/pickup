@@ -13,7 +13,7 @@
             @forelse($product_like as $k => $v)
             <div class="wish-wrapper wish-wrapper-{{$v->product->id}}">
                 <button class="delete-list" onclick="PickupCommon.productLike('{{$v->product->id ?? 0}}', 'delete')"><img src="/front/dist/img/icon_popup_x01.png" alt=""></button>
-                <div class="img-box" @if($v->product->origin_product->image_path != null) style="background-image: url('{{env('IMAGE_URL').$v->product->origin_product->image_path}}'); background-size:cover;" @endif></div>
+                <div class="img-box" @if(!empty($v->product->origin_product->image_path)) style="background-image: url('{{env('IMAGE_URL').$v->product->origin_product->image_path}}'); background-size:cover;" @endif></div>
                 <div class="word-box" onclick="location.href='/front/product/detail/{{$v->product->id ?? 0}}'">
                     <div class="toTop">
                         <p><span>{{$v->product->store->fcTrader->companyName ?? ''}}</span></p>

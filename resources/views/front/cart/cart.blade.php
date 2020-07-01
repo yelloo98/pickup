@@ -37,7 +37,7 @@
                             <input type="checkbox" id="check_item_{{$k}}" name="check_item_{{$k}}"/>
                             <label for="check_item_{{$k}}"><span class="checkbox-custom"></span></label>
                         </div>
-                        <div class="img-box" @if($v->product->origin_product->image_path != null) style="background-image: url('{{env('IMAGE_URL').$v->product->origin_product->image_path}}'); background-size:cover;" @endif></div>
+                        <div class="img-box" @if(!empty($v->product->origin_product->image_path)) style="background-image: url('{{env('IMAGE_URL').$v->product->origin_product->image_path}}'); background-size:cover;" @endif></div>
                         <div class="word-box">
                             <div class="toTop">
                                 <p><span>{{$v->product->store->fcTrader->companyName ?? ''}}</span></p>

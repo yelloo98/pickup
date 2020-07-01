@@ -62,11 +62,11 @@
             <div class="swiper-wrapper">
                 @forelse($newProduct as $k=>$v)
                 <div class="swiper-slide" onclick="pageMain.selProduct({{$v->product_id ?? 0}})">
-                    <div class="img-box" @if($v->product->origin_product->image_path != null) style="background-image: url('{{env('IMAGE_URL').$v->product->origin_product->image_path}}')" @endif>
+                    <div class="img-box" @if(!empty($v->product->origin_product->image_path)) style="background-image: url('{{env('IMAGE_URL').$v->product->origin_product->image_path}}')" @endif>
                         <img src="/front/dist/img/icon_cart_box.png" alt="">
                     </div>
                     <div class="price-box">
-                        @if($v->product->price ?? '' == $v->product->origin_product->price_cost ?? '')
+                        @if(($v->product->price ?? '') == ($v->product->origin_product->price_cost ?? '') || ($v->product->price ?? '') > ($v->product->origin_product->price_cost ?? ''))
                         <p><span>{{number_format($v->product->price ?? 0)}}</span></p>
                         @else
                         <p><span class="sale-word">SALE</span><span>{{number_format($v->product->price ?? 0)}}</span><small>{{number_format($v->product->origin_product->price_cost ?? 0)}}</small></p>
@@ -92,12 +92,12 @@
             <div class="swiper-wrapper">
                 @forelse($bestProduct as $k=>$v)
                 <div class="swiper-slide" onclick="pageMain.selProduct({{$v->product_id ?? 0}})">
-                    <div class="img-box" @if($v->product->origin_product->image_path != null) style="background-image: url('{{env('IMAGE_URL').$v->product->origin_product->image_path}}')" @endif>
+                    <div class="img-box" @if(!empty($v->product->origin_product->image_path)) style="background-image: url('{{env('IMAGE_URL').$v->product->origin_product->image_path}}')" @endif>
                         <img src="/front/dist/img/icon_cart_box.png" alt="">
                     </div>
                     <div class="word-box">
                         <div class="price-box">
-                            @if($v->product->price ?? '' == $v->product->origin_product->price_cost ?? '')
+                            @if(($v->product->price ?? '') == ($v->product->origin_product->price_cost ?? '') || ($v->product->price ?? '') > ($v->product->origin_product->price_cost ?? ''))
                             <p><span>{{number_format($v->product->price ?? 0)}}</span></p>
                             @else
                             <p><span class="sale-word">SALE</span><span>{{number_format($v->product->price ?? 0)}}</span><small>{{number_format($v->product->origin_product->price_cost ?? 0)}}</small></p>
@@ -123,7 +123,7 @@
             <div class="cubeBox-wrapper">
                 @forelse($historyProduct as $k=>$v)
                 <div class="cubeItem" onclick="pageMain.selProduct({{$v->product_id ?? 0}})">
-                    <div class="img-box" @if($v->product->origin_product->image_path != null) style="background-image: url('{{env('IMAGE_URL').$v->product->origin_product->image_path}}')" @endif>
+                    <div class="img-box" @if(!empty($v->product->origin_product->image_path)) style="background-image: url('{{env('IMAGE_URL').$v->product->origin_product->image_path}}')" @endif>
                         <img src="/front/dist/img/icon_cart_box.png" alt="">
                     </div>
                     <div class="item-subject">
@@ -146,7 +146,7 @@
                 @forelse($ProductReview as $k=>$v)
                     @if($k % 2 == 0) <div class="swiper-slide"> @endif
                         <div class="review-list">
-                            <div class="img-box" @if($v->product->origin_product->image_path != null) style="background-image: url('{{env('IMAGE_URL').$v->product->origin_product->image_path}}')" @endif></div>
+                            <div class="img-box" @if(!empty($v->product->origin_product->image_path)) style="background-image: url('{{env('IMAGE_URL').$v->product->origin_product->image_path}}')" @endif></div>
                             <div class="word-box">
                                 <img src="/front/dist/img/icon_review.png" alt="">
                                 <p class="user-word" style="-webkit-box-orient: vertical;">{{$v->contents ?? ''}}</p>
