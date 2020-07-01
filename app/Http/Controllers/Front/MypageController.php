@@ -292,7 +292,6 @@ class MypageController extends Controller
                         if(empty(Product::find($res['product_id']))) return response()->json(['code'=>400, 'msg'=>'상품이 없습니다']);
                         $qna = new PickupQna();
                         $qna->customer_id = $shopAuth->user()->id;
-                        $qna->store_id = $res['store_id'];
                         $qna->product_id = $res['product_id'];
                         $qna->category = $res['category'];
                         $qna->contents = $res['contents'];

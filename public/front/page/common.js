@@ -173,7 +173,6 @@ var PickupCommon = {
     //# 상품 문의하기
     qnaProduct : function (qna_id = '0', status = 'add') {
         var data = new FormData();
-        data.append('store_id', $("input[name='store_id']").val());
         data.append('product_id', $("input[name='product_id']").val());
         data.append('category', $('select[name="category"]').val());
         data.append('contents', $('[name=contents]').val());
