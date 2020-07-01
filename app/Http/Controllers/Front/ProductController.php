@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\Front;
 
+use App\Helper\ShopAuth;
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
 use App\Models\Device;
 use App\Models\OriginProduct;
+use App\Models\PickupCart;
 use App\Models\PickupOrders;
 use App\Models\PickupOrdersProduct;
+use App\Models\PickupProductLikes;
 use App\Models\PickupProductReview;
 use App\Models\PickupProductViews;
 use App\Models\Product;
@@ -35,11 +38,13 @@ class ProductController extends Controller
         return $view;
     }
 
-    public function getProduct($id)
+    public function getProduct(Request $request, $id)
     {
         $view = view('front.product.detail');
         $view->page = 'detail';
 
+        $shopAuth = new ShopAuth($request);
+        //# 상품
         $view->product = Product::find($id);
         //# 세일율
         $view->productSale = floor((1 - (($view->product->price ?? 0) / ($view->product->origin_product->price_cost ?? 1))) * 100);
@@ -48,6 +53,8 @@ class ProductController extends Controller
         $view->productCnt = $productList->sum('inserted_amount') - $productList->sum('sale_amount');
         //# 리뷰 평점
         $view->reviewScore = round(PickupProductReview::where('product_id',$id)->avg('score'), 1);
+        //# 상품 좋아요
+        $view->productLike = PickupProductLikes::where([['customer_id', $shopAuth->user()->id],['product_id', $id]])->get();
         return $view;
     }
 }

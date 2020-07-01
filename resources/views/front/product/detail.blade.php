@@ -5,7 +5,9 @@
         <div class="swiper-container goods-img">
             <div class="swiper-wrapper">
                 @if(!empty($product->origin_product->image_path))
-                <div class="swiper-slide" style="background: url('{{env('IMAGE_URL').$product->origin_product->image_path}}') center center; background-size: cover;"></div>
+                <div class="swiper-slide">
+                    <img src="{{env('IMAGE_URL').$product->origin_product->image_path}}" alt="">
+                </div>
                 @endif
             </div>
             <!-- Add Pagination -->
@@ -50,7 +52,21 @@
             </ul>
             <div class="target-wrap">
                 <div class="tabTarget active">
-                    <img class="goods" src="/front/dist/img/goods.png" alt="">
+                    @if(!empty($product->origin_product->landing1_path))
+                    <img class="goods" src="{{env('IMAGE_URL').$product->origin_product->landing1_path}}" alt="">
+                    @endif
+                    @if(!empty($product->origin_product->landing2_path))
+                    <img class="goods" src="{{env('IMAGE_URL').$product->origin_product->landing2_path}}" alt="">
+                    @endif
+                    @if(!empty($product->origin_product->landing3_path))
+                    <img class="goods" src="{{env('IMAGE_URL').$product->origin_product->landing3_path}}" alt="">
+                    @endif
+                    @if(!empty($product->origin_product->landing4_path))
+                    <img class="goods" src="{{env('IMAGE_URL').$product->origin_product->landing4_path}}" alt="">
+                    @endif
+                    @if(!empty($product->origin_product->landing5_path))
+                    <img class="goods" src="{{env('IMAGE_URL').$product->origin_product->landing5_path}}" alt="">
+                    @endif
                 </div>
                 <div class="tabTarget over-size">
                     <div class="accordian-list">
@@ -63,7 +79,7 @@
                 </div>
                 <div class="tabTarget ">
                     <div class="review-wrapper">
-                        <button class="write-btn" onclick="location.href='MP_reviewWrite.html'">상품후기 작성하기</button>
+                        <button class="write-btn" onclick="location.href='/front/mypage/review/0?product_id={{$product->id ?? ''}}'">상품후기 작성하기</button>
                         <div class="review-container">
                             <div class="review-list">
                                 <div class="review-title">
@@ -150,7 +166,7 @@
                 </div>
                 <div class="tabTarget over-size ">
                     <div class="qna-wrapper">
-                        <button class="write-btn" onclick="location.href='PP_qnaWrite.html'">Q&A 작성하기</button>
+                        <button class="write-btn" onclick="location.href='/front/mypage/qna/product/0?product_id={{$product->id ?? ''}}'">Q&A 작성하기</button>
                         <div class="qna-container">
                             <div class="qna-folder"><!-- clear-list 추가시 답변완료 -->
                                 <div class="qna-userContent">
@@ -237,44 +253,34 @@
         </div>
         <div class="purchase-footer fixed-footer"><!-- outOfStock 클래스 추가시 품절 -->
             <div class="subBtn-wrap">
-                <button class="clicking">
+                @if($productLike->count() > 0)
+                <button class="clicking active" onclick="PickupCommon.productLike('{{$product->id ?? 0}}', 'delete_2')">
+                    <img src="/front/dist/img/icon_heart_O_on.png" alt="">
+                </button>
+                @else
+                <button class="clicking" onclick="PickupCommon.productLike('{{$product->id ?? 0}}', 'add')">
                     <img src="/front/dist/img/icon_heart_O.png" alt="">
                 </button>
-                <button class="changeing">
+                @endif
+                <button class="changeing" onclick="PickupCommon.selProduct('{{$product->id ?? 0}}', 'cart')">
                     <img src="/front/dist/img/icon_cart_O_on.png" alt="">
                 </button>
             </div>
             <div class="mainBtn-wrap">
-                <button>구매하기</button>
+                <button onclick="PickupCommon.selProduct('{{$product->id ?? 0}}','pay')">구매하기</button>
             </div>
         </div>
     </div>
 @endsection
 @section('script')
-
     <script>
-
         $(document).ready(function(){
-
-            $('.clicking').click(function(){
-                $(this).toggleClass('active');
-                if ( $(this).hasClass('active') ) {
-                    $(this).children('img').attr('src',$(this).children('img').attr('src').replace('.png','_on.png'));
-                } else {
-                    $(this).children('img').attr('src',$(this).children('img').attr('src').replace('_on.png','.png'));
-                }
-            });
-
             var swiperGoods = new Swiper('.swiper-container.goods-img', {
+                autoHeight: true,
                 pagination: {
                     el: '.swiper-pagination',
                 },
             });
-
-            var mainItemList = $('.goods-img .swiper-slide').outerWidth();
-            $('.goods-img .swiper-slide').css('height',mainItemList);
-
-
 
             $(window).scroll(function(){
                 var goodsHeight = $('.goods-img').outerHeight();
@@ -283,8 +289,10 @@
 
                 if ( $(window).scrollTop() >= totalHeight ) {
                     $('.goodsTab-container .small-list').addClass('active');
+                    $('.tabTarget').addClass('scrolled');
                 } else {
                     $('.goodsTab-container .small-list').removeClass('active');
+                    $('.tabTarget').removeClass('scrolled');
                 }
             });
 

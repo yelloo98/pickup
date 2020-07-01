@@ -160,7 +160,7 @@
         </div>
     </div>
 
-    <div class="popup-wrapper basic-wrapper alert-wrapper">
+    <div class="popup-wrapper basic-wrapper alert-wrapper" style="z-index: 999">
         <div class="popup-inner">
             <button class="close-box"><img src="/front/dist/img/icon_popup_x01.png" alt=""></button>
             <div class="content-section">

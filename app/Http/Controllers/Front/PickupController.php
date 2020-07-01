@@ -61,10 +61,11 @@ class PickupController extends Controller
                     //# 관심상품 전체 취소
                     PickupProductLikes::where('customer_id', $shopAuth->user()->id)->delete();
                     return response()->json(['code' => 301, 'msg' => '관심상품 전체 취소']);
-                }elseif($res['status'] == 'delete'){
+                }elseif($res['status'] == 'delete' || $res['status'] == 'delete_2'){
                     //# 관심상품 취소
                     PickupProductLikes::where([['product_id', $res['product_id']], ['customer_id', $shopAuth->user()->id]])->delete();
-                    return response()->json(['code' => 300, 'msg' => '관심상품 취소', 'product_id' => $res['product_id']]);
+                    if($res['status'] == 'delete') return response()->json(['code' => 300, 'msg' => '관심상품 취소', 'product_id' => $res['product_id']]);
+                    if($res['status'] == 'delete_2') return response()->json(['code' => 302, 'msg' => '관심상품 취소', 'product_id' => $res['product_id']]);
                 }else{
                     //# 관심상품 등록
                     $productLike = new PickupProductLikes();
@@ -85,48 +86,66 @@ class PickupController extends Controller
     }
 
     //# 장바구니 선택
-    public function selCart(Request $request)
+    public function selProduct(Request $request)
     {
-        $shopAuth = new ShopAuth($request);
-        if(empty(Customer::find($shopAuth->user()->id))) return response()->json(['code'=>600, 'msg'=>'로그인해주세요']);
+        return DB::transaction(function() use ($request){
+            try{
+                $shopAuth = new ShopAuth($request);
+                if(empty(Customer::find($shopAuth->user()->id))) return response()->json(['code'=>600, 'msg'=>'로그인해주세요']);
 
-        $res = $request->all();
-        $productList = ProductStock::where('product_id', $res['product_id'])->where('slot_status','DP-COMPLETE')->where('use_status','use')->whereColumn('inserted_amount', '>', 'sale_amount');
-        $cartCnt = PickupCart::where([['product_id', $res['product_id']], ['customer_id', $shopAuth->user()->id]])->first()->count ?? 0;
-        if($productList->count() > 0){
-            $productCnt = $productList->sum('inserted_amount') - $productList->sum('sale_amount') - $cartCnt;
-            if($productCnt <= 0) return response()->json(['code' => 400, 'msg' => '해당 상품의 재고가 없습니다']);
-            $product = $productList->first()->product;
-            return response()->json(['code' => 200, 'msg' => '장바구니 정보', 'cnt' => $productCnt ?? 0, 'name' => $product->origin_product->name ?? '', 'price' => number_format($product->price) ?? '']);
-        }else{
-            return response()->json(['code' => 400, 'msg' => '해당 상품의 재고가 없습니다']);
-        }
+                $res = $request->all();
+                $productList = ProductStock::where('product_id', $res['product_id'])->where('slot_status','DP-COMPLETE')->where('use_status','use')->whereColumn('inserted_amount', '>', 'sale_amount');
+                if($productList->count() > 0){
+                    $productCnt = $productList->sum('inserted_amount') - $productList->sum('sale_amount');
+                    $product = $productList->first()->product;
+                    return response()->json(['code' => 200, 'msg' => '장바구니 정보', 'cnt' => $productCnt ?? 0, 'name' => $product->origin_product->name ?? '', 'price' => number_format($product->price) ?? '']);
+                }else{
+                    return response()->json(['code' => 400, 'msg' => '해당 상품의 재고가 없습니다']);
+                }
+            }catch(\Exception $ex){
+                DB::rollBack();
+                return response()->json(['code'=>400, 'msg'=>'관심상품 처리 중 실패하였습니다.']);
+            }catch(\Throwable $throwable){
+                DB::rollBack();
+                return response()->json(['code'=>400, 'msg'=>'관심상품 처리 중 실패하였습니다.']);
+            }
+        });
     }
 
     //# 장바구니 등록/삭제
     public function addCart(Request $request)
     {
-        $shopAuth = new ShopAuth($request);
-        if(empty(Customer::find($shopAuth->user()->id))) return response()->json(['code'=>600, 'msg'=>'로그인해주세요']);
+        return DB::transaction(function() use ($request){
+            try{
+                $shopAuth = new ShopAuth($request);
+                if(empty(Customer::find($shopAuth->user()->id))) return response()->json(['code'=>600, 'msg'=>'로그인해주세요']);
 
-        $res = $request->all();
-        if($res['status'] == 'add') {
-            $cart = PickupCart::where([['product_id', $res['product_id']], ['customer_id', $shopAuth->user()->id]])->first();
-            if(!empty($cart)){
-                $cart->count = $cart->count + $res['cnt'];
-            }else{
-                $cart = new PickupCart();
-                $cart->product_id = $res['product_id'];
-                $cart->customer_id = $shopAuth->user()->id;
-                $cart->count = $res['cnt'];
+                $res = $request->all();
+                if($res['status'] == 'add') {
+                    $cart = PickupCart::where([['product_id', $res['product_id']], ['customer_id', $shopAuth->user()->id]])->first();
+                    if(!empty($cart)){
+                        $cart->count = $cart->count + $res['cnt'];
+                    }else{
+                        $cart = new PickupCart();
+                        $cart->product_id = $res['product_id'];
+                        $cart->customer_id = $shopAuth->user()->id;
+                        $cart->count = $res['cnt'];
+                    }
+                    $cart->save();
+                    return response()->json(['code' => 200, 'msg' => '장바구니 등록']);
+                }else{
+                    //# 장바구니 등록 취소
+                    PickupCart::where([['product_id', $res['product_id']], ['customer_id', $shopAuth->user()->id], ['count', $res['cnt']]])->first()->delete();
+                    return response()->json(['code' => 400, 'msg' => '장바구니 취소']);
+                }
+            }catch(\Exception $ex){
+                DB::rollBack();
+                return response()->json(['code'=>400, 'msg'=>'관심상품 처리 중 실패하였습니다.']);
+            }catch(\Throwable $throwable){
+                DB::rollBack();
+                return response()->json(['code'=>400, 'msg'=>'관심상품 처리 중 실패하였습니다.']);
             }
-            $cart->save();
-            return response()->json(['code' => 200, 'msg' => '장바구니 등록']);
-        }else{
-            //# 장바구니 등록 취소
-            PickupCart::where([['product_id', $res['product_id']], ['customer_id', $shopAuth->user()->id], ['count', $res['cnt']]])->first()->delete();
-            return response()->json(['code' => 400, 'msg' => '장바구니 취소']);
-        }
+        });
     }
 
 

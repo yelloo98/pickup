@@ -11,7 +11,7 @@ var pageModal = {
     },
 
     alertPopup : function(msg){
-        $('.content-section p').text(msg);
+        $('.alert-wrapper .content-section p').text(msg);
         $('.alert-wrapper').addClass('active');
     },
 
@@ -32,7 +32,7 @@ var pageModal = {
                 $('.purchase-wrapper .goodsAmount').text(cnt);
                 $('.purchase-wrapper .totalNum span').text(pageModal.addComma(price * cnt));
             }else {
-                alert("재고가 없습니다.");
+                pageModal.alertPopup('재고가 없습니다.');
             }
         }else{
             cnt--;
