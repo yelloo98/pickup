@@ -251,7 +251,7 @@
                 </div>
             </div>
         </div>
-        <div class="purchase-footer fixed-footer"><!-- outOfStock 클래스 추가시 품절 -->
+        <div class="purchase-footer fixed-footer @if($productCnt == 0) outOfStock @endif"> <!-- outOfStock 클래스 추가시 품절 -->
             <div class="subBtn-wrap">
                 @if($productLike->count() > 0)
                 <button class="clicking active" onclick="PickupCommon.productLike('{{$product->id ?? 0}}', 'delete_2')">
@@ -262,12 +262,22 @@
                     <img src="/front/dist/img/icon_heart_O.png" alt="">
                 </button>
                 @endif
+                @if($productCnt == 0)
+                <button class="changeing">
+                    <img src="/front/dist/img/icon_cart_O_out.png" alt="">
+                </button>
+                @else
                 <button class="changeing" onclick="PickupCommon.selProduct('{{$product->id ?? 0}}', 'cart')">
                     <img src="/front/dist/img/icon_cart_O_on.png" alt="">
                 </button>
+                @endif
             </div>
             <div class="mainBtn-wrap">
+                @if($productCnt == 0)
+                <button>품절</button>
+                @else
                 <button onclick="PickupCommon.selProduct('{{$product->id ?? 0}}','pay')">구매하기</button>
+                @endif
             </div>
         </div>
     </div>
@@ -324,8 +334,8 @@
                 $('.photo-review .img-box').css('height',photoWidth);
             });
 
-            // $('.outOfStock').find('.changeing').children('img').attr("src",$('.outOfStock').find('.changeing').children('img').attr("src").replace("O.png","O_out.png"));
-            $('.outOfStock .mainBtn-wrap button').text('품절');
+            // $('.outOfStock').find('.changeing').children('img').attr("src",$('.outOfStock').find('.changeing').children('img').attr("src").replace("O_on.png","O_out.png"));
+            // $('.outOfStock .mainBtn-wrap button').text('품절');
 
         });
 

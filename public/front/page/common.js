@@ -136,7 +136,10 @@ var PickupCommon = {
 
     //# 결제
     addPay : function (product_id) {
-        pageModal.alertPopup(product_id);
+        var num = $('.purchase-wrapper .goodsAmount').text();
+        var price = $('.purchase-wrapper .totalNum span').text().replace(/,/gi,'');
+        var total = product_id + '번 상품, ' + num + '개, ' + price + '원';
+        pageModal.alertPopup(total);
         return false;
     },
 

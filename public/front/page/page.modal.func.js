@@ -32,7 +32,7 @@ var pageModal = {
                 $('.purchase-wrapper .goodsAmount').text(cnt);
                 $('.purchase-wrapper .totalNum span').text(pageModal.addComma(price * cnt));
             }else {
-                pageModal.alertPopup('재고가 없습니다.');
+                pageModal.alertPopup('재고가 부족합니다.');
             }
         }else{
             cnt--;
