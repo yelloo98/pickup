@@ -121,7 +121,16 @@ class PickupController extends Controller
                 if(empty(Customer::find($shopAuth->user()->id))) return response()->json(['code'=>600, 'msg'=>'로그인해주세요']);
 
                 $res = $request->all();
-                if($res['status'] == 'add') {
+                if($res['status'] == 'delete_all') {
+                    //# 장바구니 전체 삭제
+//                    PickupCart::where('customer_id', $shopAuth->user()->id)->delete();
+                    return response()->json(['code' => 301, 'msg' => '장바구니 전체 삭제']);
+                }elseif($res['status'] == 'delete') {
+                    //# 장바구니 삭제
+//                    PickupCart::where([['product_id', $res['product_id']], ['customer_id', $shopAuth->user()->id]])->delete();
+                    return response()->json(['code' => 300, 'msg' => '장바구니 삭제', 'product_id'=>$res['product_id']]);
+                }else{
+                    //# 장바구니 추가
                     $cart = PickupCart::where([['product_id', $res['product_id']], ['customer_id', $shopAuth->user()->id]])->first();
                     if(!empty($cart)){
                         $cart->count = $cart->count + $res['cnt'];
@@ -132,11 +141,7 @@ class PickupController extends Controller
                         $cart->count = $res['cnt'];
                     }
                     $cart->save();
-                    return response()->json(['code' => 200, 'msg' => '장바구니 등록']);
-                }else{
-                    //# 장바구니 등록 취소
-                    PickupCart::where([['product_id', $res['product_id']], ['customer_id', $shopAuth->user()->id], ['count', $res['cnt']]])->first()->delete();
-                    return response()->json(['code' => 400, 'msg' => '장바구니 취소']);
+                    return response()->json(['code' => 200, 'msg' => '장바구니 추가']);
                 }
             }catch(\Exception $ex){
                 DB::rollBack();

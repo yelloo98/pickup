@@ -127,6 +127,23 @@ var PickupCommon = {
             if(res.code == 200){
                 $('.popup-wrapper').removeClass('active');
                 pageModal.cartSavePopup();
+            }else if(res.code == 300){
+                if($("input[name='check_item_" + res.product_id + "']").prop("checked")){
+                    $('.content-area .product_'+res.product_id).remove();
+                    PickupCart.totalPrice();
+                }else{
+                    $('.content-area .product_'+res.product_id).remove();
+                }
+                if( $('.content-area .content-wrap').length == 0 ) {
+                    $('.content-area').append('<p class="none-list">등록된 상품이 없습니다.</p>');
+                }
+            }else if(res.code == 301){
+                $('.content-area').empty();
+                $('.content-area').append('<p class="none-list">등록된 상품이 없습니다.</p>');
+                $(".totalPrice span").text(0);
+                $(".totalPrice_m").text(0);
+                $('.totalCnt').text(0);
+                $("input[type=checkbox]").prop("checked",false);
             }else{
                 pageModal.alertPopup(res.msg);
                 return false;

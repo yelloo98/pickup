@@ -7,12 +7,12 @@
                 <div class="word-area">
                     <div class="main-box">
                         <p class="nickName"><span>{{$customer->name ?? '비회원'}}님의</span>총 결제 금액</p>
-                        <p class="totalPrice"><span>{{$cartListSum}}</span>원</p>
+                        <p class="totalPrice"><span>0</span>원</p>
                     </div>
                     <div class="sub-box">
                         <div class="sub-content">
                             <div class="reward-name">총 상품금액</div>
-                            <div class="reward-price">{{$cartListSum}}</div>
+                            <div class="reward-price totalPrice_m">0</div>
                         </div>
                         <div class="sub-content">
                             <div class="reward-name noGoods">총 배송비</div>
@@ -24,71 +24,102 @@
             <div class="content-section">
                 <div class="btn-area">
                     <div class="checkbox-wrap">
-                        <input type="checkbox" id="allCheck" name="allCheck"/>
+                        <input type="checkbox" id="allCheck" name="allCheck" onclick="PickupCart.allCheck(this)"/>
                         <label for="allCheck"><span class="checkbox-custom"></span>
                             <span class="checkbox-label">전체선택</span></label>
-                        <div class="alldelete-btn">전체삭제</div>
+                        <div class="alldelete-btn" onclick="PickupCommon.addCart('', 'delete_all')">전체삭제</div>
                     </div>
                 </div>
                 <div class="content-area">
-                    @forelse($cartList as $k=>$v)
-                    <div class="content-wrap">
+                @forelse($cartList as $k=>$v)
+                    <div class="content-wrap @if(($v->product_res ?? '') == 0) withoutGoods @endif product_{{$v->product_id}}">
                         <div class="checkbox-box">
-                            <input type="checkbox" id="check_item_{{$k}}" name="check_item_{{$k}}"/>
-                            <label for="check_item_{{$k}}"><span class="checkbox-custom"></span></label>
+                            <input type="checkbox" id="check_item_{{$v->product_id ?? 0}}" name="check_item_{{$v->product_id ?? 0}}" onclick="PickupCart.totalPrice()" @if(($v->product_res ?? '') == 0) disabled @endif/>
+                            <label for="check_item_{{$v->product_id ?? 0}}"><span class="checkbox-custom"></span></label>
                         </div>
-                        <div class="img-box" @if(!empty($v->product->origin_product->image_path)) style="background-image: url('{{env('IMAGE_URL').$v->product->origin_product->image_path}}'); background-size:cover;" @endif></div>
+                        <div class="img-box" @if(!empty($v->product->origin_product->image_path)) style="background-image: url('{{env('IMAGE_URL').$v->product->origin_product->image_path}}'); background-size:cover;" @endif>
+                            @if(($v->product_res ?? '') == 0)<p>품 절</p>@endif
+                        </div>
                         <div class="word-box">
                             <div class="toTop">
                                 <p><span>{{$v->product->store->fcTrader->companyName ?? ''}}</span></p>
-                                <button class='delete-btn'><img src="/front/dist/img/icon_popup_x01.png" alt=""></button>
+                                <button class='delete-btn' onclick="PickupCommon.addCart('{{$v->product_id ?? 0}}', 'delete')"><img src="/front/dist/img/icon_popup_x01.png" alt=""></button>
                             </div>
                             <div class="menuInfo">
                                 <p>{{$v->product->origin_product->name ?? ''}}</p>
                             </div>
                             <div class="price">
                                 <div class="btnBlock">
-                                    <button class="up-btn"><img src="/front/dist/img/icon_up.png" alt=""></button>
+                                    <button class="up-btn" onclick="PickupCart.cntNum(this, '{{$v->product_res}}', '{{$v->price}}', 'plus')"><img src="/front/dist/img/icon_up.png" alt=""></button>
                                     <div class="goodsAmount"><span>{{$v->count ?? ''}}</span></div>
-                                    <button class="down-btn"><img src="/front/dist/img/icon_down.png" alt=""></button>
+                                    <button class="down-btn" onclick="PickupCart.cntNum(this, '{{$v->product_res}}', '{{$v->price}}', 'minus')"><img src="/front/dist/img/icon_down.png" alt=""></button>
                                 </div>
                                 <p class="priceNum"><span>{{number_format($v->price_sum ?? 0)}}</span>원</p>
                             </div>
                         </div>
                     </div>
-                    @empty
-                    @endforelse
-{{--                    <div class="content-wrap withoutGoods">--}}
-{{--                        <div class="checkbox-box">--}}
-{{--                            <input type="checkbox" id="check_item02" name="check_item02" disabled/>--}}
-{{--                            <label for="check_item02"><span class="checkbox-custom"></span></label>--}}
-{{--                        </div>--}}
-{{--                        <div class="img-box "><p>품 절</p></div>--}}
-{{--                        <div class="word-box ">--}}
-{{--                            <div class="toTop">--}}
-{{--                                <p><span>군자점</span></p>--}}
-{{--                                <button class='delete-btn'><img src="/front/dist/img/icon_popup_x01.png" alt=""></button>--}}
-{{--                            </div>--}}
-{{--                            <div class="menuInfo">--}}
-{{--                                <p>국내산 생생 삼겹살250g</p>--}}
-{{--                            </div>--}}
-{{--                            <div class="price">--}}
-{{--                                <div class="btnBlock">--}}
-{{--                                    <button class="up-btn"><img src="/front/dist/img/icon_up.png" alt=""></button>--}}
-{{--                                    <div class="goodsAmount"><span>1</span></div>--}}
-{{--                                    <button class="down-btn"><img src="/front/dist/img/icon_down.png" alt=""></button>--}}
-{{--                                </div>--}}
-{{--                                <p class="priceNum"><span>22,950</span>원</p>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
+                @empty
+                    <p class="none-list">등록된 상품이 없습니다.</p>
+                @endforelse
                 </div>
             </div>
         </div>
         <div class="fixed-footer full-btn">
-            <button>총 <span>2</span>개 상품 구매하기</button>
+            <button>총 <span class="totalCnt">0</span>개 상품 구매하기</button>
         </div>
     </div>
 @endsection
 @section('script')
+    <script>
+    var PickupCart = {
+        _config : {},
+
+        //# 총 결제 금액 처리 / 구매 개수
+        totalPrice : function(){
+            var sum = 0;
+            $(".content-area input[type=checkbox]:checked").each(function () {
+                sum += Number($(this).parent('.checkbox-box').siblings('.word-box').find('.priceNum').children('span').text().replace(/,/g, ''));
+            });
+
+            $(".totalPrice span").text(pageModal.addComma(sum));
+            $(".totalPrice_m").text(pageModal.addComma(sum));
+            $(".totalCnt").text($('.content-area input[type=checkbox]:checked').length);
+        },
+
+        //# 전체 체크
+         allCheck : function(obj) {
+            if ($(obj).prop("checked")) {
+                $("input[type=checkbox]:not(:disabled)").prop("checked", true);
+            } else {
+                $("input[type=checkbox]:not(:disabled)").prop("checked", false);
+            }
+
+             PickupCart.totalPrice();
+        },
+
+        //# 상품 추가 / 감소
+        cntNum : function(obj, max, price, type) {
+            var cnt = $(obj).parents('.price').find('.goodsAmount').children('span').text();
+            if (type == 'plus') {
+                cnt++;
+                if (cnt <= max) {
+                    $(obj).parents('.price').find('.goodsAmount').children('span').text(cnt);
+                    $(obj).parents('.price').find('.priceNum').children('span').text(pageModal.addComma(price * cnt));
+                } else {
+                    pageModal.alertPopup('재고가 부족합니다.');
+                }
+            } else {
+                cnt--;
+                if (cnt >= 1) {
+                    $(obj).parents('.price').find('.goodsAmount').children('span').text(cnt);
+                    $(obj).parents('.price').find('.priceNum').children('span').text(pageModal.addComma(price * cnt));
+                } else {
+                    pageModal.alertPopup('1개 이하는 선택할 수 없습니다.');
+                }
+            }
+
+            PickupCart.totalPrice();
+        }
+    }
+    </script>
 @endsection

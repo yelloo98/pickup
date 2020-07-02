@@ -36,11 +36,11 @@ var pageModal = {
             }
         }else{
             cnt--;
-            if(cnt >= 0){
+            if(cnt >= 1){
                 $('.purchase-wrapper .goodsAmount').text(cnt);
                 $('.purchase-wrapper .totalNum span').text(pageModal.addComma(price * cnt));
             }else {
-                alert("수량을 선택해주세요.");
+                pageModal.alertPopup('1개 이하는 선택할 수 없습니다.');
             }
         }
     }
