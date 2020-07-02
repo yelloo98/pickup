@@ -123,11 +123,11 @@ class PickupController extends Controller
                 $res = $request->all();
                 if($res['status'] == 'delete_all') {
                     //# 장바구니 전체 삭제
-//                    PickupCart::where('customer_id', $shopAuth->user()->id)->delete();
+                    PickupCart::where('customer_id', $shopAuth->user()->id)->delete();
                     return response()->json(['code' => 301, 'msg' => '장바구니 전체 삭제']);
                 }elseif($res['status'] == 'delete') {
                     //# 장바구니 삭제
-//                    PickupCart::where([['product_id', $res['product_id']], ['customer_id', $shopAuth->user()->id]])->delete();
+                    PickupCart::where([['product_id', $res['product_id']], ['customer_id', $shopAuth->user()->id]])->delete();
                     return response()->json(['code' => 300, 'msg' => '장바구니 삭제', 'product_id'=>$res['product_id']]);
                 }else{
                     //# 장바구니 추가
