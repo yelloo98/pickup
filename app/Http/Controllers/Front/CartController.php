@@ -48,9 +48,11 @@ class CartController extends Controller
                     if($productCnt >= $v[1]){
                         //# 재고가 있을 경우
                         $url_parameter = $url_parameter . '&product['.$k.']='.$v[0].','.$v[1];
-                        $cart = PickupCart::where([['customer_id',$shopAuth->user()->id],['product_id',$v[0]]])->first();
-                        $cart->count = $v[1];
-                        $cart->save();
+                        if($res['type'] == 'cart'){
+                            $cart = PickupCart::where([['customer_id',$shopAuth->user()->id],['product_id',$v[0]]])->first();
+                            $cart->count = $v[1];
+                            $cart->save();
+                        }
                     }elseif($productCnt < 0){
                         //# 재고가 부족할 경우
                         DB::rollBack();

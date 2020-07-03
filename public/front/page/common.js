@@ -101,7 +101,7 @@ var PickupCommon = {
                 $('.purchase-wrapper .up-btn').attr('onclick', 'pageModal.cntNum(' + res.cnt + ', \'plus\',' + res.price.replace(/,/gi,'') + ')');
                 $('.purchase-wrapper .down-btn').attr('onclick', 'pageModal.cntNum(' + res.cnt + ', \'minus\',' + res.price.replace(/,/gi,'') + ')');
                 if(status == 'pay'){
-                    $('.purchase-wrapper .footer-section').attr('onclick', 'PickupCommon.addPay('+ product_id +')');
+                    $('.purchase-wrapper .footer-section').attr('onclick', 'PickupCommon.addOrder(\'product\', '+ product_id +')');
                     $('.purchase-wrapper .footer-section button').text('구매하기');
                 }else{
                     $('.purchase-wrapper .footer-section').attr('onclick', 'PickupCommon.addCart('+ product_id + ', \'add\')');
@@ -151,19 +151,19 @@ var PickupCommon = {
         });
     },
 
-    //# 결제
-    addPay : function (product_id) {
-        var num = $('.purchase-wrapper .goodsAmount').text();
-        var price = $('.purchase-wrapper .totalNum span').text().replace(/,/gi,'');
-        var total = product_id + '번 상품, ' + num + '개, ' + price + '원';
-        pageModal.alertPopup(total);
-        return false;
-    },
-
     //# 구매하기 버튼 클릭
-    addOrder : function () {
+    addOrder : function (type = 'cart', product_id='') {
         var data = new FormData();
-        data.append('product', JSON.stringify(PickupCart._config.productList));
+        if(type == 'cart'){
+            //# 장바구니에서 구매하기
+            data.append('product', JSON.stringify(PickupCart._config.productList));
+        }else{
+            //# 상품에서 구매하기
+            var num = $('.purchase-wrapper .goodsAmount').text();
+            data.append('product', JSON.stringify([[product_id,num]]));
+        }
+        data.append('type', type);
+
         $.ajax({
             type: 'POST',
             url: "/front/cart",
