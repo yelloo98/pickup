@@ -128,7 +128,7 @@ var PickupCommon = {
                 $('.popup-wrapper').removeClass('active');
                 pageModal.cartSavePopup();
             }else if(res.code == 300){
-                if($("input[name='check_item_" + res.product_id + "']").prop("checked")){
+                if($("#check_item_" + res.product_id).prop("checked")){
                     $('.content-area .product_'+res.product_id).remove();
                     PickupCart.totalPrice();
                 }else{
@@ -158,6 +158,27 @@ var PickupCommon = {
         var total = product_id + '번 상품, ' + num + '개, ' + price + '원';
         pageModal.alertPopup(total);
         return false;
+    },
+
+    //# 구매하기 버튼 클릭
+    addOrder : function () {
+        var data = new FormData();
+        data.append('product', JSON.stringify(PickupCart._config.productList));
+        $.ajax({
+            type: 'POST',
+            url: "/front/cart",
+            data: data,
+            contentType: false,
+            processData: false,
+            success: function (res) {
+                if (res.code == 200) {
+                    location.href = res.url;
+                }else{
+                    pageModal.alertPopup(res.msg);
+                    return false;
+                }
+            }
+        });
     },
 
     //# 매장 문의하기

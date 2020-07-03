@@ -34,7 +34,7 @@
                 @forelse($cartList as $k=>$v)
                     <div class="content-wrap @if(($v->product_res ?? '') == 0) withoutGoods @endif product_{{$v->product_id}}">
                         <div class="checkbox-box">
-                            <input type="checkbox" id="check_item_{{$v->product_id ?? 0}}" name="check_item_{{$v->product_id ?? 0}}" onclick="PickupCart.totalPrice()" @if(($v->product_res ?? '') == 0) disabled @endif/>
+                            <input type="checkbox" id="check_item_{{$v->product_id ?? 0}}" name="check_item[]" onclick="PickupCart.totalPrice()" @if(($v->product_res ?? '') == 0) disabled @endif value="{{$v->product_id}}"/>
                             <label for="check_item_{{$v->product_id ?? 0}}"><span class="checkbox-custom"></span></label>
                         </div>
                         <div class="img-box" @if(!empty($v->product->origin_product->image_path)) style="background-image: url('{{env('IMAGE_URL').$v->product->origin_product->image_path}}'); background-size:cover;" @endif>
@@ -65,14 +65,17 @@
             </div>
         </div>
         <div class="fixed-footer full-btn">
-            <button>총 <span class="totalCnt">0</span>개 상품 구매하기</button>
+            <button onclick="PickupCommon.addOrder()">총 <span class="totalCnt">0</span>개 상품 구매하기</button>
         </div>
     </div>
 @endsection
 @section('script')
     <script>
     var PickupCart = {
-        _config : {},
+        _config : {
+            productList : [],
+        },
+
 
         //# 총 결제 금액 처리 / 구매 개수
         totalPrice : function(){
@@ -84,6 +87,13 @@
             $(".totalPrice span").text(pageModal.addComma(sum));
             $(".totalPrice_m").text(pageModal.addComma(sum));
             $(".totalCnt").text($('.content-area input[type=checkbox]:checked').length);
+
+            PickupCart._config.productList = [];
+            $("input[name='check_item[]']:checked").each(function (){
+                var product_id = parseInt($(this).val());
+                var cnt = parseInt($('.product_'+$(this).val() + ' .goodsAmount span').text());
+                PickupCart._config.productList.push([product_id, cnt]);
+            });
         },
 
         //# 전체 체크

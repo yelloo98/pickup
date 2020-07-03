@@ -47,6 +47,15 @@ Route::group(['namespace' => 'Front', 'middleware' => 'front', 'prefix' => 'fron
      */
     Route::group(['prefix' => 'cart', 'as' => 'cart.'], function () {
         Route::get('/', 'CartController@getIndex')->name('index');
+        Route::post('/', 'CartController@postCart');
+    });
+
+    /**
+     * Order
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+    Route::group(['prefix' => 'order', 'as' => 'order.'], function () {
+        Route::get('/', 'OrderController@getOrderIndex');
     });
 
     /**

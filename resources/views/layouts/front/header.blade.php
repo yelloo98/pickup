@@ -57,6 +57,8 @@
             이용약관
         @elseif(($page ?? '') == 'notice')
             공지사항
+        @elseif(($page ?? '') == 'order')
+            주문/결제
         @endif
         </p>
     </div>
