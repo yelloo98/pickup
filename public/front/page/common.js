@@ -181,6 +181,46 @@ var PickupCommon = {
         });
     },
 
+    //# 결제하기 버튼 클릭
+    addPay : function () {
+        var data = new FormData();
+        data.append('product_id', $('input[name="product_id"]').val());
+        data.append('product_cnt', $('input[name="product_cnt"]').val());
+        data.append('user_name', $("input[name='user_name']").val());
+        data.append('user_phone_1', $("input[name='user_phone_1']").val());
+        data.append('user_phone_2', $("input[name='user_phone_2']").val());
+        data.append('user_phone_3', $("input[name='user_phone_3']").val());
+        data.append('user_email_01', $("input[name='user_email_01']").val());
+        if($('select[name="user_email_02"]').val() == 'direct'){
+            data.append('user_email_02', $('input[name="user_email_02"]').val());
+        }else{
+            data.append('user_email_02', $('select[name="user_email_02"]').val());
+        }
+        data.append('coupon', $('select[name="coupon"]').val());
+        data.append('user_point', $('input[name="user_point"]').val());
+        data.append('price', $('.price-total').text());
+        data.append('pay_method', $('.price-total').text());
+        data.append('pay_method', $('select[name="pay_method"]').val());
+        data.append('agree', $("input:radio[name='agree']:checked").val());
+
+        $.ajax({
+            type: 'POST',
+            url: "/front/order",
+            data: data,
+            contentType: false,
+            processData: false,
+            success: function (res) {
+                if (res.code == 200) {
+                    pageModal.alertPopup(res.msg);
+                    return false;
+                }else{
+                    pageModal.alertPopup(res.msg);
+                    return false;
+                }
+            }
+        });
+    },
+
     //# 매장 문의하기
     qnaStore : function (qna_id = '0', status = 'add') {
         var data = new FormData();

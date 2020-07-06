@@ -41,6 +41,7 @@ class CartController extends Controller
                 $shopAuth = new ShopAuth($request);
                 $url_parameter = '/front/order?';
                 $product = json_decode($res['product']);
+                if(empty($product)) return response()->json(['code' => 300, 'msg' =>'상품을 선택해주세요.']);
                 foreach ($product as $k=>$v){
                     $productList = ProductStock::where('product_id', $v[0])->where('slot_status','DP-COMPLETE')->where('use_status','use')->whereColumn('inserted_amount', '>', 'sale_amount');
                     $productCnt = $productList->sum('inserted_amount') - $productList->sum('sale_amount');
