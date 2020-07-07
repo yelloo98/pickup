@@ -53,18 +53,18 @@
                 <label for="" class="input-title">이메일</label>
                 <div class="input-content eMail">
                     <div class="input-box">
-                        <input type="text" name="user_email_01" value="{{$customer->email ?? ''}}">
+                        <input type="text" name="user_email_1" value="{{$customer->email ?? ''}}">
                     </div>
                     <div class="input-box">
                         <img src="/front/dist/img/icon_arrow_MD.png" alt="">
-                        <select id="selbox" name="user_email_02" class="hideing">
+                        <select id="selbox" name="user_email_2" class="hideing">
                             <option value="direct">직접입력</option>
                             <option value="english">english</option>
                             <option value="hanmail.net">hanmail.net</option>
                             <option value="naver.com">naver.com</option>
                             <option value="nate.com">nate.com</option>
                         </select>
-                        <input type="text" class="selboxDirect" name="user_email_02" placeholder="직접입력"/>
+                        <input type="text" class="selboxDirect" name="user_email_2" placeholder="직접입력"/>
                     </div>
                 </div>
             </div>
@@ -82,7 +82,7 @@
                         <input type="hidden" name="coupon_price_{{$v->pickup_coupon_id ?? 0}}" value="{{$v->price ?? 0}}">
                         @endforeach
                         <select name="coupon" class="noneVal">
-                            <option value="" selected disabled hidden>사용가능한 쿠폰이 {{$couponList->count()}}개 있습니다.</option>
+                            <option value="" selected>사용가능한 쿠폰이 {{$couponList->count()}}개 있습니다.</option>
                             @foreach($couponList as $k => $v)
                             <option value="{{$v->pickup_coupon_id ?? 0}}">{{$v->name ?? ''}}</option>
                             @endforeach
@@ -90,7 +90,7 @@
                         </select>
                         @else
                         <select name="coupon" class="noneVal" disabled>
-                            <option value="" selected disabled hidden>사용가능한 쿠폰이 없습니다.</option>
+                            <option value="" selected>사용가능한 쿠폰이 없습니다.</option>
                         </select>
                         @endif
                     </div>
@@ -127,27 +127,12 @@
                     <p class="table-text"><span class="price-total">{{$productSum ?? 0}}</span>원</p>
                 </li>
             </ul>
-        </div>
-        <div class="barSection"></div>
-        <div class="user-container">
-            <p class="container-title">결제수단</p>
-            <div class="radio-wrap">
-                <div class="radio ">
-                    <input type="radio" id="q1" name="pay_method" value="pay_check"/>
-                    <label for="q1"><span class="radio-custom"></span><span class="radio-label">신용/체크카드</span></label>
-                </div>
-                <div class="radio ">
-                    <input type="radio" id="q3" name="pay_method" value="pay_bank"/>
-                    <label for="q3"><span class="radio-custom"></span><span class="radio-label">실시간 계좌이체</span></label>
-                </div>
-                <div class="radio ">
-                    <input type="radio" id="q2" name="pay_method" value="pay_phone"/>
-                    <label for="q2"><span class="radio-custom"></span><span class="radio-label">휴대폰결제</span></label>
-                </div>
-                <div class="radio">
-                    <input type="radio" id="q4" name="pay_method" value="pay_e_transfer"/>
-                    <label for="q4"><span class="radio-custom"></span><span class="radio-label">무통장 입금</span></label>
-                </div>
+            <div class="alert-msg">
+                <span>※ 주의사항</span>
+                <ul>
+                    <li>결제완료 후 24시간 이내에 상품을 픽업하지 않으시면 <span>결제가 자동 취소</span> 됩니다.</li>
+                    <li>신선한 상품을 제공해드리고자 함이니 <span>주의</span>해주시기 바랍니다.</li>
+                </ul>
             </div>
             <div class="checkbox-wrap">
                 <input type="checkbox" id="agree" name="agree"/>
@@ -187,7 +172,7 @@
             }
         }
 
-        $("select[name='user_email_02']").change(function(){
+        $("select[name='user_email_2']").change(function(){
             $(this).removeClass("noneVal");
             if($(this).val() == "direct") {
                 $(this).siblings('.selboxDirect').show();

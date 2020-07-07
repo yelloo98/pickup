@@ -8,10 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
 
-class PickupCouponCustomer extends Model implements ModelAdminInterface
+class PickupCouponCustomer extends Model
 {
-    use ModelFunction;
-
+    protected $connection = 'mysql';
     protected $table = 'pickup_coupon_customer';
     public $timestamps = false;
 

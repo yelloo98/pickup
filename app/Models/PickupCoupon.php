@@ -12,6 +12,7 @@ class PickupCoupon extends Model implements ModelAdminInterface
 {
     use SoftDeletes, ModelFunction;
 
+    protected $connection = 'mysql';
     protected $table = 'pickup_coupon';
 
     public function store()
