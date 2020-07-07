@@ -208,8 +208,7 @@ var PickupCommon = {
             processData: false,
             success: function (res) {
                 if (res.code == 200) {
-                    pageModal.alertPopup(res.msg);
-                    return false;
+                    location.href='/front/order/result/'+res.order_id;
                 }else{
                     pageModal.alertPopup(res.msg);
                     return false;

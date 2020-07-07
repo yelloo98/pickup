@@ -138,7 +138,7 @@ class OrderController extends Controller
                 if($productSum == str_replace(',','',$res['price'])){
                     $order->price = $productSum;
                     $order->save();
-                    return response()->json(['code'=>200, 'msg'=>'주문 등록']);
+                    return response()->json(['code'=>200, 'msg'=>'주문 등록', 'order_id'=>$order->id]);
                 }else{
                     DB::rollBack();
                     return response()->json(['code'=>400, 'msg'=>'금액 처리 중 오류가 발생하였습니다.']);
@@ -151,5 +151,14 @@ class OrderController extends Controller
                 return response()->json(['code'=>400, 'msg'=>'관심상품 처리 중 실패하였습니다.']);
             }
         });
+    }
+
+    //# 주문/결제 완료
+    public function getOrderResult($id)
+    {
+        $view = view('front.order.result');
+        $view->page = 'order';
+        $view->order = PickupOrders::find($id);
+        return $view;
     }
 }
