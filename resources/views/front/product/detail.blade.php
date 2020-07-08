@@ -14,7 +14,7 @@
             <div class="swiper-pagination"></div>
         </div>
         <div class="goodsInfo-container">
-            <span>{{$product->store->fcTrader->companyName ?? ''}}</span>
+            <span>{{$product->fc_trader->companyName ?? ''}}</span>
             <p class="goods-subject">{{$product->origin_product->name ?? ''}}</p>
             <div class="goods-price">
                 <p>

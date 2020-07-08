@@ -21,12 +21,12 @@
         </div>
         <div class="storeTitle-container">
             <div class="ico-wrapper">
-                @if(!empty($store_like) && $store_like->where('store_id', $store->id)->count() > 0)
-                <button class="clicking-btn" onclick="PickupCommon.storeLike('{{$store->id ?? 0}}', 'delete')">
+                @if(!empty($store_like) && $store_like->where('store_id', $store->traderNo)->count() > 0)
+                <button class="clicking-btn" onclick="PickupCommon.storeLike('{{$store->traderNo ?? 0}}', 'delete')">
                     <img src="/front/dist/img/icon_star_on.png" alt="">
                 </button>
                 @else
-                <button class="clicking-btn" onclick="PickupCommon.storeLike('{{$store->id ?? 0}}', 'add')">
+                <button class="clicking-btn" onclick="PickupCommon.storeLike('{{$store->traderNo ?? 0}}', 'add')">
                     <img src="/front/dist/img/icon_star.png" alt="">
                 </button>
                 @endif
@@ -37,16 +37,16 @@
             </div>
             <div class="title-wrapper">
                 <div class="main-title">
-                    <p>{{$store->fcTrader->companyName ?? ''}}</p>
+                    <p>{{$store->companyName ?? ''}}</p>
                     <ul>
-                        <li class="gray-link" onclick="location.href='/front/mypage/qna/store/0?store_id={{$store->id ?? 0}}';">문의하기</li>
+                        <li class="gray-link" onclick="location.href='/front/mypage/qna/store/0?store_id={{$store->traderNo ?? 0}}';">문의하기</li>
                         <li class="red-link">매장변경</li>
                     </ul>
                 </div>
                 <div class="sub-title">
                     <ul>
-                        <li>{{$store->fcTrader->address ?? ''}}</li>
-                        <li>{{\App\Helper\Codes::formatPhone($store->fcTrader->tel ?? '')}}</li>
+                        <li>{{$store->address ?? ''}}</li>
+                        <li>{{\App\Helper\Codes::formatPhone($store->tel ?? '')}}</li>
                     </ul>
                 </div>
             </div>

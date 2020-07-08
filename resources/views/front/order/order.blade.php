@@ -10,7 +10,7 @@
                 <div class="img-area" @if(!empty($v->origin_product->image_path)) style="background-image: url('{{env('IMAGE_URL').$v->origin_product->image_path}}'); background-size:cover;" @endif></div>
                 <div class="word-area">
                     <div class="top-box">
-                        <p><span>{{$v->store->fcTrader->companyName ?? ''}}</span></p>
+                        <p><span>{{$v->fc_trader->companyName ?? ''}}</span></p>
                     </div>
                     <div class="menu-box">
                         <p>{{$v->origin_product->name ?? ''}}</p>

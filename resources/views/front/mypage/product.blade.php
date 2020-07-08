@@ -16,7 +16,7 @@
                 <div class="img-box" @if(!empty($v->product->origin_product->image_path)) style="background-image: url('{{env('IMAGE_URL').$v->product->origin_product->image_path}}'); background-size:cover;" @endif></div>
                 <div class="word-box" onclick="location.href='/front/product/detail/{{$v->product->id ?? 0}}'">
                     <div class="toTop">
-                        <p><span>{{$v->product->store->fcTrader->companyName ?? ''}}</span></p>
+                        <p><span>{{$v->product->fc_trader->companyName ?? ''}}</span></p>
                     </div>
                     <div class="menuInfo">
                         <p>{{$v->product->origin_product->name ?? ''}}</p>

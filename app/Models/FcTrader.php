@@ -10,6 +10,7 @@ class FcTrader extends Model
 
     protected $connection = 'mysql2';
     protected $table = 'fc_trader';
+    protected $primaryKey = 'traderNo';
     public $timestamps = false;
 
     /**

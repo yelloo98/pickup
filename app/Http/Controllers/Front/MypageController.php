@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Front;
 use App\Helper\ShopAuth;
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
+use App\Models\FcTrader;
 use App\Models\PickupCoupon;
 use App\Models\PickupCouponCustomer;
 use App\Models\PickupNotice;
@@ -15,7 +16,6 @@ use App\Models\PickupProductReview;
 use App\Models\PickupQna;
 use App\Models\PointUser;
 use App\Models\Product;
-use App\Models\Store;
 use App\Models\StoreLikes;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -317,9 +317,9 @@ class MypageController extends Controller
 
         $view->productQna = PickupQna::find($id);
         if(!empty($view->productQna)){
-            $view->store = Store::find($view->productQna->store_id);
+            $view->store = FcTrader::find($view->productQna->store_id);
         }else{
-            $view->store = Store::find($request->input('store_id', null));
+            $view->store = FcTrader::find($request->input('store_id', null));
         }
         return $view;
     }

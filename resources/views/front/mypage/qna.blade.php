@@ -32,7 +32,7 @@
                                 <div class="info-bar">
                                     <div class="user-info">
                                         <p>
-                                            <span class="store">{{$v->product->store->fcTrader->companyName ?? ''}}</span>
+                                            <span class="store">{{$v->product->fc_trader->companyName ?? ''}}</span>
                                             <span class="questionKinds">{{\App\Helper\Codes::qnaCategory($v->category ?? '')}}</span>
                                             <span class="date">{{($v->created_at)? date_format($v->created_at,'Y-m-d') : ''}}</span>
                                         </p>
@@ -81,7 +81,7 @@
                                 <div class="info-bar">
                                     <div class="user-info">
                                         <p>
-                                            <span class="store">{{$v->store->fcTrader->companyName ?? ''}}</span>
+                                            <span class="store">{{$v->fc_trader->companyName ?? ''}}</span>
                                             <span class="questionKinds">{{\App\Helper\Codes::qnaCategory($v->category ?? '')}}</span>
                                             <span class="date">{{($v->created_at)? date_format($v->created_at,'Y-m-d') : ''}}</span>
                                         </p>

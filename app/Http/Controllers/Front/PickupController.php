@@ -6,11 +6,11 @@ use App\Helper\Codes;
 use App\Helper\ShopAuth;
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
+use App\Models\FcTrader;
 use App\Models\PickupCart;
 use App\Models\PickupProductLikes;
 use App\Models\Product;
 use App\Models\ProductStock;
-use App\Models\Store;
 use App\Models\StoreLikes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -36,8 +36,8 @@ class PickupController extends Controller
                     $storeLike->store_id =  $res['store_id'];
                     $storeLike->customer_id =  $shopAuth->user()->id;
                     $storeLike->save();
-                    $store = Store::find($res['store_id']);
-                    return response()->json(['code' => 200, 'msg' => '관심매장 등록', 'store_id' => $store->id, 'store_name' => $store->fcTrader->companyName, 'store_address' => $store->fcTrader->address, 'store_tel' => Codes::formatPhone($store->fcTrader->tel)]);
+                    $store = FcTrader::find($res['store_id']);
+                    return response()->json(['code' => 200, 'msg' => '관심매장 등록', 'store_id' => $store->traderNo, 'store_name' => $store->companyName, 'store_address' => $store->address, 'store_tel' => Codes::formatPhone($store->tel)]);
                 }
             }catch(\Exception $ex){
                 DB::rollBack();

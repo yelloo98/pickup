@@ -5,11 +5,11 @@ namespace App\Http\Controllers\Front;
 use App\Helper\ShopAuth;
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
+use App\Models\FcTrader;
 use App\Models\PickupOrdersProduct;
 use App\Models\PickupProductReview;
 use App\Models\PickupProductViews;
 use App\Models\ProductStock;
-use App\Models\Store;
 use App\Models\StoreEvent;
 use App\Models\StoreLikes;
 use Illuminate\Http\Request;
@@ -22,7 +22,7 @@ class MainController extends Controller
         $view = view('front.main');
         $view->page = 'main';
         $store_id = $request->input('store_id', 498);
-        $view->store = Store::find($store_id);
+        $view->store = FcTrader::find($store_id);
         //# 이벤트
         $event = StoreEvent::where([['type', 'store_owner'],['store_id', $store_id]])->orderBy('created_at', 'desc')->limit(3);
         $view->storeEvent = StoreEvent::where('type', 'admin')->orderBy('created_at', 'desc')->limit(2)->union($event)->get();

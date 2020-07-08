@@ -42,7 +42,7 @@
                         </div>
                         <div class="word-box">
                             <div class="toTop">
-                                <p><span>{{$v->product->store->fcTrader->companyName ?? ''}}</span></p>
+                                <p><span>{{$v->product->fc_trader->companyName ?? ''}}</span></p>
                                 <button class='delete-btn' onclick="PickupCommon.addCart('{{$v->product_id ?? 0}}', 'delete')"><img src="/front/dist/img/icon_popup_x01.png" alt=""></button>
                             </div>
                             <div class="menuInfo">

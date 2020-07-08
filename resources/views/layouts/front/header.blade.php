@@ -52,7 +52,7 @@
         @elseif(($page ?? '') == 'cart')
             장바구니
         @elseif(($page ?? '') == 'storeQna')
-            {{$store->fcTrader->companyName ?? '매장'}}에 문의하기
+            {{$store->companyName ?? '매장'}}에 문의하기
         @elseif(($page ?? '') == 'term')
             이용약관
         @elseif(($page ?? '') == 'notice')

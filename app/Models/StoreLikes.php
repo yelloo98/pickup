@@ -16,9 +16,9 @@ class StoreLikes extends Model implements ModelAdminInterface
     protected $table = 'store_likes';
     public $timestamps = false;
 
-    public function store()
-    {
-        return $this->belongsTo('App\Models\Store', 'store_id');
+    //# fc_trader 정보
+    public function fc_trader(){
+        return $this->belongsTo('App\Models\FcTrader', 'store_id','traderNo');
     }
 
     /**

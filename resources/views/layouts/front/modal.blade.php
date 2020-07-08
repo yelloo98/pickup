@@ -84,14 +84,14 @@
                     <ul>
                         @if(isset($store_like) && $store_like->count() > 0)
                             @foreach($store_like as $k=>$v)
-                            <li onclick="location.href='/front/main?store_id={{$v->store->id ?? 0}}'" class="store_{{$v->store->id ?? 0}}">
+                            <li onclick="location.href='/front/main?store_id={{$v->fc_trader->traderNo ?? 0}}'" class="store_{{$v->fc_trader->traderNo ?? 0}}">
                                 <div class="store-info">
                                     <div class="store-header">
-                                        <span>{{$v->store->fcTrader->companyName ?? ''}}</span>
+                                        <span>{{$v->fc_trader->companyName ?? ''}}</span>
                                     </div>
                                     <div class="store-address">
-                                        <p>{{$v->store->fcTrader->address ?? ''}}</p>
-                                        <small>{{\App\Helper\Codes::formatPhone($v->store->fcTrader->tel ?? '')}}</small>
+                                        <p>{{$v->fc_trader->address ?? ''}}</p>
+                                        <small>{{\App\Helper\Codes::formatPhone($v->fc_trader->tel ?? '')}}</small>
                                     </div>
                                 </div>
                                 <img src="/front/dist/img/icon_arrow_MR.png" alt="">
