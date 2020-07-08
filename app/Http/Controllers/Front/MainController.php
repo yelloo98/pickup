@@ -6,6 +6,7 @@ use App\Helper\ShopAuth;
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
 use App\Models\FcTrader;
+use App\Models\PickupOrders;
 use App\Models\PickupOrdersProduct;
 use App\Models\PickupProductReview;
 use App\Models\PickupProductViews;
@@ -34,12 +35,14 @@ class MainController extends Controller
         $view->ProductReview = PickupProductReview::leftjoin('product','product.id','pickup_product_review.product_id')->where('product.store_id', $store_id)->select('pickup_product_review.*')->orderBy('created_at','DESC')->limit(6)->get();
 
         $shopAuth = new ShopAuth($request);
-        if(Customer::find($shopAuth->user()->id) != null){
-            $view->customer = Customer::find($shopAuth->user()->id);
+        if(!empty($shopAuth->user())){
+            $view->customer = $shopAuth->user();
             //# 최근 본 상품 / 유저 where 추가해야됨
             $view->historyProduct = PickupProductViews::leftjoin('product','product.id','pickup_product_views.product_id')->where('product.store_id', $store_id)->select('pickup_product_views.*')->where('customer_id', $shopAuth->user()->id)->orderBy('id','DESC')->limit(10)->get();
             //# 관심매장 여부
             $view->store_like = StoreLikes::where('customer_id', $shopAuth->user()->id)->get();
+            //# 주문 내역
+            $view->orderCnt = PickupOrders::where('customer_id',$shopAuth->user()->id)->count();
         }
 
         return $view;

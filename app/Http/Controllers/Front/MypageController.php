@@ -18,6 +18,7 @@ use App\Models\PointUser;
 use App\Models\Product;
 use App\Models\StoreLikes;
 use Carbon\Carbon;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -33,7 +34,11 @@ class MypageController extends Controller
         $view->page = 'my_order';
 
         $shopAuth = new ShopAuth($request);
-        $order = PickupOrders::where('customer_id', $shopAuth->user()->id)->get();
+        $orderList = PickupOrders::where('customer_id', $shopAuth->user()->id)->get();
+        foreach ($orderList as $k=>$v){
+            $v->productList = PickupOrdersProduct::where('pickup_orders_id',$v->id)->get();
+        }
+        $view->orderList = $orderList;
         return $view;
 	}
 

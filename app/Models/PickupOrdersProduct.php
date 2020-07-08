@@ -25,6 +25,11 @@ class PickupOrdersProduct extends Model implements ModelAdminInterface
         return $this->belongsTo('App\Models\Product', 'product_id');
     }
 
+    public function device()
+    {
+        return $this->belongsTo('App\Models\Device', 'device_id');
+    }
+
     /**
      * Override : DataTableList
      * -----------------------------------------------------------------------------------------------------------------

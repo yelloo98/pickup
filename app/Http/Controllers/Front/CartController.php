@@ -20,7 +20,7 @@ class CartController extends Controller
         $view->page = 'cart';
 
         $shopAuth = new ShopAuth($request);
-        $view->customer = Customer::find($shopAuth->user()->id);
+        $view->customer = $shopAuth->user();
         $cartList = PickupCart::leftjoin('product','product.id','pickup_cart.product_id')->leftjoin('product_stock','product_stock.product_id', 'pickup_cart.product_id')
             ->select('pickup_cart.*', 'product.price', DB::raw('pickup_cart.count * product.price as price_sum'), DB::raw('sum(product_stock.inserted_amount)-sum(product_stock.sale_amount) AS product_res'))
             ->where('pickup_cart.customer_id',$shopAuth->user()->id)

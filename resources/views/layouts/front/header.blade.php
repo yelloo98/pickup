@@ -4,7 +4,7 @@
         <button class="list-btn" onclick="location.href='/front/mypage/order'">
             <img src="/front/dist/img/icon_Pup.png" alt="">
             <img class="black-img" src="/front/dist/img/icon_Pup_B.png" alt="">
-            <span>1</span>
+            @if(!empty($orderCnt))<span>{{$orderCnt}}</span>@endif
         </button>
         <img src="/front/dist/img/icon_mainlogo.png" alt="" class="logo-img">
         <img class="black-img" src="/front/dist/img/icon_mainlogo_B.png" alt="" class="logo-img">

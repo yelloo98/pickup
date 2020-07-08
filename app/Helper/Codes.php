@@ -47,4 +47,18 @@ class Codes extends Model
 
         return $type;
     }
+
+    /**
+     * 20200708
+     * 디바이스 타입
+     */
+    public static function deviceType($type) {
+        if($type == 'frozen'){
+            $type = '<span class="blue-box option-box">냉장</span>';
+        }elseif($type == 'cold'){
+            $type = '<span class="green-box option-box">냉동</span>';
+        }
+
+        return $type;
+    }
 }
