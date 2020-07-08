@@ -37,10 +37,23 @@ class MypageController extends Controller
         $orderList = PickupOrders::where('customer_id', $shopAuth->user()->id)->get();
         foreach ($orderList as $k=>$v){
             $v->productList = PickupOrdersProduct::where('pickup_orders_id',$v->id)->get();
+            $v->until_second = (Carbon::createFromDate($v->pickup_until_at) > Carbon::now())? Carbon::createFromDate($v->pickup_until_at)->diffInSeconds(Carbon::now()) : 0;
         }
         $view->orderList = $orderList;
         return $view;
 	}
+
+    /**
+     *  주문내역 상세
+     */
+    public function getOrderDetail(Request $request, $id = 0)
+    {
+        $view = view('front.mypage.orderDetail');
+        $view->page = 'my_order';
+
+        $shopAuth = new ShopAuth($request);
+        return $view;
+    }
 
     /**
      *  쿠폰 리스트

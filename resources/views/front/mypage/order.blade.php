@@ -7,14 +7,14 @@
         </div>
         <div class="goodsList-container">
             @forelse($orderList as $k => $v)
-            <div class="goods-wrap" onclick="location.href='/'">
+            <div class="goods-wrap" onclick="location.href='/front/mypage/order/{{$v->id ?? 0}}'">
                 <div class="goods-header">
                     <p class="pickUp-num">
                         픽업번호 : <span>{{$v->pickup_num ?? ''}}</span>
                     </p>
                     <p class="counting">
-                        남은시간<span id="timer"></span>
-                        <input type="hidden" name="time" value="{{$v->pickup_until_at}}">
+                        남은시간<span id="time_{{$v->id ?? 0}}"></span>
+                        <input type="hidden" name="time" value="{{$v->until_second ?? 0}}">
                     </p>
                 </div>
                 @forelse($v->productList as $kk => $vv)
@@ -43,38 +43,33 @@
     </div>
 @endsection
 @section('script')
-    <script src="/front/dist/lib/moment/js/moment.min.js"></script>
-    <script src="/front/dist/lib/moment/js/moment-timezone-with-data.js"></script>
     <script>
-        $(document).ready(function () {
-             // 타이머 1초간격으로 수행
-            tid = setInterval('msg_time()', 1000);
+        $('.goods-wrap').each(function () {
+            var id = $(this).find('.counting').children('span').attr('id');
+            var time = $(this).find("input[name='time']").val();
+            countdown(id, time, this);
         });
 
-        function msg_time() {
-            var stDate = moment(new Date()).tz('Asia/Baku').format('Y-MM-DDTHH:mm:ss');
-            var edDate = moment($("input[name='time']").val()).format('Y-MM-DDTHH:mm:ss');
-            var RemainDate = moment(edDate,"YYYY-MM-DDTHH:mm:ssZ").diff(moment(stDate,"YYYY-MM-DDTHH:mm:ssZ"));
+        function countdown(elementId, seconds, obj ){
+            var element, endTime, hours, mins, msLeft, time;
 
-            var hours = Math.floor((RemainDate % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            var miniutes = Math.floor((RemainDate % (1000 * 60 * 60)) / (1000 * 60));
-            var seconds = Math.floor((RemainDate % (1000 * 60)) / 1000);
-
-            m = addzero(hours) + ":" + addzero(miniutes) + ":" + addzero(seconds); // 남은 시간 text형태로 변경
-            $('#timer').text(m);
-
-            if (RemainDate < 0) {
-                clearInterval(tid);   // 타이머 해제
-                $('#timer').text('시간초과');
-            } else {
-                RemainDate = RemainDate - 1000; // 남은시간 -1초
+            function updateTimer(){
+                msLeft = endTime - (+new Date);
+                if ( msLeft <= 0 ) {
+                    console.log('시간초과');
+                    $(obj).find('.counting').children('span').text('시간초과');
+                } else {
+                    time = new Date( msLeft );
+                    hours = time.getUTCHours();
+                    mins = time.getUTCMinutes();
+                    element.innerHTML = (hours ? ('0' + hours).slice(-2) +  ':' + ('0' + mins).slice(-2) : mins) + ':' + ('0' + time.getUTCSeconds()).slice(-2);
+                    setTimeout( updateTimer, time.getUTCMilliseconds());
+                }
             }
-        }
 
-        // 1자리수의 숫자인 경우 앞에 0을 붙여준다.
-        function addzero(num) {
-            if(num < 10) { num = "0" + num; }
-            return num;
+            element = document.getElementById( elementId );
+            endTime = (+new Date) + 1000 * seconds;
+            updateTimer();
         }
     </script>
 @endsection

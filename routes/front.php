@@ -67,8 +67,8 @@ Route::group(['namespace' => 'Front', 'middleware' => 'front', 'prefix' => 'fron
     Route::group(['prefix' => 'mypage', 'as' => 'mypage.'], function () {
         //# 주문내역
         Route::group(['prefix' => 'order', 'as' => 'order.'], function () {
-            //픽업상품의 주문내역 노출
-            Route::get('/', 'MypageController@getOrderList');
+            Route::get('/', 'MypageController@getOrderList');                       //픽업상품의 주문내역 노출
+            Route::get('/{id?}', 'MypageController@getOrderDetail');                //주문내역 상세
         });
         //# 쿠폰함
         Route::group(['prefix' => 'coupon', 'as' => 'coupon.'], function () {
