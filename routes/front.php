@@ -95,12 +95,10 @@ Route::group(['namespace' => 'Front', 'middleware' => 'front', 'prefix' => 'fron
         Route::group(['prefix' => 'review', 'as' => 'review.'], function () {
             //상품의 리뷰 리스트
             Route::get('/', 'MypageController@getReviewList');
-            //상품의 리뷰 뷰
+            //상품의 리뷰 등록 화면
             Route::get('/{id?}', 'MypageController@getReviewDetail');
-            //상품의 리뷰 등록 / 수정
+            //상품의 리뷰 등록 / 수정 / 삭제
             Route::post('/save', 'MypageController@postReview');
-            //상품의 리뷰 삭제
-            Route::delete('/', 'MypageController@deleteReview');
         });
         //# Q&A
         Route::group(['prefix' => 'qna', 'as' => 'qna.'], function () {
@@ -110,28 +108,20 @@ Route::group(['namespace' => 'Front', 'middleware' => 'front', 'prefix' => 'fron
             Route::group(['prefix' => 'product'], function () {
                 //상품 Q&A 등록 화면
                 Route::get('/{id?}', 'MypageController@getProductQna');
-                //상품 Q&A 등록
+                //상품 Q&A 등록 / 수정 / 삭제
                 Route::post('/', 'MypageController@postProductQna');
-                //상품 Q&A 수정
-                Route::put('/', 'MypageController@updateProductQna');
-                //상품 Q&A 삭제
-                Route::delete('/', 'MypageController@deleteProductQna');
             });
             //# 매장의 Q&A
             Route::group(['prefix' => 'store'], function () {
                 //매장의 Q&A 등록 화면
                 Route::get('/{id?}', 'MypageController@getStoreQna');
-                //매장의 Q&A 등록
+                //매장의 Q&A 등록 / 수정 / 삭제
                 Route::post('/', 'MypageController@postStoreQna');
-                //매장의 Q&A 수정
-                Route::put('/', 'MypageController@updateStoreQna');
-                //매장의 Q&A 삭제
-                Route::delete('/', 'MypageController@deleteStoreQna');
             });
         });
         //# 알림 수신 동의
         Route::group(['prefix' => 'push', 'as' => 'push.'], function () {
-            //알림 ON/OFF
+            //# 알림 ON/OFF
             Route::get('/', 'MypageController@getPush');
             //알림 ON/OFF 수정
             Route::post('/', 'MypageController@postPush');

@@ -27,10 +27,13 @@ class MypageController extends Controller
     /**
      *  주문내역 리스트
      */
-    public function getOrderList()
+    public function getOrderList(Request $request)
 	{
         $view = view('front.mypage.order');
         $view->page = 'my_order';
+
+        $shopAuth = new ShopAuth($request);
+        $order = PickupOrders::where('customer_id', $shopAuth->user()->id)->get();
         return $view;
 	}
 
@@ -224,14 +227,6 @@ class MypageController extends Controller
     }
 
     /**
-     *
-     */
-    public function deleteReview()
-    {
-
-    }
-
-    /**
      * Q&A 리스트
      */
     public function getQna(Request $request)
@@ -377,23 +372,7 @@ class MypageController extends Controller
     }
 
     /**
-     * @param $id
-     */
-    public function updateStoreQna($id)
-    {
-
-    }
-
-    /**
-     *
-     */
-    public function deleteStoreQna()
-    {
-
-    }
-
-    /**
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application|\Illuminate\View\View
+     * 푸쉬 내역
      */
     public function getPush()
     {
