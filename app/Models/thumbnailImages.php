@@ -8,15 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
 
-class StoreEvent extends Model implements ModelAdminInterface
+class thumbnailImages extends Model
 {
-    use SoftDeletes, ModelFunction;
-
-    protected $table = 'store_event';
-
-    public function thumbnailImages(){
-        return $this->belongsTo('App\Models\thumbnailImages', 'thumbnail_images_id');
-    }
+    protected $connection = 'mysql';
+    protected $table = 'thumbnail_images';
 
     /**
      * Override : DataTableList

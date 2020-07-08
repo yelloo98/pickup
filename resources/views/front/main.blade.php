@@ -5,7 +5,7 @@
         <div class="mainSlide-container swiper-container">
             <div class="swiper-wrapper">
                 @forelse($storeEvent as $k=>$v)
-                <div class="swiper-slide" @if($v->img != null) style="background-image: url('{{env('IMAGE_URL').$v->img}}')" @endif>
+                <div class="swiper-slide" @if($v->thumbnailImages->img_path != null) style="background-image: url('{{env('IMAGE_URL').$v->thumbnailImages->img_path}}')" @endif>
                     <div class="slogun-box">
                         <ul>
                             <li>{{$v->title ?? ''}}</li>
