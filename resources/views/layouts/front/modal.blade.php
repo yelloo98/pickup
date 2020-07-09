@@ -570,6 +570,7 @@
                         @endif
                     </ul>
                 </div>
+                @if($orderResult->approve_type == 'auto')
                 <div class="alert-msg">
                     <span>※ 주의사항</span>
                     <ul>
@@ -577,107 +578,45 @@
                         <li>결제를 완료하시면 픽업번호가 생성됩니다.</li>
                     </ul>
                 </div>
+                @endif
                 <div class="swiper-container price-container">
                     <div class="swiper-wrapper">
+                        @foreach($orderProductList as $k => $v)
                         <div class="swiper-slide">
-                            <ul class="numberling">
-                                <li class="active">1</li>
-                                <li>2</li>
-                                <li>3</li>
-                            </ul>
-                            <div class="table-wrapper">
-                                <div class="table-title">
-                                    <p>상품정보</p>
-                                </div>
-                                <ul class="table-content">
-                                    <li>상품명<strong><span>미트박스 함박 스테이크</span></strong></li>
-                                    <li>거래일시<strong><span>2020.03.19</span> <span>12:33:33</span></strong></li>
-                                    <li>결제금액<strong class="price"><span>12,500</span>원</strong></li>
+                                <ul class="numberling">
+                                    @for($i=1; $i<=$orderProductList->count(); $i++)
+                                        <li @if($k+1 == $i) class="active" @endif>{{$i}}</li>
+                                    @endfor
                                 </ul>
-                            </div>
-                            <div class="table-wrapper">
-                                <div class="table-title">
-                                    <p>매장정보</p>
+                                <div class="table-wrapper">
+                                    <div class="table-title">
+                                        <p>상품정보</p>
+                                    </div>
+                                    <ul class="table-content">
+                                        <li>상품명<strong><span>{{$v->product->origin_product->name ?? ''}}</span></strong></li>
+                                        <li>거래일시<strong><span>{{$v->created_at ?? ''}}</span></strong></li>
+                                        <li>결제금액<strong class="price"><span>{{number_format($v->price ?? 0)}}</span>원</strong></li>
+                                    </ul>
                                 </div>
-                                <ul class="table-content">
-                                    <li>매장명<strong><span>성남점</span></strong></li>
-                                    <li>매장위치<strong><span>경기도 성남시 중원구</span></strong></li>
-                                    <li>매장전화번호<strong><span>030-320-1234</span></strong></li>
-                                </ul>
-                            </div>
-                            <div class="order-detail">
-                                <span>냉동 1</span>
-                                <p class="order-number">픽업번호<span>12345</span></p>
-                                <p class="order-counting"><span>2020.03.19</span><span>12:30:00</span>까지</p>
-                                <p class="warning-text">(픽업가능시간 초과시 <span>결제가 자동취소</span>됩니다.)</p>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <ul class="numberling">
-                                <li>1</li>
-                                <li class="active">2</li>
-                                <li>3</li>
-                            </ul>
-                            <div class="table-wrapper">
-                                <div class="table-title">
-                                    <p>상품정보</p>
+                                <div class="table-wrapper">
+                                    <div class="table-title">
+                                        <p>매장정보</p>
+                                    </div>
+                                    <ul class="table-content">
+                                        <li>매장명<strong><span>{{$v->product->fc_trader->companyName ?? ''}}</span></strong></li>
+                                        <li>매장위치<strong><span>{{$v->product->fc_trader->address ?? ''}}</span></strong></li>
+                                        <li>매장전화번호<strong><span>{{\App\Helper\Codes::formatPhone($v->product->fc_trader->tel ?? '')}}</span></strong></li>
+                                    </ul>
                                 </div>
-                                <ul class="table-content">
-                                    <li>상품명<strong><span>미트박스 함박 스테이크</span></strong></li>
-                                    <li>거래일시<strong><span>2020.03.19</span> <span>12:33:33</span></strong></li>
-                                    <li>결제금액<strong class="price"><span>12,500</span>원</strong></li>
-                                </ul>
-                            </div>
-                            <div class="table-wrapper">
-                                <div class="table-title">
-                                    <p>매장정보</p>
+                                <div class="order-detail">
+                                    <span>{{\App\Helper\Codes::deviceTypeText($v->device->frozen_type ?? '')}}</span>
+                                    <p class="order-number">픽업번호<span>{{$orderResult->pickup_num ?? ''}}</span></p>
+                                    <p class="order-counting"><span>{{$orderResult->pickup_until_at ?? ''}}</span>까지</p>
+                                    <p class="warning-text">(픽업가능시간안에 상품을 픽업하지 않으시면</p>
+                                    <p class="warning-text"><span>결제가 자동취소</span>되오니 유의해주시기 바랍니다.)</p>
                                 </div>
-                                <ul class="table-content">
-                                    <li>매장명<strong><span>성남점</span></strong></li>
-                                    <li>매장위치<strong><span>경기도 성남시 중원구</span></strong></li>
-                                    <li>매장전화번호<strong><span>030-320-1234</span></strong></li>
-                                </ul>
                             </div>
-                            <div class="order-detail">
-                                <span>냉동 2</span>
-                                <p class="order-number">픽업번호<span>12345</span></p>
-                                <p class="order-counting"><span>2020.03.19</span><span>12:30:00</span>까지</p>
-                                <p class="warning-text">(픽업가능시간 초과시 <span>결제가 자동취소</span>됩니다.)</p>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <ul class="numberling">
-                                <li>1</li>
-                                <li>2</li>
-                                <li class="active">3</li>
-                            </ul>
-                            <div class="table-wrapper">
-                                <div class="table-title">
-                                    <p>상품정보</p>
-                                </div>
-                                <ul class="table-content">
-                                    <li>상품명<strong><span>미트박스 함박 스테이크</span></strong></li>
-                                    <li>거래일시<strong><span>2020.03.19</span> <span>12:33:33</span></strong></li>
-                                    <li>결제금액<strong class="price"><span>12,500</span>원</strong></li>
-                                </ul>
-                            </div>
-                            <div class="table-wrapper">
-                                <div class="table-title">
-                                    <p>매장정보</p>
-                                </div>
-                                <ul class="table-content">
-                                    <li>매장명<strong><span>성남점</span></strong></li>
-                                    <li>매장위치<strong><span>경기도 성남시 중원구</span></strong></li>
-                                    <li>매장전화번호<strong><span>030-320-1234</span></strong></li>
-                                </ul>
-                            </div>
-                            <div class="order-detail">
-                                <span>냉장 3</span>
-                                <p class="order-number">픽업번호<span>12345</span></p>
-                                <p class="order-counting"><span>2020.03.19</span><span>12:30:00</span>까지</p>
-                                <p class="warning-text">(픽업가능시간 초과시 <span>결제가 자동취소</span>됩니다.)</p>
-                            </div>
-                        </div>
+                        @endforeach
                     </div>
                 </div>
             </div>

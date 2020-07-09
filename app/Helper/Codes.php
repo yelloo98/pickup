@@ -18,9 +18,9 @@ class Codes extends Model
         if(strlen($phone) == 11){
             $phone = substr($phone, 0, 3).'-'.substr($phone, 3, 4).'-'.substr($phone, 7, 4);
         }elseif(strlen($phone) == 10){
-            $phone = substr($phone, 0, 2).')'.substr($phone, 3, 4).'-'.substr($phone, 7, 4);
+            $phone = substr($phone, 0, 2).')'.substr($phone, 2, 4).'-'.substr($phone, 6, 4);
         }elseif(strlen($phone) == 9){
-            $phone = substr($phone, 0, 2).')'.substr($phone, 3, 3).'-'.substr($phone, 6, 4);
+            $phone = substr($phone, 0, 2).')'.substr($phone, 2, 3).'-'.substr($phone, 5, 4);
         }
 
         return $phone;
@@ -57,6 +57,20 @@ class Codes extends Model
             $type = '<span class="blue-box option-box">냉장</span>';
         }elseif($type == 'cold'){
             $type = '<span class="green-box option-box">냉동</span>';
+        }
+
+        return $type;
+    }
+
+    /**
+     * 20200709
+     * 디바이스 타입 텍스트
+     */
+    public static function deviceTypeText($type) {
+        if($type == 'frozen'){
+            $type = '냉장';
+        }elseif($type == 'cold'){
+            $type = '냉동';
         }
 
         return $type;
