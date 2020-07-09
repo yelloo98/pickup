@@ -13,4 +13,15 @@
     </div>
 @endsection
 @section('script')
+    <script>
+        pageModal.orderResultPopup();
+        var swiperPrice = new Swiper('.swiper-container.price-container', {
+            slidesPerView: 'auto',
+            spaceBetween: 8,
+            centeredSlides: true,
+            pagination: {
+                el: '.swiper-pagination',
+            },
+        });
+    </script>
 @endsection

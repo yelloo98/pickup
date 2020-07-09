@@ -10,6 +10,10 @@ var pageModal = {
         $('.purchase-wrapper').addClass('active');
     },
 
+    orderResultPopup : function(){
+        $('.payment-wrapper').addClass('active');
+    },
+
     alertPopup : function(msg){
         $('.alert-wrapper .content-section p').text(msg);
         $('.alert-wrapper').addClass('active');

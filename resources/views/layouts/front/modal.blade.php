@@ -512,7 +512,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 
@@ -523,10 +522,60 @@
             <div class="header-section">
                 <p>결제완료</p>
             </div>
+            @if(!empty($orderResult))
             <div class="content-section">
+                @if($orderResult->status == 'cancel')
+                <div class="canceled-alarm">
+                    <p>결제승인이 취소되었습니다.</p>
+                </div>
+                @endif
                 <div class="price-title">
                     <p>총 결제금액</p>
-                    <strong><span>12,500</span>원</strong>
+                    <strong><span>{{number_format($orderResult->price ?? 0)}}</span>원</strong><!-- strong에 canceled 클래스 추가시 컬러변경 -->
+                </div>
+                <div class="table-container">
+                    <p class="table-title">결제정보</p>
+                    <ul class="price-table">
+                        <li>
+                            <ul>
+                                <li>결제수단</li>
+                                <li>{{$orderResult->approve_type ?? '자동결제'}}</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <ul>
+                                <li>결제금액</li>
+                                <li><span>{{number_format($orderResult->price ?? 0)}}</span>원</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <ul>
+                                <li>결제일시</li>
+                                <li><span>{{$orderResult->created_at ?? now()}}</span>@if($orderResult->status == 'cancel')<small>승인취소</small>@endif</li>
+                            </ul>
+                        </li>
+                        @if($orderResult->approve_type == 'card')
+                        <li>
+                            <ul>
+                                <li>카드명</li>
+                                <li><span>{{$orderResult->card_type ?? ''}}</span></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <ul>
+                                <li>할부개월</li>
+                                <li><span>일시불</span></li>
+                            </ul>
+                        </li>
+                        @endif
+                    </ul>
+                </div>
+                <div class="alert-msg">
+                    <span>※ 주의사항</span>
+                    <ul>
+                        <li><span>2020년 7월 5일 12:00:23시</span>까지 입금해 주시기바랍니다.</li>
+                        <li>결제를 완료하시면 픽업번호가 생성됩니다.</li>
+                    </ul>
                 </div>
                 <div class="swiper-container price-container">
                     <div class="swiper-wrapper">
@@ -542,7 +591,7 @@
                                 </div>
                                 <ul class="table-content">
                                     <li>상품명<strong><span>미트박스 함박 스테이크</span></strong></li>
-                                    <li>거래일시<strong><span>2020.03.19</span><span>12:33:33</span></strong></li>
+                                    <li>거래일시<strong><span>2020.03.19</span> <span>12:33:33</span></strong></li>
                                     <li>결제금액<strong class="price"><span>12,500</span>원</strong></li>
                                 </ul>
                             </div>
@@ -557,10 +606,10 @@
                                 </ul>
                             </div>
                             <div class="order-detail">
-                                <span>기기 1</span>
-                                <p class="order-number">주문번호<span>1234-0000-5678</span></p>
+                                <span>냉동 1</span>
+                                <p class="order-number">픽업번호<span>12345</span></p>
                                 <p class="order-counting"><span>2020.03.19</span><span>12:30:00</span>까지</p>
-                                <p class="waring-text">(픽업가능시간 초과시 <span>결제가 자동취소</span>됩니다.)</p>
+                                <p class="warning-text">(픽업가능시간 초과시 <span>결제가 자동취소</span>됩니다.)</p>
                             </div>
                         </div>
                         <div class="swiper-slide">
@@ -575,7 +624,7 @@
                                 </div>
                                 <ul class="table-content">
                                     <li>상품명<strong><span>미트박스 함박 스테이크</span></strong></li>
-                                    <li>거래일시<strong><span>2020.03.19</span><span>12:33:33</span></strong></li>
+                                    <li>거래일시<strong><span>2020.03.19</span> <span>12:33:33</span></strong></li>
                                     <li>결제금액<strong class="price"><span>12,500</span>원</strong></li>
                                 </ul>
                             </div>
@@ -590,10 +639,10 @@
                                 </ul>
                             </div>
                             <div class="order-detail">
-                                <span>기기 2</span>
-                                <p class="order-number">주문번호<span>1234-0000-5678</span></p>
+                                <span>냉동 2</span>
+                                <p class="order-number">픽업번호<span>12345</span></p>
                                 <p class="order-counting"><span>2020.03.19</span><span>12:30:00</span>까지</p>
-                                <p class="waring-text">(픽업가능시간 초과시 <span>결제가 자동취소</span>됩니다.)</p>
+                                <p class="warning-text">(픽업가능시간 초과시 <span>결제가 자동취소</span>됩니다.)</p>
                             </div>
                         </div>
                         <div class="swiper-slide">
@@ -608,7 +657,7 @@
                                 </div>
                                 <ul class="table-content">
                                     <li>상품명<strong><span>미트박스 함박 스테이크</span></strong></li>
-                                    <li>거래일시<strong><span>2020.03.19</span><span>12:33:33</span></strong></li>
+                                    <li>거래일시<strong><span>2020.03.19</span> <span>12:33:33</span></strong></li>
                                     <li>결제금액<strong class="price"><span>12,500</span>원</strong></li>
                                 </ul>
                             </div>
@@ -623,15 +672,16 @@
                                 </ul>
                             </div>
                             <div class="order-detail">
-                                <span>기기 3</span>
-                                <p class="order-number">주문번호<span>1234-0000-5678</span></p>
+                                <span>냉장 3</span>
+                                <p class="order-number">픽업번호<span>12345</span></p>
                                 <p class="order-counting"><span>2020.03.19</span><span>12:30:00</span>까지</p>
-                                <p class="waring-text">(픽업가능시간 초과시 <span>결제가 자동취소</span>됩니다.)</p>
+                                <p class="warning-text">(픽업가능시간 초과시 <span>결제가 자동취소</span>됩니다.)</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            @endif
         </div>
     </div>
 </div>

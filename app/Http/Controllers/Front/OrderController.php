@@ -158,7 +158,7 @@ class OrderController extends Controller
     {
         $view = view('front.order.result');
         $view->page = 'order';
-        $view->order = PickupOrders::find($id);
+        $view->orderResult = PickupOrders::find($id);
         return $view;
     }
 }
