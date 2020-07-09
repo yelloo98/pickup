@@ -34,10 +34,24 @@ class MypageController extends Controller
         $view->page = 'my_order';
 
         $shopAuth = new ShopAuth($request);
-        $orderList = PickupOrders::where('customer_id', $shopAuth->user()->id)->orderBy('created_at','desc')->get();
-        foreach ($orderList as $k=>$v){
-            $v->productList = PickupOrdersProduct::where('pickup_orders_id',$v->id)->get();
-            $v->until_second = (Carbon::createFromDate($v->pickup_until_at) > Carbon::now())? Carbon::createFromDate($v->pickup_until_at)->diffInSeconds(Carbon::now()) : 0;
+        $searchType = $request->input('searchType', null);
+        $orderList = PickupOrders::where('customer_id', $shopAuth->user()->id);
+        //# 검색 타입
+        if(!empty($searchType)){
+            $orderList = $orderList->where('status', $searchType);
+        }
+        $orderList = $orderList->orderBy('created_at','asc')->get();
+        foreach ($orderList as $k=>$v) {
+            $v->productList = PickupOrdersProduct::where('pickup_orders_id', $v->id)->get();
+            $storeArr = array();
+            $storeCnt = 0;
+            foreach ($v->productList as $kk => $vv) {
+                if (!in_array($vv->product->store_id, $storeArr)) {
+                    array_push($storeArr, $vv->product->store_id);
+                    $storeCnt++;
+                }
+            }
+            $v->storeCnt = $storeCnt - 1;
         }
         $view->orderList = $orderList;
         return $view;

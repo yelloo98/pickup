@@ -1,75 +1,64 @@
 @extends('layouts.front')
 @section('title', $title ?? '')
 @section('content')
-    <div class="content-body ppGoods-content">
-        <div class="subEtc-container">
-            <p>시간안에 상품을 픽업해주시기 바랍니다.</p>
+    <div class="content-body pickup-content">
+        <div class="subMenu-container">
+            <div class="select-box">
+                <select name="searchType" id="" class="listUp-btn" onchange="location.href='/front/mypage/order?searchType='+this.value">
+                    <option value="" @if(empty($_GET['searchType'])) selected @endif onclick="location.href='/front/mypage/order'">전체보기</option>
+                    <option value="pay" @if(!empty($_GET['searchType']) && $_GET['searchType'] == 'pay') selected @endif>결제완료/픽업대기</option>
+                    <option value="wait" @if(!empty($_GET['searchType']) && $_GET['searchType'] == 'wait') selected @endif>결제대기</option>
+                    <option value="cancel" @if(!empty($_GET['searchType']) && $_GET['searchType'] == 'cancel') selected @endif>결제취소</option>
+                    <option value="p_cancel" @if(!empty($_GET['searchType']) && $_GET['searchType'] == 'p_cancel') selected @endif>부분취소</option>
+                    <option value="done" @if(!empty($_GET['searchType']) && $_GET['searchType'] == 'done') selected @endif>픽업완료</option>
+                </select>
+            </div>
         </div>
-        <div class="goodsList-container">
-            @forelse($orderList as $k => $v)
-            <div class="goods-wrap" onclick="location.href='/front/mypage/order/{{$v->id ?? 0}}'">
-                <div class="goods-header">
-                    <p class="pickUp-num">
-                        픽업번호 : <span>{{$v->pickup_num ?? ''}}</span>
-                    </p>
-                    <p class="counting">
-                        남은시간<span id="time_{{$v->id ?? 0}}"></span>
-                        <input type="hidden" name="time" value="{{$v->until_second ?? 0}}">
-                    </p>
-                </div>
-                @forelse($v->productList as $kk => $vv)
-                <div class="goods-item">
-                    <div class="img-box" @if(!empty($vv->product->origin_product->image_path)) style="background-image: url('{{env('IMAGE_URL').$vv->product->origin_product->image_path}}')" @endif></div>
+        <div class="pickupList-container">
+        @forelse($orderList as $k => $v)
+            <div class="pickup-wrapper" onclick="pageOrder.selButton({{$v->id ?? 0}})">
                     <div class="word-box">
-                        <div class="box-header">
-                            <span class="store-name">{{$vv->product->fc_trader->companyName ?? ''}}</span>
-                            {!! \App\Helper\Codes::deviceType($vv->device->frozen_type ?? '') !!}
+                        <div class="date">
+                            <p><span>{{(!empty($v->created_at))? date_format($v->created_at,'Y-m-d') : ''}}</span> / <span>{{$v->pickup_num ?? ''}}</span></p>
+                            <button type="button"><img src="/front/dist/img/icon_next.png" alt=""></button>
                         </div>
-                        <div class="goodsSub">
-                            <p>{{$vv->product->origin_product->name ?? ''}}</p>
+                        <div class="storeInfo">
+                            <span>{{$v->productList->first()->product->fc_trader->companyName ?? ''}} @if($v->storeCnt > 0) 외{{$v->storeCnt}} @endif</span>
                         </div>
-                        <div class="toBottom">
-                            <p class="priceNum"><span>{{number_format($vv->product->price ?? 0)}}</span>원 / <small>{{$vv->count ?? 0}}</small>개</p>
+                        <div class="goods-name">
+                            <p>{{$v->productList->first()->product->origin_product->name ?? ''}}  @if($v->productList->count() > 1) 외 {{$v->productList->count()-1}} @endif</p>
+                        </div>
+                        <div class="price">
+                            <div class="goods-status">
+                                <p class="select-status">{{\App\Helper\Codes::orderStatus($v->status ?? '')}}</p>
+                                @if(($v->status ?? '') == 'pay')
+                                <button class="cancelBtn">결제취소<img src="/front/dist/img/icon_next_s.png"/></button>
+                                @endif
+                            </div>
+                            <p class="priceNum"><span>{{number_format($v->price ?? 0)}}</span>원</p>
                         </div>
                     </div>
                 </div>
-                @empty
-                @endforelse
-            </div>
-            @empty
-            <p class="none-list">구매한 상품이 없습니다.</p>
-            @endforelse
+        @empty
+            <p class="none-list">해당내역이 없습니다.</p>
+        @endforelse
         </div>
     </div>
 @endsection
 @section('script')
     <script>
-        $('.goods-wrap').each(function () {
-            var id = $(this).find('.counting').children('span').attr('id');
-            var time = $(this).find("input[name='time']").val();
-            countdown(id, time, this);
-        });
+        var pageOrder = {
+            _config : {},
 
-        function countdown(elementId, seconds, obj ){
-            var element, endTime, hours, mins, msLeft, time;
-
-            function updateTimer(){
-                msLeft = endTime - (+new Date);
-                if ( msLeft <= 0 ) {
-                    console.log('시간초과');
-                    $(obj).find('.counting').children('span').text('시간초과');
-                } else {
-                    time = new Date( msLeft );
-                    hours = time.getUTCHours();
-                    mins = time.getUTCMinutes();
-                    element.innerHTML = (hours ? ('0' + hours).slice(-2) +  ':' + ('0' + mins).slice(-2) : mins) + ':' + ('0' + time.getUTCSeconds()).slice(-2);
-                    setTimeout( updateTimer, time.getUTCMilliseconds());
+            selButton : function (id) {
+                var $target = $(event.target);
+                if($target.is(".cancelBtn")) {
+                    //# 버튼 클릭
+                    alert("버튼 클릭");
+                }else{
+                    location.href = '/front/mypage/order/' + id;
                 }
             }
-
-            element = document.getElementById( elementId );
-            endTime = (+new Date) + 1000 * seconds;
-            updateTimer();
-        }
+        };
     </script>
 @endsection

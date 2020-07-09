@@ -162,4 +162,22 @@ class OrderController extends Controller
         $view->orderProductList = PickupOrdersProduct::where('pickup_orders_id', $id)->get();
         return $view;
     }
+
+    //# 픽업 리스트
+    public function getOrderPickupList(Request $request)
+    {
+        $view = view('front.order.pickup');
+        $view->page = 'pickup';
+
+        $shopAuth = new ShopAuth($request);
+        $orderList = PickupOrders::where([['customer_id', $shopAuth->user()->id],['pickup_until_at','>',now()]])->orderBy('created_at','desc')->get();
+        foreach ($orderList as $k=>$v){
+            $v->productList = PickupOrdersProduct::where('pickup_orders_id',$v->id)->get();
+            $v->until_second = (Carbon::createFromDate($v->pickup_until_at) > Carbon::now())? Carbon::createFromDate($v->pickup_until_at)->diffInSeconds(Carbon::now()) : 0;
+        }
+        $view->orderList = $orderList;
+        return $view;
+    }
+
+
 }

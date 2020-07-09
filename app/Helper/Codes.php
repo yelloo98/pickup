@@ -75,4 +75,24 @@ class Codes extends Model
 
         return $type;
     }
+
+    /**
+     * 20200709
+     * 주문 상태
+     */
+    public static function orderStatus($status) {
+        if($status == 'pay'){
+            $status = '픽업대기';
+        }elseif($status == 'cancel'){
+            $status = '결제취소';
+        }elseif($status == 'wait'){
+            $status = '결제대기';
+        }elseif($status == 'done'){
+            $status = '픽업완료';
+        }elseif($status == 'p_cancel'){
+            $status = '부분취소';
+        }
+
+        return $status;
+    }
 }

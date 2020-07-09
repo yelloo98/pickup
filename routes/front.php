@@ -58,6 +58,7 @@ Route::group(['namespace' => 'Front', 'middleware' => 'front', 'prefix' => 'fron
         Route::get('/', 'OrderController@getOrderIndex');
         Route::post('/', 'OrderController@postOrder');
         Route::get('/result/{id?}', 'OrderController@getOrderResult');
+        Route::get('/pickup', 'OrderController@getOrderPickupList');
     });
 
     /**

@@ -1,7 +1,7 @@
 <header>
     @if(($page ?? '') == 'main')
     <div class="transparent-header">
-        <button class="list-btn" onclick="location.href='/front/mypage/order'">
+        <button class="list-btn" onclick="location.href='/front/order/pickup'">
             <img src="/front/dist/img/icon_Pup.png" alt="">
             <img class="black-img" src="/front/dist/img/icon_Pup_B.png" alt="">
             @if(!empty($orderCnt))<span>{{$orderCnt}}</span>@endif
@@ -30,6 +30,8 @@
         </button>
         <p class="headerTitle">
         @if(($page ?? '') == 'search')
+            구매한 픽업상품
+        @elseif(($page ?? '') == 'pickup')
             구매한 픽업상품
         @elseif(($page ?? '') == 'latest')
             픽업상품
