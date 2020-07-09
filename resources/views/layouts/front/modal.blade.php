@@ -609,7 +609,7 @@
                                     </ul>
                                 </div>
                                 <div class="order-detail">
-                                    <span>{{\App\Helper\Codes::deviceTypeText($v->device->frozen_type ?? '')}}</span>
+                                    <span>{{\App\Helper\Codes::deviceTypeText($v->device->frozen_type ?? '').($k+1)}}</span>
                                     <p class="order-number">픽업번호<span>{{$orderResult->pickup_num ?? ''}}</span></p>
                                     <p class="order-counting"><span>{{$orderResult->pickup_until_at ?? ''}}</span>까지</p>
                                     <p class="warning-text">(픽업가능시간안에 상품을 픽업하지 않으시면</p>
