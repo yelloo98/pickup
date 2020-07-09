@@ -70,6 +70,7 @@ class OrderController extends Controller
                 $order->order_phone = $res['user_phone_1'].$res['user_phone_2'].$res['user_phone_3'];
                 if(!empty($res['user_email_1']) && !empty($res['user_email_2'])) $order->order_email = $res['user_email_1'].'@'.$res['user_email_2'];
                 $order->pickup_until_at = Carbon::now()->addDay();
+                //# 결제 모듈 추가 시 status = ''
                 $order->status = 'pay';
                 $pickup_num = sprintf('%05d', mt_rand(00000, 99999));
                 if(PickupOrders::where('pickup_num',$pickup_num)->count() > 0) $pickup_num = sprintf('%05d', mt_rand(00000, 99999));
@@ -89,6 +90,11 @@ class OrderController extends Controller
                             $productSum = $productSum + ($product[$k]->price * $item[1]);
                             $productStockList = ProductStock::select('product_stock.*',DB::raw('(inserted_amount - sale_amount) as stock'))->
                             where('product_id', $product[$k]->id)->where('slot_status','DP-COMPLETE')->where('use_status','use')->whereColumn('inserted_amount', '>', 'sale_amount')->orderBy('stock','desc')->get();
+                            //# 재고 부족 시
+                            if($productStockList->sum('stock') < $item[1]){
+                                DB::rollBack();
+                                return response()->json(['code'=>400, 'msg'=>'재고가 부족합니다.']);
+                            }
                             foreach ($productStockList as $kk => $vv){
                                 if($item[1] == 0) break;
                                 $stockCnt = ($item[1] >= $vv->stock)? $vv->stock : $item[1];
@@ -138,7 +144,24 @@ class OrderController extends Controller
                 if($productSum == str_replace(',','',$res['price'])){
                     $order->price = $productSum;
                     $order->save();
-                    return response()->json(['code'=>200, 'msg'=>'주문 등록', 'order_id'=>$order->id]);
+                    //# 키오스크 API 호출
+                    $url = 'http://192.168.0.42:8080/api/pickup/sendOrder';
+                    $json_data = '{"pickupOrdersId" : "'.$order->id.'"}';
+                    $ch = curl_init($url);
+                    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                        'Content-Type: application/json',
+                        'Content-Length: '.strlen($json_data)));
+                    curl_setopt($ch, CURLOPT_URL, $url);
+                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                    curl_setopt($ch, CURLOPT_POSTFIELDS, $json_data);
+                    curl_setopt($ch, CURLOPT_POST, 1);
+                    $output = json_decode(curl_exec($ch));
+                    if($output->code == 200){
+                        return response()->json(['code'=>200, 'msg'=>'주문 등록', 'order_id'=>$order->id]);
+                    }else{
+                        DB::rollBack();
+                        return response()->json(['code'=>400, 'msg'=>'금액 처리 중 오류가 발생하였습니다.']);
+                    }
                 }else{
                     DB::rollBack();
                     return response()->json(['code'=>400, 'msg'=>'금액 처리 중 오류가 발생하였습니다.']);

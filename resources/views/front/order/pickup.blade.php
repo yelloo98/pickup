@@ -29,6 +29,7 @@
                                     <p>{{$vv->product->origin_product->name ?? ''}}</p>
                                 </div>
                                 <div class="toBottom">
+                                    @if($v->status == 'done')<p class="pickUp-status">픽업완료</p>@endif
                                     <p class="priceNum"><span>{{number_format($vv->product->price ?? 0)}}</span>원 / <small>{{$vv->count ?? 0}}</small>개</p>
                                 </div>
                             </div>
