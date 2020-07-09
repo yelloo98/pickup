@@ -70,7 +70,7 @@ class OrderController extends Controller
                 $order->order_phone = $res['user_phone_1'].$res['user_phone_2'].$res['user_phone_3'];
                 if(!empty($res['user_email_1']) && !empty($res['user_email_2'])) $order->order_email = $res['user_email_1'].'@'.$res['user_email_2'];
                 $order->pickup_until_at = Carbon::now()->addDay();
-                $order->status = 'wait';
+                $order->status = 'pay';
                 $pickup_num = sprintf('%05d', mt_rand(00000, 99999));
                 if(PickupOrders::where('pickup_num',$pickup_num)->count() > 0) $pickup_num = sprintf('%05d', mt_rand(00000, 99999));
                 $order->pickup_num = $pickup_num;

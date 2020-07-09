@@ -42,7 +42,7 @@ class MainController extends Controller
             //# 관심매장 여부
             $view->store_like = StoreLikes::where('customer_id', $shopAuth->user()->id)->get();
             //# 주문 내역
-            $view->orderCnt = PickupOrders::where('customer_id',$shopAuth->user()->id)->count();
+            $view->orderCnt = PickupOrders::where([['customer_id',$shopAuth->user()->id],['status','pay']])->count();
         }
 
         return $view;
