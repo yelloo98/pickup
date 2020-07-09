@@ -7768,4 +7768,24 @@
 	background: #ee5322;
 }
 
+.content-body.order-clear .center-box {
+	text-align: center;
+	padding-top: 22vh;
+}
+
+.content-body.order-clear .center-box img {
+	width: 116px;
+	margin-bottom: 5px;
+}
+
+.content-body.order-clear .center-box p {
+	font-size: 15px;
+	font-weight: 400;
+	margin-bottom: 5px;
+}
+
+.content-body.order-clear .center-box p:last-child {
+	margin-bottom: 0;
+}
+
 /*# sourceMappingURL=style.css.map */

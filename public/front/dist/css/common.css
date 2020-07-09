@@ -525,6 +525,12 @@ header .transparent-header .list-btn span {
 header .transparent-header .btns-wrap {
 	position: absolute;
 	right: 15px;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	-ms-flex-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
 }
 
 header .transparent-header .btns-wrap button {

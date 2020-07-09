@@ -2,10 +2,10 @@
 
 $(document).ready(function () {
     //페이지 타이틀체인지
-    var pageHtml = ["/MP_conditions.html", "/MP_notice.html", "/MP_listUp_detail.html", "/PP_goodsDetail.html", "/PP_qnaWrite.html", "/PP_storeQuestion.html", "/PP_all_pickupList.html", "/MP_review.html", "/MP_attention_store.html", "/MP_wishList.html", "/MP_pickupList.html", "/MP_reward.html", "/MP_coupon.html", "/PP_pickupOrder.html", "/MP_reviewChange.html", "/MP_productSearch.html", "/MP_orderDetail.html", "/MP_orderCancel.html"];
-    var pageTitle = ["이용약관", "공지사항", "공지약관상세페이지", "픽업상품", "Q&A 작성", "성남점에 문의하기", "픽업상품", "픽업 상품후기", "관심매장", "픽업 관심상품", "픽업 주문내역", "픽업 적립금", "픽업 쿠폰함", "주문/결제", "상품후기 수정", "픽업상품 검색", "주문 상세", "결제 취소"];
+    var pageHtml = ["/MP_conditions.html", "/MP_notice.html", "/MP_listUp_detail.html", "/PP_goodsDetail.html", "/PP_qnaWrite.html", "/PP_storeQuestion.html", "/PP_all_pickupList.html", "/MP_review.html", "/MP_attention_store.html", "/MP_wishList.html", "/MP_pickupList.html", "/MP_reward.html", "/MP_coupon.html", "/PP_pickupOrder.html", "/MP_reviewChange.html", "/MP_productSearch.html", "/MP_orderDetail.html", "/MP_orderCancel.html", "/PP_orderComplete.html", "/NS_orderCancel.html"];
+    var pageTitle = ["이용약관", "공지사항", "공지약관상세페이지", "픽업상품", "Q&A 작성", "성남점에 문의하기", "픽업상품", "픽업 상품후기", "관심매장", "픽업 관심상품", "픽업 주문내역", "픽업 적립금", "픽업 쿠폰함", "주문/결제", "상품후기 수정", "픽업상품 검색", "주문 상세", "결제 취소", "픽업상품", "주문 취소"];
 
-    pageHtml.forEach(function (item, index, array) {
+    pageHtml.forEach(function (item, index) {
         if (item == location.pathname) {
             var pageTitleName = pageTitle[index];
             $(".headerTitle").text(pageTitleName);
@@ -29,22 +29,6 @@ $(document).ready(function () {
 
         $('.list-wrapper').eq(tabItem).addClass('active').siblings('.list-wrapper').removeClass('active');
     });
-
-    // window.__scrollPosition = document.documentElement.scrollTop || 0;
-
-
-    // document.addEventListener('scroll', function() {
-    //     let _documentY = document.documentElement.scrollTop;
-    //     let direction = _documentY - window.__scrollPosition >= 0 ? 1 : -1;
-    //     console.log(direction); // 콘솔창에 스크롤 방향을 출력
-
-    //     window.__scrollPosition = _documentY; // Update scrollY
-    //     if ( direction == 1 ) {
-    //         $('header').slideUp(100);
-    //     } else if ( direction == -1 ) {
-    //         $('header').slideDown(100);
-    //     }
-    // });
 
     var didScroll;
     var lastScrollTop = 0;
