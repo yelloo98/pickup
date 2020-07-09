@@ -208,7 +208,15 @@ var PickupCommon = {
             processData: false,
             success: function (res) {
                 if (res.code == 200) {
-                    location.href='/front/order/result/'+res.order_id;
+                    //# 결제 API 호출
+                    $.get('/front/order/'+res.order_id, function(res_2){
+                        if (res_2.code == 200) {
+                            location.href='/front/order/result/'+res.order_id;
+                        }else{
+                            pageModal.alertPopup(res_2.msg);
+                            return false;
+                        }
+                    });
                 }else{
                     pageModal.alertPopup(res.msg);
                     return false;
