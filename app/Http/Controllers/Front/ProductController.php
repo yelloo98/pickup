@@ -4,29 +4,19 @@ namespace App\Http\Controllers\Front;
 
 use App\Helper\ShopAuth;
 use App\Http\Controllers\Controller;
-use App\Models\Customer;
 use App\Models\Device;
-use App\Models\OriginProduct;
-use App\Models\PickupCart;
-use App\Models\PickupOrders;
-use App\Models\PickupOrdersProduct;
 use App\Models\PickupProductLikes;
 use App\Models\PickupProductReview;
-use App\Models\PickupProductViews;
 use App\Models\Product;
 use App\Models\ProductStock;
-use App\Models\Store;
-use App\Models\StoreLikes;
-use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
 
     public function getProductList(Request $request)
     {
-        $view = view('front.product.list');
+        $view = view('front.product.product');
         $view->page = 'latest';
         $store = $request->input('store_id', 498);
         $device = $request->input('device_id', null);

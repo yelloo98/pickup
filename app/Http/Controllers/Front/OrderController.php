@@ -201,7 +201,7 @@ class OrderController extends Controller
      */
     public function getOrderDetail(Request $request, $id = 0)
     {
-        $view = view('front.order.orderDetail');
+        $view = view('front.order.detail');
         $view->page = 'my_order';
 
         return $view;
