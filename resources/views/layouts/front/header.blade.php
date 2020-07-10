@@ -63,6 +63,17 @@
             주문/결제
         @endif
         </p>
+        <div class="btns-wrap">
+            <button onclick="location.href='/front/search'">
+                <img class="black-img" src="/front/dist/img/icon_search_B.png" alt="">
+            </button>
+            <button onclick="location.href='/front/cart'">
+                <img class="black-img" src="/front/dist/img/icon_cart_B.png" alt="">
+            </button>
+            <button onclick="pageModal.menuPopup();">
+                <img class="black-img" src="/front/dist/img/icon_menu_B.png" alt="">
+            </button>
+        </div>
     </div>
     @endif
 </header>

@@ -27,7 +27,7 @@ class OrderController extends Controller
         $view->page = 'order';
 
         $shopAuth = new ShopAuth($request);
-        $view->customer = Customer::find($shopAuth->user()->id);
+        $view->customer = $shopAuth->user();
 
         $product = $request->input('product', null);
         $view->productAll = json_encode($request['product']);
@@ -171,10 +171,12 @@ class OrderController extends Controller
     /**
      * 주문/결제 완료
      */
-    public function getOrderResult($id)
+    public function getOrderResult(Request $request, $id)
     {
         $view = view('front.order.result');
         $view->page = 'order';
+        $shopAuth = new ShopAuth($request);
+        $view->customer = $shopAuth->user();
         $view->orderResult = PickupOrders::find($id);
         $view->orderProductList = PickupOrdersProduct::where('pickup_orders_id', $id)->get();
         return $view;
@@ -189,6 +191,7 @@ class OrderController extends Controller
         $view->page = 'pickup';
 
         $shopAuth = new ShopAuth($request);
+        $view->customer = $shopAuth->user();
         $orderList = PickupOrders::where([['customer_id', $shopAuth->user()->id],['pickup_until_at','>',now()]])->orderBy('created_at','desc')->get();
         foreach ($orderList as $k=>$v){
             $v->productList = PickupOrdersProduct::where('pickup_orders_id',$v->id)->get();
@@ -205,6 +208,8 @@ class OrderController extends Controller
     {
         $view = view('front.order.detail');
         $view->page = 'my_order';
+        $shopAuth = new ShopAuth($request);
+        $view->customer = $shopAuth->user();
         $view->order = PickupOrders::find($id);
         $view->orderProductSum = PickupOrdersProduct::where('pickup_orders_id', $id)->sum('price');
         $productStore = PickupOrdersProduct::leftjoin('product', 'product.id', 'pickup_orders_product.product_id')

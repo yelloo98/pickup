@@ -18,6 +18,8 @@ class ProductController extends Controller
     {
         $view = view('front.product.product');
         $view->page = 'latest';
+        $shopAuth = new ShopAuth($request);
+        $view->customer = $shopAuth->user();
         $store = $request->input('store_id', 498);
         $device = $request->input('device_id', null);
         $searchSort = $request->input('searchSort', null);
@@ -34,6 +36,7 @@ class ProductController extends Controller
         $view->page = 'detail';
 
         $shopAuth = new ShopAuth($request);
+        $view->customer = $shopAuth->user();
         //# 상품
         $view->product = Product::find($id);
         //# 세일율

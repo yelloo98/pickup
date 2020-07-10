@@ -34,6 +34,7 @@ class MypageController extends Controller
         $view->page = 'my_order';
 
         $shopAuth = new ShopAuth($request);
+        $view->customer = $shopAuth->user();
         $searchType = $request->input('searchType', null);
         $orderList = PickupOrders::where('customer_id', $shopAuth->user()->id);
         //# 검색 타입
@@ -65,6 +66,7 @@ class MypageController extends Controller
         $view = view('front.mypage.coupon');
         $view->page = 'my_coupon';
         $shopAuth = new ShopAuth($request);
+        $view->customer = $shopAuth->user();
         $couponList = PickupCouponCustomer::where('customer_id', $shopAuth->user()->id)->where('status', 'N')->leftjoin('pickup_coupon','pickup_coupon.id','pickup_coupon_customer.pickup_coupon_id')->select('pickup_coupon_customer.*','pickup_coupon.end_at')->where('end_at','>',now())->get();
         foreach ($couponList as $k => $v){
             $v->coupon->start_at = Carbon::createFromDate($v->coupon->start_at)->toDateString();
@@ -120,7 +122,7 @@ class MypageController extends Controller
         $view->page = 'my_point';
 
         $shopAuth = new ShopAuth($request);
-        $view->customer = Customer::find($shopAuth->user()->id);
+        $view->customer = $shopAuth->user();
 
         //# 총 사용 포인트
         $view->use_point = PointUser::where('customer_id',$shopAuth->user()->id)->where('type', 'use')->sum('point');
@@ -141,6 +143,7 @@ class MypageController extends Controller
         $view->page = 'my_store';
 
         $shopAuth = new ShopAuth($request);
+        $view->customer = $shopAuth->user();
         $view->store_like = StoreLikes::where('customer_id', $shopAuth->user()->id)->get();
         return $view;
     }
@@ -154,6 +157,7 @@ class MypageController extends Controller
         $view->page = 'my_product';
 
         $shopAuth = new ShopAuth($request);
+        $view->customer = $shopAuth->user();
         $view->product_like = PickupProductLikes::where('customer_id', $shopAuth->user()->id)->get();
         return $view;
     }
@@ -167,6 +171,7 @@ class MypageController extends Controller
         $view->page = 'my_review';
 
         $shopAuth = new ShopAuth($request);
+        $view->customer = $shopAuth->user();
         //# 후기 미작성 리스트
         $view->unreviewList = PickupOrdersProduct::leftjoin('pickup_orders', '.pickup_orders.id', 'pickup_orders_product.pickup_orders_id')
             ->leftjoin('product', 'product.id', 'pickup_orders_product.product_id')
@@ -187,6 +192,9 @@ class MypageController extends Controller
     {
         $view = view('front.mypage.reviewDetail');
         $view->page = 'my_review';
+
+        $shopAuth = new ShopAuth($request);
+        $view->customer = $shopAuth->user();
 
         $view->review = PickupProductReview::find($id);
         if(!empty($view->review)){
@@ -255,6 +263,7 @@ class MypageController extends Controller
         $view->page = 'my_qna';
 
         $shopAuth = new ShopAuth($request);
+        $view->customer = $shopAuth->user();
         $view->productQna = PickupQna::where([['customer_id', $shopAuth->user()->id],['type','product']])->orderBy('created_at','desc')->get();
         $view->storeQna = PickupQna::where([['customer_id', $shopAuth->user()->id],['type','store']])->orderBy('created_at','desc')->get();
         return $view;
@@ -268,6 +277,8 @@ class MypageController extends Controller
         $view = view('front.mypage.productQna');
         $view->page = 'my_qna';
 
+        $shopAuth = new ShopAuth($request);
+        $view->customer = $shopAuth->user();
         $view->productQna = PickupQna::find($id);
         if(!empty($view->productQna)){
             $view->product = Product::find($view->productQna->product_id);
@@ -335,6 +346,8 @@ class MypageController extends Controller
         $view = view('front.mypage.storeQna');
         $view->page = 'storeQna';
 
+        $shopAuth = new ShopAuth($request);
+        $view->customer = $shopAuth->user();
         $view->productQna = PickupQna::find($id);
         if(!empty($view->productQna)){
             $view->store = FcTrader::find($view->productQna->store_id);
@@ -411,21 +424,26 @@ class MypageController extends Controller
     /**
      * 이용약관
      */
-    public function getTermList()
+    public function getTermList(Request $request)
     {
         $view = view('front.mypage.term');
         $view->page = 'term';
+
+        $shopAuth = new ShopAuth($request);
+        $view->customer = $shopAuth->user();
         return $view;
     }
 
     /**
      * 공지사항
      */
-    public function getNoticeList()
+    public function getNoticeList(Request $request)
     {
         $view = view('front.mypage.notice');
         $view->page = 'notice';
 
+        $shopAuth = new ShopAuth($request);
+        $view->customer = $shopAuth->user();
         $view->noticeList = PickupNotice::orderBy('created_at','desc')->get();
         return $view;
     }
@@ -433,11 +451,13 @@ class MypageController extends Controller
     /**
      * 공지사항 상세
      */
-    public function getNoticeDetail($id = 0)
+    public function getNoticeDetail(Request $request, $id = 0)
     {
         $view = view('front.mypage.noticeDetail');
         $view->page = 'notice';
 
+        $shopAuth = new ShopAuth($request);
+        $view->customer = $shopAuth->user();
         $view->notice = PickupNotice::find($id);
         return $view;
     }
