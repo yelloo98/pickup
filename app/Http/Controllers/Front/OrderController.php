@@ -206,7 +206,15 @@ class OrderController extends Controller
         $view = view('front.order.detail');
         $view->page = 'my_order';
         $view->order = PickupOrders::find($id);
-        $view->orderProduct = PickupOrdersProduct::where('pickup_orders_id', $id)->get();
+        $view->orderProductSum = PickupOrdersProduct::where('pickup_orders_id', $id)->sum('price');
+        $productStore = PickupOrdersProduct::leftjoin('product', 'product.id', 'pickup_orders_product.product_id')
+            ->select('pickup_orders_product.product_id', 'product.store_id')->where('pickup_orders_id', $id)->groupBy('store_id')->get();
+        foreach ($productStore as $item){
+            $item->productList = PickupOrdersProduct::leftjoin('product', 'product.id', 'pickup_orders_product.product_id')
+                ->select('pickup_orders_product.*', 'product.store_id')
+                ->where([['pickup_orders_id', $id],['store_id', $item->store_id]])->orderBy('pickup_orders_product.id','desc')->get();
+        }
+        $view->productStore = $productStore;
         return $view;
     }
 }

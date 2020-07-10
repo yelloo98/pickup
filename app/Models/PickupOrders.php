@@ -15,6 +15,11 @@ class PickupOrders extends Model implements ModelAdminInterface
     protected $connection = 'mysql';
     protected $table = 'pickup_orders';
 
+
+    public function coupon()
+    {
+        return $this->belongsTo('App\Models\PickupCoupon', 'pickup_coupon_id');
+    }
     /**
      * Override : DataTableList
      * -----------------------------------------------------------------------------------------------------------------
