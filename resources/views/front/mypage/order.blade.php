@@ -54,7 +54,7 @@
                 var $target = $(event.target);
                 if($target.is(".cancelBtn")) {
                     //# 버튼 클릭
-                    alert("버튼 클릭");
+                    pageModal.alertPopup('준비중입니다.');
                 }else{
                     location.href = '/front/mypage/order/' + id;
                 }

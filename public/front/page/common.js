@@ -209,7 +209,7 @@ var PickupCommon = {
             success: function (res) {
                 if (res.code == 200) {
                     //# 결제 API 호출
-                    $.get('/front/order/'+res.order_id, function(res_2){
+                    $.get('/front/api/order/'+res.order_id, function(res_2){
                         if (res_2.code == 200) {
                             location.href='/front/order/result/'+res.order_id;
                         }else{

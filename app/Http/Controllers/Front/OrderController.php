@@ -162,7 +162,7 @@ class OrderController extends Controller
 
 
     //# 주문/결제 API
-    public function postOrderApi($id)
+    public function getOrderApi($id)
     {
         //# 키오스크 API 호출
         $url = 'http://192.168.0.42:8080/api/pickup/sendOrder';

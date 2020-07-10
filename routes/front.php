@@ -24,6 +24,7 @@ Route::group(['namespace' => 'Front', 'middleware' => 'front', 'prefix' => 'fron
     Route::get('/add/product', 'PickupController@addProduct');                 //# 관심상품 등록/삭제
     Route::get('/sel/product', 'PickupController@selProduct');                 //# 상품 선택
     Route::get('/add/cart', 'PickupController@addCart');                       //# 카트 등록/삭제
+    Route::get('/api/order/{id?}', 'OrderController@getOrderApi');            //# 결제 요청 api
 
     /**
      * Main
@@ -31,12 +32,12 @@ Route::group(['namespace' => 'Front', 'middleware' => 'front', 'prefix' => 'fron
      */
     //메인화면
     Route::get('/main', 'MainController@getIndex')->name('index');
+
     /**
      * Product
      * -----------------------------------------------------------------------------------------------------------------
      */
     Route::group(['prefix' => 'product', 'as' => 'product.'], function () {
-        //픽업상품의 설명 제공
         Route::get('/list', 'ProductController@getProductList');
         Route::get('/detail/{id?}', 'ProductController@getProduct');
     });
@@ -57,7 +58,6 @@ Route::group(['namespace' => 'Front', 'middleware' => 'front', 'prefix' => 'fron
     Route::group(['prefix' => 'order', 'as' => 'order.'], function () {
         Route::get('/', 'OrderController@getOrderIndex');
         Route::post('/', 'OrderController@postOrder');
-        Route::get('/{id?}', 'OrderController@postOrderApi');
         Route::get('/result/{id?}', 'OrderController@getOrderResult');
         Route::get('/pickup', 'OrderController@getOrderPickupList');
     });
