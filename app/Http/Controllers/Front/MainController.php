@@ -14,6 +14,7 @@ use App\Models\ProductStock;
 use App\Models\StoreEvent;
 use App\Models\StoreLikes;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class MainController extends Controller
 {
@@ -28,7 +29,8 @@ class MainController extends Controller
         $event = StoreEvent::where([['type', 'store_owner'],['store_id', $store_id]])->orderBy('created_at', 'desc')->limit(3);
         $view->storeEvent = StoreEvent::where('type', 'admin')->orderBy('created_at', 'desc')->limit(2)->union($event)->get();
         //# 신규 상품 / 슬롯에 새로 들어온 상품
-        $view->newProduct = ProductStock::leftjoin('product','product.id','product_stock.product_id')->where('product.store_id', $store_id)->select('product_stock.*')->orderBy('id','DESC')->limit(10)->get();
+        $view->newProduct = ProductStock::leftjoin('product','product.id','product_stock.product_id')->where('product.store_id', $store_id)
+            ->where([['product_stock.slot_status','DP-COMPLETE'],['product_stock.use_status','use']])->select('product_stock.*', DB::raw('(inserted_amount - sale_amount) as stock'))->orderBy('product_stock.id','DESC')->limit(10)->get();
         //# 인기 상품 / 구매량이 많은 상품
         $view->bestProduct = PickupOrdersProduct::leftjoin('product','product.id','pickup_orders_product.product_id')->where('product.store_id', $store_id)->select('pickup_orders_product.*')->orderBy('id','DESC')->limit(10)->get();
         //# 상품 리뷰 / 최신 순

@@ -60,7 +60,7 @@
                 <button onclick="location.href='/front/product';"><img src="/front/dist/img/icon_mainarrow.png" alt=""></button>
             </div>
             <div class="swiper-wrapper">
-                @forelse($newProduct as $k=>$v)
+                @foreach($newProduct as $k=>$v)
                 <div class="swiper-slide" onclick="pageMain.selProduct({{$v->product_id ?? 0}})">
                     <div class="img-box" @if(!empty($v->product->origin_product->image_path)) style="background-image: url('{{env('IMAGE_URL').$v->product->origin_product->image_path}}')" @endif>
                         <img src="/front/dist/img/icon_cart_box.png" alt="">
@@ -76,8 +76,7 @@
                         <p>{{$v->product->origin_product->name ?? ''}}</p>
                     </div>
                 </div>
-                @empty
-                @endforelse
+                @endforeach
             </div>
         </div>
         @endif
@@ -145,7 +144,7 @@
             <div class="swiper-wrapper">
                 @forelse($ProductReview as $k=>$v)
                     @if($k % 2 == 0) <div class="swiper-slide"> @endif
-                        <div class="review-list">
+                        <div class="review-list" onclick="location.href='/front/product/{{$v->product_id ?? 0}}'">
                             <div class="img-box" @if(!empty($v->product->origin_product->image_path)) style="background-image: url('{{env('IMAGE_URL').$v->product->origin_product->image_path}}')" @endif></div>
                             <div class="word-box">
                                 <img src="/front/dist/img/icon_review.png" alt="">

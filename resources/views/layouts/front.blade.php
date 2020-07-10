@@ -24,7 +24,7 @@
     @include('layouts.front.header')
     @yield('content')
     @include('layouts.front.modal')
-    @yield('footer')
+    {{--@yield('footer')--}}
 </div>
 </body>
 <script type="text/javascript" src="/front/dist/plugin/vendor.min.js"></script>
