@@ -56,7 +56,7 @@
                     //# 버튼 클릭
                     pageModal.alertPopup('준비중입니다.');
                 }else{
-                    location.href = '/front/mypage/order/' + id;
+                    location.href = '/front/order/detail/' + id;
                 }
             }
         };

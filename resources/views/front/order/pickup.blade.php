@@ -7,7 +7,7 @@
         </div>
         <div class="goodsList-container">
             @forelse($orderList as $k => $v)
-                <div class="goods-wrap" onclick="location.href='/front/mypage/order/{{$v->id ?? 0}}'">
+                <div class="goods-wrap" onclick="location.href='/front/order/detail/{{$v->id ?? 0}}'">
                     <div class="goods-header">
                         <p class="pickUp-num">
                             픽업번호 : <span>{{$v->pickup_num ?? ''}}</span>

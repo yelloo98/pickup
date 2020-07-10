@@ -17,7 +17,9 @@ use Illuminate\Support\Facades\DB;
 
 class PickupController extends Controller
 {
-    //# 관심매장 등록/삭제
+    /**
+     * 관심매장 등록/삭제
+     */
 	public function addStore(Request $request)
 	{
         return DB::transaction(function() use ($request){
@@ -48,7 +50,10 @@ class PickupController extends Controller
             }
         });
     }
-    //# 관심상품 등록/삭제
+
+    /**
+     * 관심상품 등록/삭제
+     */
     public function addProduct(Request $request)
     {
         return DB::transaction(function() use ($request){
@@ -85,7 +90,9 @@ class PickupController extends Controller
         });
     }
 
-    //# 장바구니 선택
+    /**
+     * 장바구니 선택
+     */
     public function selProduct(Request $request)
     {
         return DB::transaction(function() use ($request){
@@ -112,7 +119,9 @@ class PickupController extends Controller
         });
     }
 
-    //# 장바구니 등록/삭제
+    /**
+     * 장바구니 등록/삭제
+     */
     public function addCart(Request $request)
     {
         return DB::transaction(function() use ($request){
@@ -153,8 +162,33 @@ class PickupController extends Controller
         });
     }
 
+    /**
+     * 주문/결제 API
+     */
+    public function getOrderApi($id)
+    {
+        //# 키오스크 API 호출
+        $url = 'http://192.168.0.42:8080/api/pickup/sendOrder';
+        $json_data = '{"pickupOrdersId" : "'.$id.'"}';
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            'Content-Type: application/json',
+            'Content-Length: '.strlen($json_data)));
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $json_data);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        $output = json_decode(curl_exec($ch));
+        if($output->code == 200){
+            return response()->json(['code'=>200, 'msg'=>'주문 등록']);
+        }else{
+            return response()->json(['code'=>400, 'msg'=>'주문 실패']);
+        }
+    }
 
-    //# 장바구니 등록/삭제
+    /**
+     * 앱 테스트 API
+     */
     public function appTest(Request $request)
     {
         return response()->json(['code' => 200, 'msg' => 'API 성공']);

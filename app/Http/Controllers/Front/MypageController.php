@@ -58,18 +58,6 @@ class MypageController extends Controller
 	}
 
     /**
-     *  주문내역 상세
-     */
-    public function getOrderDetail(Request $request, $id = 0)
-    {
-        $view = view('front.mypage.orderDetail');
-        $view->page = 'my_order';
-
-        $shopAuth = new ShopAuth($request);
-        return $view;
-    }
-
-    /**
      *  쿠폰 리스트
      */
     public function getCouponList(Request $request)

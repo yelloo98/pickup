@@ -3,7 +3,7 @@ var PickupCommon = {
 
     //# 관심매장 추가 / 삭제
     storeLike : function(store_id, status){
-        $.get('/front/add/store', {'store_id':store_id, 'status':status}, function(res) {
+        $.get('/front/api/add/store', {'store_id':store_id, 'status':status}, function(res) {
             if(res.code == 600){
                 pageModal.alertPopup(res.msg);
                 return false;
@@ -50,7 +50,7 @@ var PickupCommon = {
 
     //# 관심상품 추가 / 삭제
     productLike : function(product_id, status){
-        $.get('/front/add/product', {'product_id':product_id, 'status':status}, function(res) {
+        $.get('/front/api/add/product', {'product_id':product_id, 'status':status}, function(res) {
             //# 로그인 요청
             if(res.code == 600){
                 pageModal.alertPopup(res.msg);
@@ -93,7 +93,7 @@ var PickupCommon = {
 
     //# 상품 선택
     selProduct : function (product_id, status='cart') {
-        $.get('/front/sel/product', {'product_id':product_id}, function(res) {
+        $.get('/front/api/sel/product', {'product_id':product_id}, function(res) {
             if(res.code == 200){
                 $('.purchase-wrapper .header-section p').html(res.name);
                 $('.purchase-wrapper .totalNum span').html(res.price);
@@ -119,7 +119,7 @@ var PickupCommon = {
     addCart : function (product_id, status) {
         var cnt = $('.purchase-wrapper .goodsAmount').text();
 
-        $.get('/front/add/cart', {'product_id':product_id, 'status':status, 'cnt':cnt}, function(res) {
+        $.get('/front/api/add/cart', {'product_id':product_id, 'status':status, 'cnt':cnt}, function(res) {
             if(res.code == 600){
                 pageModal.alertPopup(res.msg);
                 return false;

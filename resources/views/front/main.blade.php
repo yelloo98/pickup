@@ -57,7 +57,7 @@
             <div class="moreTitle-wrapper">
                 <img src="/front/dist/img/m_new.png" alt="">
                 <p>새로운 픽업상품이 출시했어요.</p>
-                <button onclick="location.href='/front/product/list';"><img src="/front/dist/img/icon_mainarrow.png" alt=""></button>
+                <button onclick="location.href='/front/product';"><img src="/front/dist/img/icon_mainarrow.png" alt=""></button>
             </div>
             <div class="swiper-wrapper">
                 @forelse($newProduct as $k=>$v)
@@ -87,7 +87,7 @@
             <div class="moreTitle-wrapper">
                 <img src="/front/dist/img/m_hot.png" alt="">
                 <p>지금 핫한 인기 상품은?</p>
-                <button onclick="location.href='/front/product/list?searchSort=hit';"><img src="/front/dist/img/icon_mainarrow.png" alt=""></button>
+                <button onclick="location.href='/front/product?searchSort=hit';"><img src="/front/dist/img/icon_mainarrow.png" alt=""></button>
             </div>
             <div class="swiper-wrapper">
                 @forelse($bestProduct as $k=>$v)

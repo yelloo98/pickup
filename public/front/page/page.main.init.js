@@ -6,7 +6,7 @@ var pageMain = {
         if($target.is("img")) {
             PickupCommon.selProduct(product_id, 'cart');
         }else{
-            location.href = '/front/product/detail/' + product_id;
+            location.href = '/front/product/' + product_id;
         }
     }
 };

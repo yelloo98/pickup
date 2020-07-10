@@ -18,7 +18,9 @@ use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
-    //# 주문/결제
+    /**
+     * 주문/결제 입력
+     */
 	public function getOrderIndex(Request $request)
 	{
         $view = view('front.order.order');
@@ -51,7 +53,9 @@ class OrderController extends Controller
         return $view;
 	}
 
-    //# 주문/결제
+    /**
+     * 주문/결제 처리
+     */
     public function postOrder(Request $request)
     {
         return DB::transaction(function() use ($request){
@@ -161,29 +165,10 @@ class OrderController extends Controller
     }
 
 
-    //# 주문/결제 API
-    public function getOrderApi($id)
-    {
-        //# 키오스크 API 호출
-        $url = 'http://192.168.0.42:8080/api/pickup/sendOrder';
-        $json_data = '{"pickupOrdersId" : "'.$id.'"}';
-        $ch = curl_init($url);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-        'Content-Type: application/json',
-        'Content-Length: '.strlen($json_data)));
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $json_data);
-        curl_setopt($ch, CURLOPT_POST, 1);
-        $output = json_decode(curl_exec($ch));
-        if($output->code == 200){
-            return response()->json(['code'=>200, 'msg'=>'주문 등록']);
-        }else{
-            return response()->json(['code'=>400, 'msg'=>'주문 실패']);
-        }
-    }
 
-    //# 주문/결제 완료
+    /**
+     * 주문/결제 완료
+     */
     public function getOrderResult($id)
     {
         $view = view('front.order.result');
@@ -193,7 +178,9 @@ class OrderController extends Controller
         return $view;
     }
 
-    //# 픽업 리스트
+    /**
+     *  픽업 리스트
+     */
     public function getOrderPickupList(Request $request)
     {
         $view = view('front.order.pickup');
@@ -209,5 +196,14 @@ class OrderController extends Controller
         return $view;
     }
 
+    /**
+     *  주문내역 상세
+     */
+    public function getOrderDetail(Request $request, $id = 0)
+    {
+        $view = view('front.order.orderDetail');
+        $view->page = 'my_order';
 
+        return $view;
+    }
 }

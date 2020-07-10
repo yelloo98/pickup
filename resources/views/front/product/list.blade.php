@@ -24,7 +24,7 @@
                 <ul class="machine-list">
                     <li class="active">
                     @forelse($productList as $k => $v)
-                        <div class="machine-item" onclick="location.href='/front/product/detail/{{$v->product_id ?? 0}}'">
+                        <div class="machine-item" onclick="location.href='/front/product/{{$v->product_id ?? 0}}'">
                             <div class="img-box">
                                 <img class="cart-ico" src="/front/dist/img/icon_cart_box.png" alt="">
                                 {{--<div class="outOfStock"><p>품절</p></div>--}}
