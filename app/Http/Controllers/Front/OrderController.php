@@ -111,6 +111,8 @@ class OrderController extends Controller
                                 $orderProduct->product_stock_id = $vv->product_stock_id;
                                 $orderProduct->count = $stockCnt;
                                 $orderProduct->price = $product[$k]->price * $stockCnt;
+                                //# 결제 모듈 추가 시 status = ''
+                                $orderProduct->status = 'pay';
                                 $orderProduct->save();
                             }
                         }
@@ -203,7 +205,8 @@ class OrderController extends Controller
     {
         $view = view('front.order.detail');
         $view->page = 'my_order';
-
+        $view->order = PickupOrders::find($id);
+        $view->orderProduct = PickupOrdersProduct::where('pickup_orders_id', $id)->get();
         return $view;
     }
 }
