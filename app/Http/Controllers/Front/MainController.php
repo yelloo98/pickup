@@ -40,7 +40,7 @@ class MainController extends Controller
         if(!empty($shopAuth->user())){
             $view->customer = $shopAuth->user();
             //# 최근 본 상품 / 유저 where 추가해야됨
-            $view->historyProduct = PickupProductViews::leftjoin('product','product.id','pickup_product_views.product_id')->where('product.store_id', $store_id)->select('pickup_product_views.*')->where('customer_id', $shopAuth->user()->id)->orderBy('id','DESC')->limit(10)->get();
+            $view->historyProduct = PickupProductViews::leftjoin('product','product.id','pickup_product_views.product_id')->where('product.store_id', $store_id)->select('pickup_product_views.*')->where('customer_id', $shopAuth->user()->id)->orderBy('created_at','DESC')->limit(10)->get();
             //# 관심매장 여부
             $view->store_like = StoreLikes::where('customer_id', $shopAuth->user()->id)->get();
             //# 주문 내역

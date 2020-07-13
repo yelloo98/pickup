@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Device;
 use App\Models\PickupProductLikes;
 use App\Models\PickupProductReview;
+use App\Models\PickupProductViews;
 use App\Models\Product;
 use App\Models\ProductStock;
 use Illuminate\Http\Request;
@@ -48,6 +49,12 @@ class ProductController extends Controller
         $view->reviewScore = round(PickupProductReview::where('product_id',$id)->avg('score'), 1);
         //# 상품 좋아요
         $view->productLike = PickupProductLikes::where([['customer_id', $shopAuth->user()->id],['product_id', $id]])->get();
+        //# 최근 본 상품 추가
+        $pickupProductViews = new PickupProductViews();
+        $pickupProductViews->customer_id = $shopAuth->user()->id;
+        $pickupProductViews->product_id = $id;
+        $pickupProductViews->save();
+
         return $view;
     }
 }
