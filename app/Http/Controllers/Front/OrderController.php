@@ -192,7 +192,7 @@ class OrderController extends Controller
 
         $shopAuth = new ShopAuth($request);
         $view->customer = $shopAuth->user();
-        $orderList = PickupOrders::where([['customer_id', $shopAuth->user()->id],['pickup_until_at','>',now()]])->orderBy('created_at','desc')->get();
+        $orderList = PickupOrders::where([['customer_id', $shopAuth->user()->id],['pickup_until_at','>',now()],['status','pay']])->orderBy('created_at','desc')->get();
         foreach ($orderList as $k=>$v){
             $v->productList = PickupOrdersProduct::where('pickup_orders_id',$v->id)->get();
             $v->until_second = (Carbon::createFromDate($v->pickup_until_at) > Carbon::now())? Carbon::createFromDate($v->pickup_until_at)->diffInSeconds(Carbon::now()) : 0;
