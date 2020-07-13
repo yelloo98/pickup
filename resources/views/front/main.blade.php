@@ -63,7 +63,11 @@
                 @foreach($newProduct as $k=>$v)
                 <div class="swiper-slide" onclick="pageMain.selProduct({{$v->product_id ?? 0}})">
                     <div class="img-box" @if(!empty($v->product->origin_product->image_path)) style="background-image: url('{{env('IMAGE_URL').$v->product->origin_product->image_path}}')" @endif>
+                        @if($v->stock == 0)
+                        <div class="outOfStock"><p>품절</p></div>
+                        @else
                         <img src="/front/dist/img/icon_cart_box.png" alt="">
+                        @endif
                     </div>
                     <div class="price-box">
                         @if(($v->product->price ?? '') == ($v->product->origin_product->price_cost ?? '') || ($v->product->price ?? '') > ($v->product->origin_product->price_cost ?? ''))
@@ -119,9 +123,9 @@
                 <img src="/front/dist/img/m_pick.png" alt="">
                 <p>최근 본 상품을 확인하세요.</p>
             </div>
-            <div class="cubeBox-wrapper">
+            <div class="cubeBox-wrapper swiper-wrapper">
                 @forelse($historyProduct as $k=>$v)
-                <div class="cubeItem" onclick="pageMain.selProduct({{$v->product_id ?? 0}})">
+                <div class="cubeItem swiper-slide" onclick="pageMain.selProduct({{$v->product_id ?? 0}})">
                     <div class="img-box" @if(!empty($v->product->origin_product->image_path)) style="background-image: url('{{env('IMAGE_URL').$v->product->origin_product->image_path}}')" @endif>
                         <img src="/front/dist/img/icon_cart_box.png" alt="">
                     </div>
@@ -144,7 +148,7 @@
             <div class="swiper-wrapper">
                 @forelse($ProductReview as $k=>$v)
                     @if($k % 2 == 0) <div class="swiper-slide"> @endif
-                        <div class="review-list" onclick="location.href='/front/product/{{$v->product_id ?? 0}}'">
+                        <div class="review-list" onclick="location.href='/front/product/{{$v->product_id ?? 0}}?tab=review'">
                             <div class="img-box" @if(!empty($v->product->origin_product->image_path)) style="background-image: url('{{env('IMAGE_URL').$v->product->origin_product->image_path}}')" @endif></div>
                             <div class="word-box">
                                 <img src="/front/dist/img/icon_review.png" alt="">

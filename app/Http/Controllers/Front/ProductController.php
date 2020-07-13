@@ -50,10 +50,12 @@ class ProductController extends Controller
         //# 상품 좋아요
         $view->productLike = PickupProductLikes::where([['customer_id', $shopAuth->user()->id],['product_id', $id]])->get();
         //# 최근 본 상품 추가
-        $pickupProductViews = new PickupProductViews();
-        $pickupProductViews->customer_id = $shopAuth->user()->id;
-        $pickupProductViews->product_id = $id;
-        $pickupProductViews->save();
+        if(PickupProductViews::where([['customer_id',$shopAuth->user()->id],['product_id', $id]])->count() == 0){
+            $pickupProductViews = new PickupProductViews();
+            $pickupProductViews->customer_id = $shopAuth->user()->id;
+            $pickupProductViews->product_id = $id;
+            $pickupProductViews->save();
+        }
 
         return $view;
     }

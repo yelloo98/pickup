@@ -37,6 +37,10 @@ $(document).ready(function(){
         slidesPerView: 'auto',
         spaceBetween: 30,
     });
+    var swiperCube = new Swiper('.swiper-container.cubeItem-container', {
+        slidesPerView: 'auto',
+        spaceBetween: 10,
+    });
 
     var mainItemList = $('.cubeBox-wrapper .img-box').outerWidth();
     $('.cubeBox-wrapper .img-box').css('height',mainItemList);

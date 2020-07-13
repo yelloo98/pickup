@@ -45,13 +45,13 @@
         </div>
         <div class="goodsTab-container tab-section">
             <ul class="small-list">
-                <li class="tabItem active">상품설명</li>
-                <li class="tabItem">구매정보</li>
-                <li class="tabItem">상품후기<span>100</span></li>
-                <li class="tabItem">Q&A<span>15</span></li>
+                <li class="tabItem @if(($_GET['tab'] ?? '') == 'description' || empty($_GET['tab'])) active @endif">상품설명</li>
+                <li class="tabItem @if(($_GET['tab'] ?? '') == 'information') active @endif">구매정보</li>
+                <li class="tabItem @if(($_GET['tab'] ?? '') == 'review') active @endif">상품후기<span>100</span></li>
+                <li class="tabItem @if(($_GET['tab'] ?? '') == 'qna') active @endif">Q&A<span>15</span></li>
             </ul>
             <div class="target-wrap">
-                <div class="tabTarget active">
+                <div class="tabTarget @if(($_GET['tab'] ?? '') == 'description' || empty($_GET['tab'])) active @endif">
                     @if(!empty($product->origin_product->landing1_path))
                     <img class="goods" src="{{env('IMAGE_URL').$product->origin_product->landing1_path}}" alt="">
                     @endif
@@ -68,7 +68,7 @@
                     <img class="goods" src="{{env('IMAGE_URL').$product->origin_product->landing5_path}}" alt="">
                     @endif
                 </div>
-                <div class="tabTarget over-size">
+                <div class="tabTarget over-size @if(($_GET['tab'] ?? '') == 'information') active @endif">
                     <div class="accordian-list">
                         <ul>
                             <li>상품정보 제공고시<img src="/front/dist/img/icon_arrow_MD.png" alt=""></li>
@@ -77,7 +77,7 @@
                         </ul>
                     </div>
                 </div>
-                <div class="tabTarget ">
+                <div class="tabTarget @if(($_GET['tab'] ?? '') == 'review') active @endif">
                     <div class="review-wrapper">
                         <button class="write-btn" onclick="location.href='/front/mypage/review/0?product_id={{$product->id ?? ''}}'">상품후기 작성하기</button>
                         <div class="review-container">
@@ -164,7 +164,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="tabTarget over-size ">
+                <div class="tabTarget over-size @if(($_GET['tab'] ?? '') == 'qna') active @endif">
                     <div class="qna-wrapper">
                         <button class="write-btn" onclick="location.href='/front/mypage/qna/product/0?product_id={{$product->id ?? ''}}'">Q&A 작성하기</button>
                         <div class="qna-container">
