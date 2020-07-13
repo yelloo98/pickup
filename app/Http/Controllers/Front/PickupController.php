@@ -168,7 +168,8 @@ class PickupController extends Controller
     public function getOrderApi($id)
     {
         //# 키오스크 API 호출
-        $url = 'http://192.168.0.42:8080/api/pickup/sendOrder';
+//        $url = 'http://192.168.0.42:8080/api/pickup/sendOrder';           //# 테스트 내부접속
+        $url = 'http://dev.e777.kr:8842/api/pickup/sendOrder';              //# 테스트 외부접속
         $json_data = '{"pickupOrdersId" : "'.$id.'"}';
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_HTTPHEADER, array(
