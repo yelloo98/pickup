@@ -11,10 +11,13 @@ use App\Models\PickupProductViews;
 use App\Models\Product;
 use App\Models\ProductStock;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
-
+    /**
+     *  상품 리스트
+     */
     public function getProductList(Request $request)
     {
         $view = view('front.product.product');
@@ -23,14 +26,18 @@ class ProductController extends Controller
         $view->customer = $shopAuth->user();
         $store = $request->input('store_id', 498);
         $device = $request->input('device_id', null);
-        $searchSort = $request->input('searchSort', null);
+        $searchSort = $request->input('searchSort', 'created_at');
 
         $view->deviceList = Device::where('store_id', $store)->orderBy('id','desc')->get();
-        $view->productList = ProductStock::leftjoin('device','device.id','product_stock.device_id')
-            ->select('product_stock.*','device.store_id')->where('device.store_id', $store)->orderBy('id','desc')->get();
+        $productList = ProductStock::leftjoin('device','device.id','product_stock.device_id')
+            ->select('product_stock.*')->where('device.store_id', $store)->where('product_stock.product_id','!=','0')->groupBy('product_stock.product_id')->groupBy('product_stock.device_id')->orderBy($searchSort,'desc')->get();
+        $view->productList = $productList;
         return $view;
     }
 
+    /**
+     * 상품 상세
+     */
     public function getProduct(Request $request, $id)
     {
         $view = view('front.product.detail');

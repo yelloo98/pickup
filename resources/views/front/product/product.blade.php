@@ -25,17 +25,24 @@
                     <li class="active">
                     @forelse($productList as $k => $v)
                         <div class="machine-item" onclick="location.href='/front/product/{{$v->product_id ?? 0}}'">
-                            <div class="img-box">
+                            <div class="img-box" @if(!empty($v->product->origin_product->image_path)) style="background-image: url('{{env('IMAGE_URL').$v->product->origin_product->image_path}}')" @endif>
+                                @if(($v->slot_status ?? '') == 'DP-COMPLETE' && ($v->use_status ?? '') == 'use' && ($v->inserted_amount ?? '') > ($v->sale_amount ?? ''))
                                 <img class="cart-ico" src="/front/dist/img/icon_cart_box.png" alt="">
-                                {{--<div class="outOfStock"><p>품절</p></div>--}}
+                                @else
+                                <div class="outOfStock"><p>품절</p></div>
+                                @endif
                             </div>
                             <div class="price-box">
+                                @if(($v->product->price ?? '') == ($v->product->origin_product->price_cost ?? '') || ($v->product->price ?? '') > ($v->product->origin_product->price_cost ?? ''))
+                                <p>{{number_format($v->product->price ?? 0)}}</p>
+                                @else
                                 <span class="percent">SALE</span>
-                                <p>22,950</p>
-                                <small>29,000</small>
+                                <p>{{number_format($v->product->price ?? 0)}}</p>
+                                <small>{{number_format($v->product->origin_product->price_cost ?? 0)}}</small>
+                                @endif
                             </div>
                             <div class="item-subject">
-                                <p>쫀똑한 수제 산딸기 브라우니</p>
+                                <p>{{$v->product->origin_product->name ?? ''}}</p>
                             </div>
                         </div>
                     @empty
