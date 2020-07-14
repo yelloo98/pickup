@@ -5,7 +5,7 @@
         <div class="mainSlide-container swiper-container">
             <div class="swiper-wrapper">
                 @forelse($storeEvent as $k=>$v)
-                <div class="swiper-slide" @if($v->thumbnailImages->img_path != null) style="background-image: url('{{env('IMAGE_URL').$v->thumbnailImages->img_path}}')" @endif>
+                <div class="swiper-slide" @if(!empty($v->thumbnailImages->img_path)) style="background-image: url('{{env('IMAGE_URL').$v->thumbnailImages->img_path}}')" @endif>
                     <div class="slogun-box">
                         <ul>
                             <li>{{$v->title ?? ''}}</li>
@@ -96,7 +96,11 @@
                 @forelse($bestProduct as $k=>$v)
                 <div class="swiper-slide" onclick="pageMain.selProduct({{$v->product_id ?? 0}})">
                     <div class="img-box" @if(!empty($v->product->origin_product->image_path)) style="background-image: url('{{env('IMAGE_URL').$v->product->origin_product->image_path}}')" @endif>
+                        @if(($v->stock ?? 0) > 0)
                         <img src="/front/dist/img/icon_cart_box.png" alt="">
+                        @else
+                        <div class="outOfStock"><p>품절</p></div>
+                        @endif
                     </div>
                     <div class="word-box">
                         <div class="price-box">
@@ -127,7 +131,11 @@
                 @forelse($historyProduct as $k=>$v)
                 <div class="cubeItem swiper-slide" onclick="pageMain.selProduct({{$v->product_id ?? 0}})">
                     <div class="img-box" @if(!empty($v->product->origin_product->image_path)) style="background-image: url('{{env('IMAGE_URL').$v->product->origin_product->image_path}}')" @endif>
+                        @if(($v->stock ?? 0) > 0)
                         <img src="/front/dist/img/icon_cart_box.png" alt="">
+                        @else
+                        <div class="outOfStock"><p>품절</p></div>
+                        @endif
                     </div>
                     <div class="item-subject">
                         <p>{{$v->product->origin_product->name ?? ''}}</p>
@@ -139,14 +147,14 @@
         </div>
         @endif
 
-        @if($ProductReview->count() > 0 )
+        @if($productReview->count() > 0 )
         <div class="reviewSlide-container swiper-container sub-content">
             <div class="moreTitle-wrapper">
                 <img src="/front/dist/img/m_best.png" alt="">
                 <p>최고 리뷰를 확인하세요.</p>
             </div>
             <div class="swiper-wrapper">
-                @forelse($ProductReview as $k=>$v)
+                @forelse($productReview as $k=>$v)
                     @if($k % 2 == 0) <div class="swiper-slide"> @endif
                         <div class="review-list" onclick="location.href='/front/product/{{$v->product_id ?? 0}}?tab=review'">
                             <div class="img-box" @if(!empty($v->product->origin_product->image_path)) style="background-image: url('{{env('IMAGE_URL').$v->product->origin_product->image_path}}')" @endif></div>

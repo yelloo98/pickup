@@ -24,7 +24,7 @@
             <textarea class="hasPhoto" name="contents" id="" cols="30" rows="10" placeholder="상품 후기를 작성해주세요.">{{$review->contents ?? ''}}</textarea>
             <div class="upload-btn">
                 <input type="file" id="review_img">
-                @if($review->img1 ?? '' != null)
+                @if(!empty($review->img1))
                 <label for="review_img"  style="background-image: url('{{env('IMAGE_URL').$review->img1}}'); background-size:cover;">
                     <button class="delete-btn"><img src="/front/dist/img/icon_image_x.png" alt=""></button>
                 </label>

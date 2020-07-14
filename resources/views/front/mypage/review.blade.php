@@ -40,7 +40,7 @@
                                 <li class="delete-list" onclick="PickupCommon.addReview('{{$v->id ?? 0}}', 'delete')">삭제</li>
                             </ul>
                         </div>
-                        @if($v->img1 != null)<div class="img-box" style="background-image: url('{{env('IMAGE_URL').$v->img1}}'); background-size:cover;"></div>@endif
+                        @if(!empty($v->img1))<div class="img-box" style="background-image: url('{{env('IMAGE_URL').$v->img1}}'); background-size:cover;"></div>@endif
                         <div class="word-box">
                             <img src="/front/dist/img/icon_review.png" alt="">
                             <p class="user-word" style="-webkit-box-orient: vertical;">{{$v->contents ?? ''}}</p>
