@@ -63,8 +63,10 @@ class ProductController extends Controller
         //# 재고량
         $productList = ProductStock::where('product_id', $id)->where('slot_status','DP-COMPLETE')->where('use_status','use')->whereColumn('inserted_amount', '>', 'sale_amount');
         $view->productCnt = $productList->sum('inserted_amount') - $productList->sum('sale_amount');
-        //# 리뷰 평점
-        $view->reviewScore = round(PickupProductReview::where('product_id',$id)->avg('score'), 1);
+        //# 상품후기
+        $view->reviewList = PickupProductReview::where('product_id',$id)->orderBy('created_at', 'desc')->get();
+        $view->photoReviewList = PickupProductReview::where('product_id',$id)->whereNotNull('img1')->orderBy('created_at', 'desc')->get();
+        $view->reviewScore = round($view->reviewList->avg('score'), 1);
         //# 상품 좋아요
         $view->productLike = PickupProductLikes::where([['customer_id', $shopAuth->user()->id],['product_id', $id]])->get();
         //# 최근 본 상품 추가
@@ -75,6 +77,17 @@ class ProductController extends Controller
             $pickupProductViews->save();
         }
 
+        return $view;
+    }
+
+    /**
+     * 상품 포토 후기
+     */
+    public function getPhotoReview($id)
+    {
+        $view = view('front.product.photo');
+        $view->page = 'photo';
+        $view->photoReviewList = PickupProductReview::where('product_id',$id)->whereNotNull('img1')->orderBy('created_at', 'desc')->get();
         return $view;
     }
 }

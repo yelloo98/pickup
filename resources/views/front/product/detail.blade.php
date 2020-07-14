@@ -47,7 +47,7 @@
             <ul class="small-list">
                 <li class="tabItem @if(($_GET['tab'] ?? '') == 'description' || empty($_GET['tab'])) active @endif">상품설명</li>
                 <li class="tabItem @if(($_GET['tab'] ?? '') == 'information') active @endif">구매정보</li>
-                <li class="tabItem @if(($_GET['tab'] ?? '') == 'review') active @endif">상품후기<span>100</span></li>
+                <li class="tabItem @if(($_GET['tab'] ?? '') == 'review') active @endif">상품후기<span>{{$reviewList->count()}}</span></li>
                 <li class="tabItem @if(($_GET['tab'] ?? '') == 'qna') active @endif">Q&A<span>15</span></li>
             </ul>
             <div class="target-wrap">
@@ -81,86 +81,64 @@
                     <div class="review-wrapper">
                         <button class="write-btn" onclick="location.href='/front/mypage/review/0?product_id={{$product->id ?? ''}}'">상품후기 작성하기</button>
                         <div class="review-container">
+                            @if($photoReviewList->count() > 0)
                             <div class="review-list">
                                 <div class="review-title">
-                                    <p>포토 상품후기(<span>23</span>)</p>
-                                    <button>더보기<img src="/front/dist/img/icon_next.png"></button>
+                                    <p>포토 상품후기(<span>{{$photoReviewList->count()}}</span>)</p>
+                                    <button onclick="location.href='/front/product/photo/{{$product->id ?? ''}}'">더보기<img src="/front/dist/img/icon_next.png"></button>
                                 </div>
                                 <div class="review-content photo-review">
-                                    <div class="img-box"></div>
-                                    <div class="img-box"></div>
-                                    <div class="img-box"></div>
-                                    <div class="img-box"></div>
+                                    @foreach($photoReviewList as $k=>$v)
+                                    @break($loop->index == 4)
+                                    <div class="img-box" style="background-image: url('{{env('IMAGE_URL').$v->img1}}')"></div>
+                                    @endforeach
                                 </div>
                             </div>
+                            @endif
+                            @if($reviewList->count() > 0)
                             <div class="review-list">
                                 <div class="review-title">
-                                    <p>전체 상품후기(<span>23</span>)</p>
+                                    <p>전체 상품후기(<span>{{$reviewList->count()}}</span>)</p>
                                 </div>
                                 <div class="review-content">
-                                    <div class="list-item">
-                                        <div class="img-box"></div>
+                                    @foreach($reviewList as $k=>$v)
+                                    @break($loop->index == 5)
+                                    <div class="list-item @if(empty($v->img1)) none-img @endif">
+                                        @if(!empty($v->img1))
+                                        <div class="img-box" style="background-image: url('{{env('IMAGE_URL').$v->img1}}')"></div>
+                                        @endif
                                         <div class="word-box">
                                             <img src="/front/dist/img/icon_review.png" alt="">
-                                            <p class="user-word" style="-webkit-box-orient: vertical;">두번째 주문입니다. 보기엔 생각보다 작아보이는데 먹어보니 은근 양이 꽤 많아요 ㅎㅎ 쫀쫀하고 고소해서 그냥 먹어도 괜찮을듯괜찮을듯괜찮을듯괜찮을듯괜찮을듯</p>
+                                            <p class="user-word" style="-webkit-box-orient: vertical;">{{$v->contents ?? ''}}</p>
                                             <div class="toBottom">
                                                 <div class="user-info">
-                                                    <p class="user-name"><strong><span>신</span>OO</strong>님</p>
+                                                    <p class="user-name"><strong><span>{{mb_substr(($v->customer->name ?? ''), 0, 1)}}</span>OO</strong>님</p>
                                                     <ul class="user-score">
-                                                        <li><img src="/front/dist/img/icon_star_on_B.png" alt=""></li>
-                                                        <li><img src="/front/dist/img/icon_star_on_B.png" alt=""></li>
-                                                        <li><img src="/front/dist/img/icon_star_on_B.png" alt=""></li>
-                                                        <li><img src="/front/dist/img/icon_star_on_B.png" alt=""></li>
-                                                        <li><img src="/front/dist/img/icon_star_off_B.png" alt=""></li>
+                                                        @php($score = round(($v->score ?? 0),1))
+                                                        @for($i=1; $i<=5; $i++)
+                                                        <li>
+                                                            @if($score >= $i)
+                                                            <img src="/front/dist/img/icon_star_on_B.png" alt="">
+                                                            @elseif($i-$score <= 0.5 && $i-$score < 1)
+                                                            <img src="/front/dist/img/icon_star_harf_B.png" alt="">
+                                                            @else
+                                                            <img src="/front/dist/img/icon_star_off_B.png" alt="">
+                                                            @endif
+                                                        </li>
+                                                        @endfor
                                                     </ul>
                                                 </div>
-                                                <p class="item-subject">[국내산] 한돈 설깃살 모듬 구이용 500G</p>
+                                                <p class="item-subject">{{$v->product->origin_product->name ?? ''}}</p>
                                                 <button class="more-btn"><img src="/front/dist/img/icon_arrow_MD.png" alt=""></button>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="list-item none-img">
-                                        <div class="word-box">
-                                            <img src="/front/dist/img/icon_review.png" alt="">
-                                            <p class="user-word" style="-webkit-box-orient: vertical;">두번째 주문입니다. 보기엔 생각보다 작아보이는데 먹어보니 은근 양이 꽤 많아요 ㅎㅎ 쫀쫀하고 고소해서 그냥 먹어도주문입니다. 보기엔 생각보다 작아보이는데 먹어보니 은근 양이 꽤 많아요 ㅎㅎ 쫀쫀하고 고소해서 그냥 먹어도주문입니다. 보기엔 생각보다 작아보이는데 먹어보니 은근 양이 꽤 많아요 ㅎㅎ 쫀쫀하고 고소해서 그냥 먹어도주문입니다. 보기엔 생각보다 작아보이는데 먹어보니 은근 양이 꽤 많아요 ㅎㅎ 쫀쫀하고 고소해서 그냥 먹어도 괜찮을듯</p>
-                                            <div class="toBottom">
-                                                <div class="user-info">
-                                                    <p class="user-name"><strong><span>신</span>OO</strong>님</p>
-                                                    <ul class="user-score">
-                                                        <li><img src="/front/dist/img/icon_star_on_B.png" alt=""></li>
-                                                        <li><img src="/front/dist/img/icon_star_on_B.png" alt=""></li>
-                                                        <li><img src="/front/dist/img/icon_star_on_B.png" alt=""></li>
-                                                        <li><img src="/front/dist/img/icon_star_on_B.png" alt=""></li>
-                                                        <li><img src="/front/dist/img/icon_star_off_B.png" alt=""></li>
-                                                    </ul>
-                                                </div>
-                                                <p class="item-subject">[국내산] 한돈 설깃살 모듬 구이용 500G</p>
-                                                <button class="more-btn"><img src="/front/dist/img/icon_arrow_MD.png" alt=""></button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="list-item">
-                                        <div class="img-box"></div>
-                                        <div class="word-box">
-                                            <img src="/front/dist/img/icon_review.png" alt="">
-                                            <p class="user-word" style="-webkit-box-orient: vertical;">두번째 주문입니다. 보기엔 생각보다 작아보이는데 먹어보니 은근 양이 꽤 많아요 ㅎㅎ</p>
-                                            <div class="toBottom">
-                                                <div class="user-info">
-                                                    <p class="user-name"><strong><span>신</span>OO</strong>님</p>
-                                                    <ul class="user-score">
-                                                        <li><img src="/front/dist/img/icon_star_on_B.png" alt=""></li>
-                                                        <li><img src="/front/dist/img/icon_star_on_B.png" alt=""></li>
-                                                        <li><img src="/front/dist/img/icon_star_on_B.png" alt=""></li>
-                                                        <li><img src="/front/dist/img/icon_star_on_B.png" alt=""></li>
-                                                        <li><img src="/front/dist/img/icon_star_off_B.png" alt=""></li>
-                                                    </ul>
-                                                </div>
-                                                <p class="item-subject">[국내산] 한돈 설깃살 모듬 구이용 500G</p>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    @endforeach
                                 </div>
                             </div>
+                            @else
+                            <p class="none-list">등록된 상품후기가 없습니다.</p>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -319,11 +297,6 @@
             $('.qna-content.secret').empty();
             $('.qna-content.secret').append('<pre><img src="/front/dist/img/icon_lock.png"/>비밀글 입니다.</pre>');
 
-            //리뷰 리스트 없는경우
-            if( $('.ppGoodsDetail-content .review-container div').length == 0 ) {
-                $('.ppGoodsDetail-content .review-container').append('<p class="none-list">등록된 상품후기가 없습니다.</p>');
-            }
-
             //qna 리스트 없는경우
             if( $('.ppGoodsDetail-content .qna-container div').length == 0 ) {
                 $('.ppGoodsDetail-content .qna-container').append('<p class="none-list">등록된 Q&A가 없습니다.</p>');
@@ -333,10 +306,6 @@
                 var photoWidth = $('.photo-review .img-box').outerWidth();
                 $('.photo-review .img-box').css('height',photoWidth);
             });
-
-            // $('.outOfStock').find('.changeing').children('img').attr("src",$('.outOfStock').find('.changeing').children('img').attr("src").replace("O_on.png","O_out.png"));
-            // $('.outOfStock .mainBtn-wrap button').text('품절');
-
         });
 
     </script>

@@ -41,6 +41,7 @@ Route::group(['namespace' => 'Front', 'middleware' => 'front', 'prefix' => 'fron
     Route::group(['prefix' => 'product', 'as' => 'product.'], function () {
         Route::get('/', 'ProductController@getProductList');                 //# 상품 목록
         Route::get('/{id?}', 'ProductController@getProduct');                //# 상품 상세
+        Route::get('/photo/{id?}', 'ProductController@getPhotoReview');      //# 상품 포토 후기
     });
 
     /**

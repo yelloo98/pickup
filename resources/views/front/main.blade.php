@@ -162,7 +162,7 @@
                                 <img src="/front/dist/img/icon_review.png" alt="">
                                 <p class="user-word" style="-webkit-box-orient: vertical;">{{$v->contents ?? ''}}</p>
                                 <div class="toBottom">
-                                    <p class="user-name"><strong><span>{{mb_substr(($customer->name ?? ''), 0, 1)}}</span>OO</strong>님</p>
+                                    <p class="user-name"><strong><span>{{mb_substr(($v->customer->name ?? ''), 0, 1)}}</span>OO</strong>님</p>
                                     <p class="item-subject">{{$v->product->origin_product->name ?? ''}}</p>
                                 </div>
                             </div>

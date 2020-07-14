@@ -178,9 +178,9 @@ class MypageController extends Controller
             ->leftjoin('pickup_product_review', 'pickup_product_review.product_id', 'product.id')
             ->select('pickup_orders_product.*', 'pickup_product_review.id as pickup_product_review_id')
             ->orderBy('pickup_orders_product.id', 'desc')
-            ->where('pickup_orders.customer_id', $shopAuth->user()->id)->whereNull('pickup_product_review.id')->get();
+            ->where('pickup_orders.customer_id', $shopAuth->user()->id)->whereNull('pickup_product_review.id')->orderBy('created_at','desc')->get();
         //# 내가 쓴 후기
-        $view->review_list = PickupProductReview::where('customer_id', $shopAuth->user()->id)->get();
+        $view->review_list = PickupProductReview::where('customer_id', $shopAuth->user()->id)->orderBy('created_at','desc')->get();
 
         return $view;
     }

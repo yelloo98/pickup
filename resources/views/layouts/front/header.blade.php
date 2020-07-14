@@ -37,6 +37,8 @@
             픽업상품
         @elseif(($page ?? '') == 'detail')
             픽업상품 상세
+        @elseif(($page ?? '') == 'photo')
+            포토리뷰
         @elseif(($page ?? '') == 'my_order')
             픽업 주문내역
         @elseif(($page ?? '') == 'my_coupon')
