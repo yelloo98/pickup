@@ -145,8 +145,10 @@
                 <div class="tabTarget over-size @if(($_GET['tab'] ?? '') == 'qna') active @endif">
                     <div class="qna-wrapper">
                         <button class="write-btn" onclick="location.href='/front/mypage/qna/product/0?product_id={{$product->id ?? ''}}'">Q&A 작성하기</button>
+                        @if($qnaList->count() > 0)
                         <div class="qna-container">
-                            <div class="qna-folder"><!-- clear-list 추가시 답변완료 -->
+                            @foreach($qnaList as $k=>$v)
+                            <div class="qna-folder @if(!empty($v->re_contents)) clear-list @endif"><!-- clear-list 추가시 답변완료 -->
                                 <div class="qna-userContent">
                                     <div class="qna-header">
                                         <div class="status-box">
@@ -156,75 +158,31 @@
                                         <div class="etc-box">
                                             <p class="category">[<span>배송문의</span>]</p>
                                             <p class="date">2020.03.12</p>
+                                            @if(($v->secret ?? '') != 'Y')
                                             <button class="more-btn"><img src="/front/dist/img/icon_arrow_MD.png" alt=""></button>
+                                            @endif
                                         </div>
                                     </div>
-                                    <div class="qna-content secret"><!-- secret 추가시 비밀글 -->
-                                        <pre>혹시 가능하시다면 빨간색 토마토 초록색 토마토 상품으로 보내주세여 보내주세여 감사합니다.</pre>
+                                    @if(($v->secret ?? '') == 'Y')
+                                    <div class="qna-content secret">
+                                        <pre><img src="/front/dist/img/icon_lock.png"/>비밀글 입니다.</pre>
                                     </div>
-                                </div>
-                                <div class="qna-managerContent">
-                                    <span>답변.</span>
-                                    <pre>안녕하세요. 고객님!
-미트 박스 상품 담당자입니다.
-고객님께서 보내주신 문의사항 잘 보았습니다. 제품 하자가 있을 시,
-조리 전 반품 가능하며 반품비 부담은 없습니다.
-저희 제품을 구매해 주셔서 감사드립니다.</pre>
-                                </div>
-                            </div>
-                            <div class="qna-folder clear-list"><!-- clear-list 추가시 답변완료 -->
-                                <div class="qna-userContent">
-                                    <div class="qna-header">
-                                        <div class="status-box">
-                                            <span>답변대기</span>
-                                            <p><strong><span>김</span>OO</strong>님</p>
-                                        </div>
-                                        <div class="etc-box">
-                                            <p class="category">[<span>배송문의</span>]</p>
-                                            <p class="date">2020.03.12</p>
-                                            <button class="more-btn"><img src="/front/dist/img/icon_arrow_MD.png" alt=""></button>
-                                        </div>
-                                    </div>
+                                    @else
                                     <div class="qna-content">
-                                        <pre>혹시 가능하시다면 빨간색 토마토 초록색 토마토 상품으로 보내주세여 보내주세여 감사합니다.</pre>
+                                        <pre>혹시 가능하시다면 빨간색 토마토 초록색 토</pre>
                                     </div>
+                                    @endif
                                 </div>
+                                @if(!empty($v->re_contents))
                                 <div class="qna-managerContent">
                                     <span>답변.</span>
-                                    <pre>안녕하세요. 고객님!
-미트 박스 상품 담당자입니다.
-고객님께서 보내주신 문의사항 잘 보았습니다. 제품 하자가 있을 시,
-조리 전 반품 가능하며 반품비 부담은 없습니다.
-저희 제품을 구매해 주셔서 감사드립니다.</pre>
+                                    <pre>안녕하세요. 고객님!</pre>
                                 </div>
+                                @endif
                             </div>
-                            <div class="qna-folder"><!-- clear-list 추가시 답변완료 -->
-                                <div class="qna-userContent">
-                                    <div class="qna-header">
-                                        <div class="status-box">
-                                            <span>답변대기</span>
-                                            <p><strong><span>김</span>OO</strong>님</p>
-                                        </div>
-                                        <div class="etc-box">
-                                            <p class="category">[<span>배송문의</span>]</p>
-                                            <p class="date">2020.03.12</p>
-                                            <button class="more-btn"><img src="/front/dist/img/icon_arrow_MD.png" alt=""></button>
-                                        </div>
-                                    </div>
-                                    <div class="qna-content">
-                                        <pre>혹시 가능하시다면 빨간색 토마토 초록색 토마토 상품으로 보내주세여 보내주세여 감사합니다.</pre>
-                                    </div>
-                                </div>
-                                <div class="qna-managerContent">
-                                    <span>답변.</span>
-                                    <pre>안녕하세요. 고객님!
-미트 박스 상품 담당자입니다.
-고객님께서 보내주신 문의사항 잘 보았습니다. 제품 하자가 있을 시,
-조리 전 반품 가능하며 반품비 부담은 없습니다.
-저희 제품을 구매해 주셔서 감사드립니다.</pre>
-                                </div>
-                            </div>
+                            @endforeach
                         </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -293,19 +251,6 @@
             });
 
             $('.qna-folder.clear-list').find('.status-box').children('span').text('답변완료');
-
-            $('.qna-content.secret').empty();
-            $('.qna-content.secret').append('<pre><img src="/front/dist/img/icon_lock.png"/>비밀글 입니다.</pre>');
-
-            //qna 리스트 없는경우
-            if( $('.ppGoodsDetail-content .qna-container div').length == 0 ) {
-                $('.ppGoodsDetail-content .qna-container').append('<p class="none-list">등록된 Q&A가 없습니다.</p>');
-            }
-
-            $('.tabItem').click(function(){
-                var photoWidth = $('.photo-review .img-box').outerWidth();
-                $('.photo-review .img-box').css('height',photoWidth);
-            });
         });
 
     </script>

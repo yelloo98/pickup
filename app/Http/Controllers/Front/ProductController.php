@@ -8,6 +8,7 @@ use App\Models\Device;
 use App\Models\PickupProductLikes;
 use App\Models\PickupProductReview;
 use App\Models\PickupProductViews;
+use App\Models\PickupQna;
 use App\Models\Product;
 use App\Models\ProductStock;
 use Illuminate\Http\Request;
@@ -67,6 +68,8 @@ class ProductController extends Controller
         $view->reviewList = PickupProductReview::where('product_id',$id)->orderBy('created_at', 'desc')->get();
         $view->photoReviewList = PickupProductReview::where('product_id',$id)->whereNotNull('img1')->orderBy('created_at', 'desc')->get();
         $view->reviewScore = round($view->reviewList->avg('score'), 1);
+        //# Q&A
+        $view->qnaList = PickupQna::where('product_id',$id)->orderBy('created_at', 'desc')->get();
         //# 상품 좋아요
         $view->productLike = PickupProductLikes::where([['customer_id', $shopAuth->user()->id],['product_id', $id]])->get();
         //# 최근 본 상품 추가
