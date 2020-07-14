@@ -4,7 +4,7 @@
     <div class="content-body allPickup-content">
         <div class="subMenu-container">
             <div class="select-box">
-                <select name="searchSort" class="listUp-btn" onchange="location.href='/front/product?searchSort='+this.value">
+                <select name="searchSort" class="listUp-btn" onchange="pageProduct.urlLink()">
                     <option @if(empty($_GET['searchType'])) selected @endif value="">최신순</option>
                     <option @if(($_GET['searchSort'] ?? '') == 'hit') selected @endif value="hit">인기순</option>
                     <option @if(($_GET['searchSort'] ?? '') == 'lately') selected @endif value="lately">최근 본 상품</option>
@@ -13,10 +13,11 @@
         </div>
         <div class="pickupList-container">
             <div class="machine-tabWrapper">
+                <input type="hidden" name="searchDevice" value="{{$_GET['searchDevice'] ?? ''}}"/>
                 <ul class="machine-tab">
-                    <li class="active">ALL</li>
+                    <li @if(empty($_GET['searchDevice'])) class="active" @endif onclick="pageProduct.searchDevice()">ALL</li>
                     @foreach($deviceList as $k => $v)
-                    <li>기기{{$k+1}}</li>
+                    <li @if(($_GET['searchDevice'] ?? '') == $v->id) class="active" @endif onclick="pageProduct.searchDevice({{$v->id}})">기기{{$k+1}}</li>
                     @endforeach
                 </ul>
             </div>
@@ -61,6 +62,7 @@
         var pageProduct = {
             _config : {},
 
+            //# 상품 선택
             selProduct : function (product_id) {
                 var $target = $(event.target);
                 if($target.is("img")) {
@@ -68,6 +70,27 @@
                 }else{
                     location.href = '/front/product/' + product_id;
                 }
+            },
+
+            //# 기기 선택
+            searchDevice : function(val) {
+                $('input[name="searchDevice"]').val(val);
+                pageProduct.urlLink();
+            },
+
+            //# URL 이동
+            urlLink : function () {
+                var url = '/front/product?';
+
+                //# 정렬
+                if($('select[name="searchSort"]').val()){
+                    url = url + '&searchSort='+ $('select[name="searchSort"]').val();
+                }
+                //# 기기
+                if($('input[name="searchDevice"]').val()){
+                    url = url + '&searchDevice='+ $('input[name="searchDevice"]').val();
+                }
+                location.href = url;
             }
         };
 

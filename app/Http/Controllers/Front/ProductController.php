@@ -25,13 +25,24 @@ class ProductController extends Controller
         $shopAuth = new ShopAuth($request);
         $view->customer = $shopAuth->user();
         $store = $request->input('store_id', 498);
-        $device = $request->input('device_id', null);
-        $searchSort = $request->input('searchSort', 'created_at');
+        $searchDevice = $request->input('searchDevice', null);
+        $searchSort = $request->input('searchSort', null);
 
+        //# 기기 리스트
         $view->deviceList = Device::where('store_id', $store)->orderBy('id','desc')->get();
-        $productList = ProductStock::leftjoin('device','device.id','product_stock.device_id')
-            ->select('product_stock.*')->where('device.store_id', $store)->where('product_stock.product_id','!=','0')->groupBy('product_stock.product_id')->groupBy('product_stock.device_id')->orderBy($searchSort,'desc')->get();
+
+        //# 상품 리스트
+        $productList = ProductStock::leftjoin('device','device.id','product_stock.device_id')->select('product_stock.*')
+            ->where('device.store_id', $store)->where('product_stock.product_id','!=','0')->groupBy('product_stock.product_id')
+            ->groupBy('product_stock.device_id')->orderBy('created_at','desc');
+
+        //# 기기 선택
+        if(!empty($searchDevice)){
+            $productList = $productList->where('product_stock.device_id', $searchDevice);
+        }
+        $productList = $productList->get();
         $view->productList = $productList;
+
         return $view;
     }
 
