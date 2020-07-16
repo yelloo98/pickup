@@ -1,5 +1,7 @@
 var PickupCommon = {
-    _config : {},
+    _config : {
+        SUBMIT_WRITE : true
+    },
 
     //# 관심매장 추가 / 삭제
     storeLike : function(store_id, status){
@@ -183,46 +185,51 @@ var PickupCommon = {
 
     //# 결제하기 버튼 클릭
     addPay : function () {
-        var data = new FormData();
-        data.append('product_all', $('input[name="product_all"]').val());
-        data.append('user_name', $("input[name='user_name']").val());
-        data.append('user_phone_1', $("input[name='user_phone_1']").val());
-        data.append('user_phone_2', $("input[name='user_phone_2']").val());
-        data.append('user_phone_3', $("input[name='user_phone_3']").val());
-        data.append('user_email_1', $("input[name='user_email_1']").val());
-        if($('select[name="user_email_2"]').val() == 'direct'){
-            data.append('user_email_2', $('input[name="user_email_2"]').val());
-        }else{
-            data.append('user_email_2', $('select[name="user_email_2"]').val());
-        }
-        data.append('coupon', $('select[name="coupon"]').val());
-        data.append('user_point', $('input[name="user_point"]').val());
-        data.append('price', $('.price-total').text());
-        data.append('agree', $("input[name='agree']:checked").val());
-
-        $.ajax({
-            type: 'POST',
-            url: "/front/order",
-            data: data,
-            contentType: false,
-            processData: false,
-            success: function (res) {
-                if (res.code == 200) {
-                    //# 결제 API 호출
-                    $.get('/front/api/order/'+res.order_id, function(res_2){
-                        if (res_2.code == 200) {
-                            location.href = '/front/order/result/' + res.order_id;
-                        }else{
-                            pageModal.alertPopup(res_2.msg);
-                            return false;
-                        }
-                    });
-                }else{
-                    pageModal.alertPopup(res.msg);
-                    return false;
-                }
+        if (PickupCommon._config.SUBMIT_WRITE) {
+            PickupCommon._config.SUBMIT_WRITE = false;
+            var data = new FormData();
+            data.append('product_all', $('input[name="product_all"]').val());
+            data.append('user_name', $("input[name='user_name']").val());
+            data.append('user_phone_1', $("input[name='user_phone_1']").val());
+            data.append('user_phone_2', $("input[name='user_phone_2']").val());
+            data.append('user_phone_3', $("input[name='user_phone_3']").val());
+            data.append('user_email_1', $("input[name='user_email_1']").val());
+            if ($('select[name="user_email_2"]').val() == 'direct') {
+                data.append('user_email_2', $('input[name="user_email_2"]').val());
+            } else {
+                data.append('user_email_2', $('select[name="user_email_2"]').val());
             }
-        });
+            data.append('coupon', $('select[name="coupon"]').val());
+            data.append('user_point', $('input[name="user_point"]').val());
+            data.append('price', $('.price-total').text());
+            data.append('agree', $("input[name='agree']:checked").val());
+
+            $.ajax({
+                type: 'POST',
+                url: "/front/order",
+                data: data,
+                contentType: false,
+                processData: false,
+                success: function (res) {
+                    if (res.code == 200) {
+                        //# 결제 API 호출
+                        $.get('/front/api/order/' + res.order_id, function (res_2) {
+                            if (res_2.code == 200) {
+                                location.href = '/front/order/result/' + res.order_id;
+                            } else {
+                                pageModal.alertPopup(res_2.msg);
+                                PickupCommon._config.SUBMIT_WRITE = true;
+                                return false;
+                            }
+                        });
+                    } else {
+                        pageModal.alertPopup(res.msg);
+                        PickupCommon._config.SUBMIT_WRITE = true;
+                        return false;
+                    }
+                }
+            });
+        }
     },
 
     //# 매장 문의하기
