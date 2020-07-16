@@ -169,31 +169,25 @@ class PickupController extends Controller
      */
     public function getOrderApi(Request $request, $id)
     {
-        try{
-            //# 키오스크 API 호출
-//            $url = 'http://192.168.0.42:8080/api/pickup/sendOrder';           //# 테스트 내부접속
-            $url = 'http://dev.e777.kr:8842/api/pickup/sendOrder';              //# 테스트 외부접속
-            $json_data = '{"pickupOrdersId" : "'.$id.'"}';
-            $ch = curl_init($url);
-            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-                'Content-Type: application/json',
-                'Content-Length: '.strlen($json_data)));
-            curl_setopt($ch, CURLOPT_URL, $url);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $json_data);
-            curl_setopt($ch, CURLOPT_POST, 1);
-            $output = json_decode(curl_exec($ch));
+        //# 키오스크 API 호출
+//        $url = 'http://192.168.0.42:8080/api/pickup/sendOrder';           //# 테스트 내부접속
+        $url = 'http://dev.e777.kr:8842/api/pickup/sendOrder';              //# 테스트 외부접속
+        $json_data = '{"pickupOrdersId" : "'.$id.'"}';
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            'Content-Type: application/json',
+            'Content-Length: '.strlen($json_data)));
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $json_data);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        $output = json_decode(curl_exec($ch));
 
-            if($output->code == 200){
-                //# 푸쉬 보내기
-                $this->getPushApi($request);
-                return response()->json(['code'=>200, 'msg'=>'주문 등록']);
-            }else{
-                return response()->json(['code'=>400, 'msg'=>'주문 실패']);
-            }
-        }catch(\Exception $ex){
-            return response()->json(['code'=>400, 'msg'=>'주문 실패']);
-        }catch(\Throwable $throwable){
+        if($output->code == 200){
+            //# 푸쉬 보내기
+            $push = $this->getPushApi($request);
+            if($push->getData()->code == 200) return response()->json(['code'=>200, 'msg'=>'주문 등록']);
+        }else{
             return response()->json(['code'=>400, 'msg'=>'주문 실패']);
         }
     }
@@ -237,7 +231,7 @@ class PickupController extends Controller
 
         $response = curl_exec($curl);
 
-        if (json_decode($response, true)['code'] != 200) {
+        /*if (json_decode($response, true)['code'] != 200) {
             return response()->json(['code' => 400, 'msg' => 'Make an another attempt when the first one failed.' . PHP_EOL]);
             $oneCode = $ga->getCode($secret);
             curl_setopt($curl, CURLOPT_HTTPHEADER, [
@@ -245,7 +239,7 @@ class PickupController extends Controller
                 'Content-Type: application/json'
             ]);
             $response = curl_exec($curl);
-        }
+        }*/
         curl_close($curl);
 
         return response()->json(['code' => 200, 'msg' => '푸쉬 성공']);
