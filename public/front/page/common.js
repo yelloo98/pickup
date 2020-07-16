@@ -212,8 +212,6 @@ var PickupCommon = {
                 processData: false,
                 success: function (res) {
                     if (res.code == 200) {
-                        alert("TEst");
-
                         //# 결제 API 호출
                         $.get('/front/api/order/' + res.order_id, function (res_2) {
                             if (res_2.code == 200) {
