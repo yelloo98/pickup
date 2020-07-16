@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Front;
 
 use App\Helper\Codes;
+use App\Helper\GoogleAuthenticator;
 use App\Helper\ShopAuth;
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
 use App\Models\FcTrader;
 use App\Models\PickupCart;
+use App\Models\PickupCustomerPushInfo;
 use App\Models\PickupProductLikes;
 use App\Models\Product;
 use App\Models\ProductStock;
@@ -193,5 +195,69 @@ class PickupController extends Controller
     public function appTest(Request $request)
     {
         return response()->json(['code' => 200, 'msg' => 'API 성공']);
+    }
+
+    /**
+     * push 통신 API
+     */
+    public function getPushApi(Request $request)
+    {
+        try {
+            $res = $request->all();
+            $shopAuth = new ShopAuth($request);
+            $token = PickupCustomerPushInfo::where('customer_id', $shopAuth->user()->memId)->pluck('firebase_token');
+            if ($token->count() == 0) return response()->json(['code' => 400, 'msg' => 'token 없음']);
+
+            $ga = new GoogleAuthenticator();
+            $secret = 'VVOFVY6O3VQ3KJKV'; // keep it secretly
+            $oneCode = $ga->getCode($secret); // this code lives up to 60s.
+            //$oneCode = '568686';
+
+            $url = 'http://store.smartkiosk.kr/api/store-owner/notification/send';
+            //        $url = 'http://localhost:8080/api/store-owner/notification/send';
+
+            $data = [
+                'tokens' => json_decode($token),
+                'message' => [
+                    'title' => $res['title'],
+                    'content' => $res['contents'],
+                    'type' => 'type php',
+                    'action' => 'action php',
+                    'link' => $res['link'],
+                    'app_type' => 'app type',
+                    'message_id' => 'event php'
+                ],
+            ];
+
+            $curl = curl_init($url);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($curl, CURLOPT_POST, true);
+            curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data));
+            curl_setopt($curl, CURLOPT_HTTPHEADER, [
+                'Authorization: ' . $oneCode,
+                'Content-Type: application/json'
+            ]);
+
+            $response = curl_exec($curl);
+
+            if (json_decode($response, true)['code'] != 200) {
+                return response()->json(['code' => 400, 'msg' => 'Make an another attempt when the first one failed.' . PHP_EOL]);
+                $oneCode = $ga->getCode($secret);
+                curl_setopt($curl, CURLOPT_HTTPHEADER, [
+                    'Authorization: ' . $oneCode,
+                    'Content-Type: application/json'
+                ]);
+                $response = curl_exec($curl);
+            }
+            curl_close($curl);
+
+            return response()->json(['code' => 200, 'msg' => '푸쉬 성공']);
+        }catch(\Exception $ex){
+            DB::rollBack();
+            return response()->json(['code'=>400, 'msg'=>'푸쉬 실패']);
+        }catch(\Throwable $throwable){
+            DB::rollBack();
+            return response()->json(['code'=>400, 'msg'=>'푸쉬 실패']);
+        }
     }
 }

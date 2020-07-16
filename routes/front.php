@@ -26,6 +26,7 @@ Route::group(['namespace' => 'Front', 'middleware' => 'front', 'prefix' => 'fron
         Route::get('/add/cart', 'PickupController@addCart');                  //# 카트 등록/삭제
         Route::get('/app/test', 'PickupController@appTest');                  //# 앱 테스트 (toast)
         Route::get('/order/{id?}', 'PickupController@getOrderApi');           //# 결제 요청 api
+        Route::get('/push', 'PickupController@getPushApi');                   //# 결제 요청 api
     });
 
     /**

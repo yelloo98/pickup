@@ -211,7 +211,14 @@ var PickupCommon = {
                     //# 결제 API 호출
                     $.get('/front/api/order/'+res.order_id, function(res_2){
                         if (res_2.code == 200) {
-                            location.href='/front/order/result/'+res.order_id;
+                            $.get('/front/api/push', {'title': '사용자 픽업 결제 완료', 'contents':'주문하신 픽업상품 결제 완료되었습니다.\n 매장에 방문하여 상품을 픽업해주세요.', 'link':'/front/order/pickup'}, function(res_3) {
+                                if (res_2.code == 200) {
+                                    location.href = '/front/order/result/' + res.order_id;
+                                }else{
+                                    pageModal.alertPopup(res_3.msg);
+                                    return false;
+                                }
+                            });
                         }else{
                             pageModal.alertPopup(res_2.msg);
                             return false;

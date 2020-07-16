@@ -152,12 +152,16 @@
                                 <div class="qna-userContent">
                                     <div class="qna-header">
                                         <div class="status-box">
+                                            @if(!empty($v->re_contents))
+                                            <span>답변완료</span>
+                                            @else
                                             <span>답변대기</span>
-                                            <p><strong><span>김</span>OO</strong>님</p>
+                                            @endif
+                                            <p><strong><span>{{mb_substr(($v->customer->name ?? ''), 0, 1)}}</span>OO</strong>님</p>
                                         </div>
                                         <div class="etc-box">
-                                            <p class="category">[<span>배송문의</span>]</p>
-                                            <p class="date">2020.03.12</p>
+                                            <p class="category">[<span>{{\App\Helper\Codes::qnaCategory($v->category ?? '')}}</span>]</p>
+                                            <p class="date">{{(!empty($v->created_at))? date_format($v->created_at,'Y-m-d') : ''}}</p>
                                             @if(($v->secret ?? '') != 'Y')
                                             <button class="more-btn"><img src="/front/dist/img/icon_arrow_MD.png" alt=""></button>
                                             @endif
@@ -169,14 +173,14 @@
                                     </div>
                                     @else
                                     <div class="qna-content">
-                                        <pre>혹시 가능하시다면 빨간색 토마토 초록색 토</pre>
+                                        <pre>{{$v->contents ?? ''}}</pre>
                                     </div>
                                     @endif
                                 </div>
                                 @if(!empty($v->re_contents))
                                 <div class="qna-managerContent">
                                     <span>답변.</span>
-                                    <pre>안녕하세요. 고객님!</pre>
+                                    <pre>{{$v->re_contents ?? ''}}</pre>
                                 </div>
                                 @endif
                             </div>
@@ -249,8 +253,6 @@
             $('.qna-folder .more-btn').click(function(){
                 $(this).closest('.qna-folder').toggleClass('open');
             });
-
-            $('.qna-folder.clear-list').find('.status-box').children('span').text('답변완료');
         });
 
     </script>
