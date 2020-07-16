@@ -185,9 +185,7 @@ var PickupCommon = {
 
     //# 결제하기 버튼 클릭
     addPay : function () {
-        alert("TEst");
         if (PickupCommon._config.SUBMIT_WRITE) {
-            alert("TEst1212");
             PickupCommon._config.SUBMIT_WRITE = false;
             var data = new FormData();
             data.append('product_all', $('input[name="product_all"]').val());
@@ -214,6 +212,8 @@ var PickupCommon = {
                 processData: false,
                 success: function (res) {
                     if (res.code == 200) {
+                        alert("TEst");
+
                         //# 결제 API 호출
                         $.get('/front/api/order/' + res.order_id, function (res_2) {
                             if (res_2.code == 200) {
