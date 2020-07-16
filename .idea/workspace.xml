@@ -1,14 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="eb28e625-a848-4af6-9cbb-f56991c64e18" name="Default Changelist" comment="20200710 - front - api 연동 수정">
-      <change afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/webServers.xml" afterDir="false" />
+    <list default="true" id="eb28e625-a848-4af6-9cbb-f56991c64e18" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/front/page/common.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/front/page/common.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Front/PickupController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Front/PickupController.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -198,21 +193,7 @@
       <workItem from="1594598610888" duration="21491000" />
       <workItem from="1594685116852" duration="13408000" />
       <workItem from="1594704872942" duration="10678000" />
-      <workItem from="1594857441648" duration="22453000" />
-    </task>
-    <task id="LOCAL-00002" summary="20200629 - front - 후기 쓰기 기능 추가">
-      <created>1593394799010</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1593394799010</updated>
-    </task>
-    <task id="LOCAL-00003" summary="20200629 - front - 강제 로그인 계정 추가">
-      <created>1593413004850</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1593413004850</updated>
+      <workItem from="1594857441648" duration="24000000" />
     </task>
     <task id="LOCAL-00004" summary="20200629 - front - 후기 삭제/수정 로직 수정">
       <created>1593419787717</created>
@@ -543,7 +524,21 @@
       <option name="project" value="LOCAL" />
       <updated>1594891313557</updated>
     </task>
-    <option name="localTasksCounter" value="51" />
+    <task id="LOCAL-00051" summary="20200710 - front - api 연동 수정">
+      <created>1594891403219</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1594891403219</updated>
+    </task>
+    <task id="LOCAL-00052" summary="20200716 - front - push 수정">
+      <created>1594891496122</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1594891496122</updated>
+    </task>
+    <option name="localTasksCounter" value="53" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -604,15 +599,15 @@
       <screen x="-1920" y="0" width="1920" height="1040" />
     </state>
     <state x="-1230" y="275" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1920.1040/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1594627193056" />
-    <state x="-1575" y="102" width="1275" height="813" key="CommitChangelistDialog2" timestamp="1594891312729">
+    <state x="-1575" y="102" width="1275" height="813" key="CommitChangelistDialog2" timestamp="1594891495434">
       <screen x="-1920" y="0" width="1920" height="1040" />
     </state>
-    <state x="-1575" y="102" width="1275" height="813" key="CommitChangelistDialog2/0.0.1920.1040/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1594891312729" />
+    <state x="-1575" y="102" width="1275" height="813" key="CommitChangelistDialog2/0.0.1920.1040/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1594891495434" />
     <state x="568" y="113" key="CommitChangelistDialog2/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1594200211066" />
-    <state x="-1828" y="92" width="1736" height="856" key="DiffContextDialog" timestamp="1594693798872">
+    <state x="-1828" y="92" width="1736" height="856" key="DiffContextDialog" timestamp="1594891764741">
       <screen x="-1920" y="0" width="1920" height="1040" />
     </state>
-    <state x="-1828" y="92" width="1736" height="856" key="DiffContextDialog/0.0.1920.1040/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1594693798872" />
+    <state x="-1828" y="92" width="1736" height="856" key="DiffContextDialog/0.0.1920.1040/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1594891764741" />
     <state x="-1180" y="275" key="FileChooserDialogImpl" timestamp="1594889901397">
       <screen x="-1920" y="0" width="1920" height="1040" />
     </state>
@@ -622,10 +617,10 @@
       <screen x="-1920" y="0" width="1920" height="1040" />
     </state>
     <state x="-1154" y="230" key="RollbackChangesDialog/0.0.1920.1040/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1594600457060" />
-    <state x="-1368" y="253" key="Vcs.Push.Dialog.v2" timestamp="1594891314750">
+    <state x="-1368" y="253" key="Vcs.Push.Dialog.v2" timestamp="1594891497127">
       <screen x="-1920" y="0" width="1920" height="1040" />
     </state>
-    <state x="-1368" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1594891314750" />
+    <state x="-1368" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1594891497127" />
     <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1594200212784" />
     <state x="-1340" y="135" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1594270200884">
       <screen x="-1920" y="0" width="1920" height="1040" />
