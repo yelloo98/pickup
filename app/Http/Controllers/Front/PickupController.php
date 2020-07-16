@@ -186,7 +186,11 @@ class PickupController extends Controller
         if($output->code == 200){
             //# 푸쉬 보내기
             $push = $this->getPushApi($request);
-            if($push->getData()->code == 200) return response()->json(['code'=>200, 'msg'=>'주문 등록']);
+            if($push->getData()->code == 200){
+                return response()->json(['code'=>200, 'msg'=>'주문 등록']);
+            }else{
+                return response()->json(['code'=>400, 'msg'=>'주문 실패']);
+            }
         }else{
             return response()->json(['code'=>400, 'msg'=>'주문 실패']);
         }
@@ -231,15 +235,15 @@ class PickupController extends Controller
 
         $response = curl_exec($curl);
 
-        /*if (json_decode($response, true)['code'] != 200) {
+        if (json_decode($response, true)['code'] != 200) {
             return response()->json(['code' => 400, 'msg' => 'Make an another attempt when the first one failed.' . PHP_EOL]);
-            $oneCode = $ga->getCode($secret);
+            /*$oneCode = $ga->getCode($secret);
             curl_setopt($curl, CURLOPT_HTTPHEADER, [
                 'Authorization: ' . $oneCode,
                 'Content-Type: application/json'
             ]);
-            $response = curl_exec($curl);
-        }*/
+            $response = curl_exec($curl);*/
+        }
         curl_close($curl);
 
         return response()->json(['code' => 200, 'msg' => '푸쉬 성공']);
