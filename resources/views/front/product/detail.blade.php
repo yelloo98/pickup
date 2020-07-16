@@ -48,7 +48,7 @@
                 <li class="tabItem @if(($_GET['tab'] ?? '') == 'description' || empty($_GET['tab'])) active @endif">상품설명</li>
                 <li class="tabItem @if(($_GET['tab'] ?? '') == 'information') active @endif">구매정보</li>
                 <li class="tabItem @if(($_GET['tab'] ?? '') == 'review') active @endif">상품후기<span>{{$reviewList->count()}}</span></li>
-                <li class="tabItem @if(($_GET['tab'] ?? '') == 'qna') active @endif">Q&A<span>15</span></li>
+                <li class="tabItem @if(($_GET['tab'] ?? '') == 'qna') active @endif">Q&A<span>{{$qnaList->count()}}</span></li>
             </ul>
             <div class="target-wrap">
                 <div class="tabTarget @if(($_GET['tab'] ?? '') == 'description' || empty($_GET['tab'])) active @endif">
@@ -145,8 +145,8 @@
                 <div class="tabTarget over-size @if(($_GET['tab'] ?? '') == 'qna') active @endif">
                     <div class="qna-wrapper">
                         <button class="write-btn" onclick="location.href='/front/mypage/qna/product/0?product_id={{$product->id ?? ''}}'">Q&A 작성하기</button>
-                        @if($qnaList->count() > 0)
-                        <div class="qna-container">
+                            <div class="qna-container">
+                            @if($qnaList->count() > 0)
                             @foreach($qnaList as $k=>$v)
                             <div class="qna-folder @if(!empty($v->re_contents)) clear-list @endif"><!-- clear-list 추가시 답변완료 -->
                                 <div class="qna-userContent">
@@ -185,8 +185,10 @@
                                 @endif
                             </div>
                             @endforeach
+                            @else
+                            <p class="none-list">등록된 Q&A가 없습니다.</p>
+                            @endif
                         </div>
-                        @endif
                     </div>
                 </div>
             </div>
