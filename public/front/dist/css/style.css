@@ -1001,14 +1001,22 @@
 	clear: both;
 }
 
-.fullPopup-wrapper .list-section > p > span {
-	float: right;
+.fullPopup-wrapper .list-section > p .alarmWarning {
+	float: left;
 	font-size: 10px;
 	font-weight: 300;
 	line-height: 15px;
 	color: #999;
-	right: 15px;
-	top: 0;
+}
+
+.fullPopup-wrapper .list-section > p button {
+	float: right;
+	background: none;
+	border: 0;
+	font-size: 11px;
+	font-weight: 100;
+	border-bottom: 0.5px solid rgba(153, 153, 153, 0.2);
+	color: #999;
 }
 
 .fullPopup-wrapper .list-section > ul > li {
@@ -6363,19 +6371,56 @@
 	line-height: calc( 100vh - 324px);
 }
 
-.content-body.pickupBasket .content-wrapper .content-section .content-area .content-wrap {
+.content-body.pickupBasket .content-wrapper .content-section .content-area .store-wrap {
+	padding-top: 20px;
+	border-bottom: 1px solid #eeeeee;
+}
+
+.content-body.pickupBasket .content-wrapper .content-section .content-area .store-wrap:last-of-type {
+	border-bottom: none;
+	margin-bottom: 15px;
+}
+
+.content-body.pickupBasket .content-wrapper .content-section .content-area .store-wrap .store-title {
+	margin-bottom: 10px;
 	display: -ms-flexbox;
 	display: -webkit-flex;
 	display: flex;
 	-ms-flex-align: center;
 	-webkit-align-items: center;
 	        align-items: center;
-	padding: 20px 0 20px 25px;
-	border-bottom: 1px solid #eeeeee;
+}
+
+.content-body.pickupBasket .content-wrapper .content-section .content-area .store-wrap .store-title span {
+	padding: 0 9px;
+	height: 23px;
+	line-height: 24px;
+	background: #000;
+	border-radius: 99px;
+	color: #fff;
+	font-size: 12px;
+	font-weight: 300;
+	margin-right: 5px;
+}
+
+.content-body.pickupBasket .content-wrapper .content-section .content-area .store-wrap .store-title .address {
+	font-size: 12px;
+	font-weight: 400;
+	color: #333;
+}
+
+.content-body.pickupBasket .content-wrapper .content-section .content-area .store-wrap .content-wrap {
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	-ms-flex-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
+	padding: 0px 0 15px 25px;
 	position: relative;
 }
 
-.content-body.pickupBasket .content-wrapper .content-section .content-area .content-wrap.withoutGoods .img-box p {
+.content-body.pickupBasket .content-wrapper .content-section .content-area .store-wrap .content-wrap.withoutGoods .img-box p {
 	width: 80px;
 	height: 25px;
 	color: #fff;
@@ -6389,18 +6434,17 @@
 	padding: 3px 0;
 }
 
-.content-body.pickupBasket .content-wrapper .content-section .content-area .content-wrap.withoutGoods .word-box {
+.content-body.pickupBasket .content-wrapper .content-section .content-area .store-wrap .content-wrap.withoutGoods .word-box {
 	opacity: 0.5;
 }
 
-.content-body.pickupBasket .content-wrapper .content-section .content-area .content-wrap .checkbox-box {
+.content-body.pickupBasket .content-wrapper .content-section .content-area .store-wrap .content-wrap .checkbox-box {
 	position: absolute;
-	top: 20px;
 	left: 0;
 	margin-right: 10px;
 }
 
-.content-body.pickupBasket .content-wrapper .content-section .content-area .content-wrap .img-box {
+.content-body.pickupBasket .content-wrapper .content-section .content-area .store-wrap .content-wrap .img-box {
 	background: url(../img/image_09.png) center center;
 	width: 80px;
 	height: 80px;
@@ -6408,47 +6452,58 @@
 	position: relative;
 }
 
-.content-body.pickupBasket .content-wrapper .content-section .content-area .content-wrap .word-box {
+.content-body.pickupBasket .content-wrapper .content-section .content-area .store-wrap .content-wrap .word-box {
 	height: 80px;
 	width: calc( 100% - 90px);
 	position: relative;
 }
 
-.content-body.pickupBasket .content-wrapper .content-section .content-area .content-wrap .word-box.cancle {
+.content-body.pickupBasket .content-wrapper .content-section .content-area .store-wrap .content-wrap .word-box.cancle {
 	opacity: 0.5;
 }
 
-.content-body.pickupBasket .content-wrapper .content-section .content-area .content-wrap .word-box .toTop {
+.content-body.pickupBasket .content-wrapper .content-section .content-area .store-wrap .content-wrap .word-box .toTop {
 	margin-bottom: 5px;
 	position: relative;
 }
 
-.content-body.pickupBasket .content-wrapper .content-section .content-area .content-wrap .word-box .toTop:after {
-	content: "";
-	display: block;
-	clear: both;
+.content-body.pickupBasket .content-wrapper .content-section .content-area .store-wrap .content-wrap .word-box .toTop .status-area {
+	margin-bottom: 9px;
 }
 
-.content-body.pickupBasket .content-wrapper .content-section .content-area .content-wrap .word-box .toTop p {
-	float: left;
-}
-
-.content-body.pickupBasket .content-wrapper .content-section .content-area .content-wrap .word-box .toTop p span {
+.content-body.pickupBasket .content-wrapper .content-section .content-area .store-wrap .content-wrap .word-box .toTop .status-area > span {
+	font-size: 10px;
+	font-weight: 500;
+	width: 34px;
+	height: 19px;
 	display: inline-block;
-	color: #fff;
-	font-size: 12px;
-	font-weight: 300;
-	line-height: 24px;
-	height: 23px;
-	background: #000;
-	padding: 0 9px;
-	border-radius: 12px;
+	text-align: center;
+	line-height: 18px;
 }
 
-.content-body.pickupBasket .content-wrapper .content-section .content-area .content-wrap .word-box .toTop button {
+.content-body.pickupBasket .content-wrapper .content-section .content-area .store-wrap .content-wrap .word-box .toTop .status-area > span.blue-box {
+	border: 1px solid rgba(41, 98, 230, 0.5);
+	color: #2962e6;
+}
+
+.content-body.pickupBasket .content-wrapper .content-section .content-area .store-wrap .content-wrap .word-box .toTop .status-area > span.green-box {
+	border: 1px solid rgba(20, 164, 181, 0.5);
+	color: #14a4b5;
+}
+
+.content-body.pickupBasket .content-wrapper .content-section .content-area .store-wrap .content-wrap .word-box .toTop .status-area .cancel {
+	font-size: 12px;
+	font-weight: 500;
+	line-height: 19px;
+	color: #fb2b4f;
+	margin-left: 5px;
+}
+
+.content-body.pickupBasket .content-wrapper .content-section .content-area .store-wrap .content-wrap .word-box .toTop .delete-btn {
 	border: 0;
 	background: none;
 	position: absolute;
+	top: 0;
 	right: 0;
 	height: 10px;
 	width: 10px;
@@ -6463,14 +6518,14 @@
 	        justify-content: center;
 }
 
-.content-body.pickupBasket .content-wrapper .content-section .content-area .content-wrap .word-box .menuInfo {
+.content-body.pickupBasket .content-wrapper .content-section .content-area .store-wrap .content-wrap .word-box .menuInfo {
 	font-size: 14px;
 	font-weight: 500;
 	color: #333;
 	line-height: 20px;
 }
 
-.content-body.pickupBasket .content-wrapper .content-section .content-area .content-wrap .word-box .menuInfo p {
+.content-body.pickupBasket .content-wrapper .content-section .content-area .store-wrap .content-wrap .word-box .menuInfo p {
 	width: calc( 100% - 5px);
 	display: inline-block;
 	text-overflow: ellipsis;
@@ -6479,9 +6534,8 @@
 	line-height: 20px;
 }
 
-.content-body.pickupBasket .content-wrapper .content-section .content-area .content-wrap .word-box .price {
+.content-body.pickupBasket .content-wrapper .content-section .content-area .store-wrap .content-wrap .word-box .price {
 	width: 100%;
-	bottom: 2px;
 	display: -ms-flexbox;
 	display: -webkit-flex;
 	display: flex;
@@ -6491,13 +6545,13 @@
 	position: relative;
 }
 
-.content-body.pickupBasket .content-wrapper .content-section .content-area .content-wrap .word-box .price .btnBlock:after {
+.content-body.pickupBasket .content-wrapper .content-section .content-area .store-wrap .content-wrap .word-box .price .btnBlock:after {
 	content: "";
 	display: block;
 	clear: both;
 }
 
-.content-body.pickupBasket .content-wrapper .content-section .content-area .content-wrap .word-box .price .btnBlock > button {
+.content-body.pickupBasket .content-wrapper .content-section .content-area .store-wrap .content-wrap .word-box .price .btnBlock > button {
 	float: left;
 	background: none;
 	border: 1px solid #eee;
@@ -6505,7 +6559,7 @@
 	height: 28px;
 }
 
-.content-body.pickupBasket .content-wrapper .content-section .content-area .content-wrap .word-box .price .btnBlock .goodsAmount {
+.content-body.pickupBasket .content-wrapper .content-section .content-area .store-wrap .content-wrap .word-box .price .btnBlock .goodsAmount {
 	float: left;
 	width: 47px;
 	height: 28px;
@@ -6521,14 +6575,14 @@
 	        justify-content: center;
 }
 
-.content-body.pickupBasket .content-wrapper .content-section .content-area .content-wrap .word-box .price .btnBlock .goodsAmount span {
+.content-body.pickupBasket .content-wrapper .content-section .content-area .store-wrap .content-wrap .word-box .price .btnBlock .goodsAmount span {
 	color: #333;
 	font-size: 12px;
 	font-weight: 400;
 	line-height: 14px;
 }
 
-.content-body.pickupBasket .content-wrapper .content-section .content-area .content-wrap .word-box .price .priceNum {
+.content-body.pickupBasket .content-wrapper .content-section .content-area .store-wrap .content-wrap .word-box .price .priceNum {
 	color: #333;
 	font-size: 12px;
 	font-weight: 400;
@@ -6537,7 +6591,7 @@
 	right: 0;
 }
 
-.content-body.pickupBasket .content-wrapper .content-section .content-area .content-wrap .word-box .price .priceNum span {
+.content-body.pickupBasket .content-wrapper .content-section .content-area .store-wrap .content-wrap .word-box .price .priceNum span {
 	color: #333;
 	font-size: 15px;
 	font-weight: 700;

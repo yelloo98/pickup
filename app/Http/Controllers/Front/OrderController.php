@@ -37,10 +37,11 @@ class OrderController extends Controller
             foreach ($product as $k=>$v){
                 $item = explode(',',$v);
                 $product[$k] = Product::find($item[0] ?? 0);
-                $product[$k]->count = $item[1] ?? 0;
-                $price_sum = ($product[$k]->price ?? 0) * ($item[1] ?? 0);
+                $product[$k]->count = $item[2] ?? 0;
+                $price_sum = ($product[$k]->price ?? 0) * ($item[2] ?? 0);
                 $product[$k]->price_sum = number_format($price_sum);
                 $productSum = $productSum + $price_sum;
+                $product[$k]->device_id = $item[1];
 
                 $view->product[$k] = $product[$k];
             }
@@ -91,18 +92,18 @@ class OrderController extends Controller
                         $item = explode(',',$v);
                         $product[$k] = Product::find($item[0]);
                         if(!empty($product[$k])){
-                            $productSum = $productSum + ($product[$k]->price * $item[1]);
+                            $productSum = $productSum + ($product[$k]->price * $item[2]);
                             $productStockList = ProductStock::select('product_stock.*',DB::raw('(inserted_amount - sale_amount) as stock'))->
-                            where('product_id', $product[$k]->id)->where('slot_status','DP-COMPLETE')->where('use_status','use')->whereColumn('inserted_amount', '>', 'sale_amount')->orderBy('stock','desc')->get();
+                            where([['product_id', $product[$k]->id],['device_id', $item[1]],['slot_status','DP-COMPLETE'],['use_status','use']])->whereColumn('inserted_amount', '>', 'sale_amount')->orderBy('stock','desc')->get();
                             //# 재고 부족 시
-                            if($productStockList->sum('stock') < $item[1]){
+                            if($productStockList->sum('stock') < $item[2]){
                                 DB::rollBack();
                                 return response()->json(['code'=>400, 'msg'=>'재고가 부족합니다.']);
                             }
                             foreach ($productStockList as $kk => $vv){
-                                if($item[1] == 0) break;
-                                $stockCnt = ($item[1] >= $vv->stock)? $vv->stock : $item[1];
-                                $item[1] = $item[1] - $stockCnt;
+                                if($item[2] == 0) break;
+                                $stockCnt = ($item[2] >= $vv->stock)? $vv->stock : $item[2];
+                                $item[2] = $item[2] - $stockCnt;
                                 $orderProduct = new PickupOrdersProduct();
                                 $orderProduct->pickup_orders_id = $order->id;
                                 $orderProduct->product_id = $product[$k]->id;

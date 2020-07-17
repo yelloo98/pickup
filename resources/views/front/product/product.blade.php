@@ -25,7 +25,7 @@
                 <ul class="machine-list">
                     <li class="active">
                     @forelse($productList as $k => $v)
-                        <div class="machine-item" onclick="pageProduct.selProduct({{$v->product_id ?? 0}})">
+                        <div class="machine-item" onclick="pageProduct.selProduct('{{$v->product_id ?? 0}}', '{{$v->device_id ?? 0}}')">
                             <div class="img-box" @if(!empty($v->product->origin_product->image_path)) style="background-image: url('{{env('IMAGE_URL').$v->product->origin_product->image_path}}')" @endif>
                                 @if(($v->slot_status ?? '') == 'DP-COMPLETE' && ($v->use_status ?? '') == 'use' && ($v->inserted_amount ?? '') > ($v->sale_amount ?? ''))
                                 <img class="cart-ico" src="/front/dist/img/icon_cart_box.png" alt="">
@@ -63,12 +63,12 @@
             _config : {},
 
             //# 상품 선택
-            selProduct : function (product_id) {
+            selProduct : function (product_id, device_id) {
                 var $target = $(event.target);
                 if($target.is("img")) {
-                    PickupCommon.selProduct(product_id, 'cart');
+                    PickupCommon.selProduct(product_id, device_id, 'cart');
                 }else{
-                    location.href = '/front/product/' + product_id;
+                    location.href = '/front/product/' + product_id + '?device_id=' + device_id;
                 }
             },
 

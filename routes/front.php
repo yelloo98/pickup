@@ -22,8 +22,6 @@ Route::group(['namespace' => 'Front', 'middleware' => 'front', 'prefix' => 'fron
     Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
         Route::get('/add/store', 'PickupController@addStore');                //# 관심매장 등록/삭제
         Route::get('/add/product', 'PickupController@addProduct');            //# 관심상품 등록/삭제
-        Route::get('/sel/product', 'PickupController@selProduct');            //# 상품 선택
-        Route::get('/add/cart', 'PickupController@addCart');                  //# 카트 등록/삭제
         Route::get('/app/test', 'PickupController@appTest');                  //# 앱 테스트 (toast)
         Route::get('/order/{id?}', 'PickupController@getOrderApi');           //# 결제 요청 api
     });
@@ -49,8 +47,10 @@ Route::group(['namespace' => 'Front', 'middleware' => 'front', 'prefix' => 'fron
      * -----------------------------------------------------------------------------------------------------------------
      */
     Route::group(['prefix' => 'cart', 'as' => 'cart.'], function () {
-        Route::get('/', 'CartController@getIndex')->name('index');          //# 카트 목록
-        Route::post('/', 'CartController@postCart');                        //# 카트 추가 / 삭제
+        Route::get('/', 'CartController@getIndex')->name('index');          //# 장바구니 목록
+        Route::get('/sel', 'CartController@getCartSel');                    //# 상품 선택
+        Route::get('/add', 'CartController@getCartAdd');                    //# 장바구니 등록/삭제
+        Route::post('/pay', 'CartController@postCartPay');                  //# 구매하기 버튼 클릭
     });
 
     /**

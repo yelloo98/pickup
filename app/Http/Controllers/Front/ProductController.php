@@ -57,12 +57,14 @@ class ProductController extends Controller
 
         $shopAuth = new ShopAuth($request);
         $view->customer = $shopAuth->user();
+        $device_id = $request->input('device_id', null);
+
         //# 상품
         $view->product = Product::find($id);
         //# 세일율
         $view->productSale = floor((1 - (($view->product->price ?? 0) / ($view->product->origin_product->price_cost ?? 1))) * 100);
         //# 재고량
-        $productList = ProductStock::where('product_id', $id)->where('slot_status','DP-COMPLETE')->where('use_status','use')->whereColumn('inserted_amount', '>', 'sale_amount');
+        $productList = ProductStock::where([['product_id', $id],['device_id', $device_id],['slot_status','DP-COMPLETE'],['use_status','use']])->whereColumn('inserted_amount', '>', 'sale_amount');
         $view->productCnt = $productList->sum('inserted_amount') - $productList->sum('sale_amount');
         //# 상품후기
         $view->reviewList = PickupProductReview::where('product_id',$id)->orderBy('created_at', 'desc')->get();
