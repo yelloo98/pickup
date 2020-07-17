@@ -183,7 +183,7 @@ class PickupController extends Controller
         curl_setopt($ch, CURLOPT_POST, 1);
         $output = json_decode(curl_exec($ch));
 
-        if($output->code == 200){
+        if(($output->code ?? '') == 200){
             //# 푸쉬 보내기
             $push = $this->getPushApi($request);
             if($push->getData()->code == 200){
