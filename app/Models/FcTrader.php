@@ -8,8 +8,8 @@ use Illuminate\Http\Request;
 class FcTrader extends Model
 {
 
-    protected $connection = 'mysql2';
-    protected $table = 'vw_kiosk_fc_trader';
+    protected $connection = 'mysql';
+    protected $table = 'temp_fc_trader';
     protected $primaryKey = 'traderNo';
     public $timestamps = false;
 

@@ -1,12 +1,12 @@
 var pageMain = {
     _config : {},
 
-    selProduct : function (product_id) {
+    selProduct : function (product_id, device_id) {
         var $target = $(event.target);
         if($target.is("img")) {
-            PickupCommon.selProduct(product_id, 'cart');
+            PickupCommon.selProduct(product_id, device_id, 'cart');
         }else{
-            location.href = '/front/product/' + product_id;
+            location.href = '/front/product/' + product_id + '?device_id=' + device_id;
         }
     }
 };

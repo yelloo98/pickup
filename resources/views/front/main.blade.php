@@ -61,7 +61,7 @@
             </div>
             <div class="swiper-wrapper">
                 @foreach($newProduct as $k=>$v)
-                <div class="swiper-slide" onclick="pageMain.selProduct({{$v->product_id ?? 0}})">
+                <div class="swiper-slide" onclick="pageMain.selProduct('{{$v->product_id ?? 0}}', '{{$v->device_id ?? 0}}')">
                     <div class="img-box" @if(!empty($v->product->origin_product->image_path)) style="background-image: url('{{env('IMAGE_URL').$v->product->origin_product->image_path}}')" @endif>
                         @if(($v->slot_status ?? '') == 'DP-COMPLETE' && ($v->use_status ?? '') == 'use' && ($v->inserted_amount ?? '') > ($v->sale_amount ?? ''))
                         <img src="/front/dist/img/icon_cart_box.png" alt="">
@@ -94,7 +94,7 @@
             </div>
             <div class="swiper-wrapper">
                 @forelse($bestProduct as $k=>$v)
-                <div class="swiper-slide" onclick="pageMain.selProduct({{$v->product_id ?? 0}})">
+                <div class="swiper-slide" onclick="pageMain.selProduct('{{$v->product_id ?? 0}}', '{{$v->device_id ?? 0}}')">
                     <div class="img-box" @if(!empty($v->product->origin_product->image_path)) style="background-image: url('{{env('IMAGE_URL').$v->product->origin_product->image_path}}')" @endif>
                         @if(($v->stock ?? 0) > 0)
                         <img src="/front/dist/img/icon_cart_box.png" alt="">
@@ -129,7 +129,7 @@
             </div>
             <div class="cubeBox-wrapper swiper-wrapper">
                 @forelse($historyProduct as $k=>$v)
-                <div class="cubeItem swiper-slide" onclick="pageMain.selProduct({{$v->product_id ?? 0}})">
+                <div class="cubeItem swiper-slide" onclick="pageMain.selProduct('{{$v->product_id ?? 0}}', '{{$v->device_id ?? 0}}')">
                     <div class="img-box" @if(!empty($v->product->origin_product->image_path)) style="background-image: url('{{env('IMAGE_URL').$v->product->origin_product->image_path}}')" @endif>
                         @if(($v->stock ?? 0) > 0)
                         <img src="/front/dist/img/icon_cart_box.png" alt="">
@@ -156,7 +156,7 @@
             <div class="swiper-wrapper">
                 @forelse($productReview as $k=>$v)
                     @if($k % 2 == 0) <div class="swiper-slide"> @endif
-                        <div class="review-list" onclick="location.href='/front/product/{{$v->product_id ?? 0}}?tab=review'">
+                        <div class="review-list" onclick="location.href='/front/product/{{$v->product_id ?? 0}}?device_id={{$v->device_id ?? 0}}&tab=review'">
                             <div class="img-box" @if(!empty($v->product->origin_product->image_path)) style="background-image: url('{{env('IMAGE_URL').$v->product->origin_product->image_path}}')" @endif></div>
                             <div class="word-box">
                                 <img src="/front/dist/img/icon_review.png" alt="">

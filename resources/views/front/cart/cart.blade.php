@@ -27,40 +27,51 @@
                         <input type="checkbox" id="allCheck" name="allCheck" onclick="PickupCart.allCheck(this)"/>
                         <label for="allCheck"><span class="checkbox-custom"></span>
                             <span class="checkbox-label">전체선택</span></label>
-                        <div class="alldelete-btn" onclick="PickupCommon.addCart('', 'delete_all')">전체삭제</div>
+                        <div class="alldelete-btn" onclick="PickupCommon.addCart('', '', 'delete_all')">전체삭제</div>
                     </div>
                 </div>
                 <div class="content-area">
-                @forelse($cartList as $k=>$v)
-                    <div class="content-wrap @if(($v->product_res ?? '') == 0) withoutGoods @endif product_{{$v->product_id}}">
-                        <div class="checkbox-box">
-                            <input type="checkbox" id="check_item_{{$v->product_id ?? 0}}" name="check_item[]" onclick="PickupCart.totalPrice()" @if(($v->product_res ?? '') == 0) disabled @endif value="{{$v->product_id}}"/>
-                            <label for="check_item_{{$v->product_id ?? 0}}"><span class="checkbox-custom"></span></label>
+                    @forelse($productStore as $item)
+                    <div class="store-wrap">
+                        <div class="store-title">
+                            <span>{{$item->product->fc_trader->companyName ?? ''}}</span>
+                            <p class="address">{{$item->product->fc_trader->address ?? ''}}</p>
                         </div>
-                        <div class="img-box" @if(!empty($v->product->origin_product->image_path)) style="background-image: url('{{env('IMAGE_URL').$v->product->origin_product->image_path}}'); background-size:cover;" @endif>
-                            @if(($v->product_res ?? '') == 0)<p>품 절</p>@endif
-                        </div>
-                        <div class="word-box">
-                            <div class="toTop">
-                                <p><span>{{$v->product->fc_trader->companyName ?? ''}}</span></p>
-                                <button class='delete-btn' onclick="PickupCommon.addCart('{{$v->product_id ?? 0}}', 'delete')"><img src="/front/dist/img/icon_popup_x01.png" alt=""></button>
+                        @foreach($item->cartList as $k=>$v)
+                        <div class="content-wrap @if(($v->product_res ?? '') == 0) withoutGoods @endif product_{{$v->product_id}}">
+                            <div class="checkbox-box">
+                                <input type="hidden" name="device_id" value="{{$v->device_id ?? ''}}"/>
+                                <input type="checkbox" id="check_item_{{$v->product_id ?? 0}}" name="check_item[]" onclick="PickupCart.totalPrice()" @if(($v->product_res ?? '') == 0) disabled @endif value="{{$v->product_id ?? ''}}"/>
+                                <label for="check_item_{{$v->product_id ?? 0}}"><span class="checkbox-custom"></span></label>
                             </div>
-                            <div class="menuInfo">
-                                <p>{{$v->product->origin_product->name ?? ''}}</p>
+                            <div class="img-box" @if(!empty($v->product->origin_product->image_path)) style="background-image: url('{{env('IMAGE_URL').$v->product->origin_product->image_path}}'); background-size:cover;" @endif>
+                                @if(($v->product_res ?? '') == 0)<p>품 절</p>@endif
                             </div>
-                            <div class="price">
-                                <div class="btnBlock">
-                                    <button class="up-btn" onclick="PickupCart.cntNum(this, '{{$v->product_res}}', '{{$v->price}}', 'plus')"><img src="/front/dist/img/icon_up.png" alt=""></button>
-                                    <div class="goodsAmount"><span>{{$v->count ?? ''}}</span></div>
-                                    <button class="down-btn" onclick="PickupCart.cntNum(this, '{{$v->product_res}}', '{{$v->price}}', 'minus')"><img src="/front/dist/img/icon_down.png" alt=""></button>
+                            <div class="word-box">
+                                <div class="toTop">
+                                    <div class="status-area">
+                                        <span class="blue-box">{{\App\Helper\Codes::deviceTypeText($v->device->frozen_type ?? '')}}</span>
+                                    </div>
+                                    <button class='delete-btn' onclick="PickupCommon.addCart('{{$v->product_id ?? 0}}','{{$v->device_id ?? 0}}', 'delete')"><img src="/front/dist/img/icon_popup_x01.png" alt=""></button>
                                 </div>
-                                <p class="priceNum"><span>{{number_format($v->price_sum ?? 0)}}</span>원</p>
+                                <div class="menuInfo">
+                                    <p>{{$v->product->origin_product->name ?? ''}}</p>
+                                </div>
+                                <div class="price">
+                                    <div class="btnBlock">
+                                        <button class="up-btn" onclick="PickupCart.cntNum(this, '{{$v->product_res}}', '{{$v->price}}', 'plus')"><img src="/front/dist/img/icon_up.png" alt=""></button>
+                                        <div class="goodsAmount"><span>{{$v->count ?? ''}}</span></div>
+                                        <button class="down-btn" onclick="PickupCart.cntNum(this, '{{$v->product_res}}', '{{$v->price}}', 'minus')"><img src="/front/dist/img/icon_down.png" alt=""></button>
+                                    </div>
+                                    <p class="priceNum"><span>{{number_format($v->price_sum ?? 0)}}</span>원</p>
+                                </div>
                             </div>
                         </div>
+                        @endforeach
                     </div>
-                @empty
+                    @empty
                     <p class="none-list">등록된 상품이 없습니다.</p>
-                @endforelse
+                    @endforelse
                 </div>
             </div>
         </div>
@@ -91,8 +102,9 @@
             PickupCart._config.productList = [];
             $("input[name='check_item[]']:checked").each(function (){
                 var product_id = parseInt($(this).val());
+                var device_id = $(this).parent('.checkbox-box').find("input[name='device_id']").val();
                 var cnt = parseInt($('.product_'+$(this).val() + ' .goodsAmount span').text());
-                PickupCart._config.productList.push([product_id, cnt]);
+                PickupCart._config.productList.push([product_id, device_id, cnt]);
             });
         },
 

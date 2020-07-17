@@ -2,6 +2,7 @@
 @section('title', $title ?? '')
 @section('content')
     <div class="content-body ppGoodsDetail-content">
+        <input type="hidden" name="device_id" value="{{$_GET['device_id'] ?? ''}}">
         <div class="swiper-container goods-img">
             <div class="swiper-wrapper">
                 @if(!empty($product->origin_product->image_path))
@@ -209,7 +210,7 @@
                     <img src="/front/dist/img/icon_cart_O_out.png" alt="">
                 </button>
                 @else
-                <button class="changeing" onclick="PickupCommon.selProduct('{{$product->id ?? 0}}', 'cart')">
+                <button class="changeing" onclick="PickupCommon.selProduct('{{$product->id ?? 0}}','{{$_GET['device_id'] ?? ''}}', 'cart')">
                     <img src="/front/dist/img/icon_cart_O_on.png" alt="">
                 </button>
                 @endif
@@ -218,7 +219,7 @@
                 @if($productCnt == 0)
                 <button>품절</button>
                 @else
-                <button onclick="PickupCommon.selProduct('{{$product->id ?? 0}}','pay')">구매하기</button>
+                <button onclick="PickupCommon.selProduct('{{$product->id ?? 0}}','{{$_GET['device_id'] ?? ''}}','pay')">구매하기</button>
                 @endif
             </div>
         </div>

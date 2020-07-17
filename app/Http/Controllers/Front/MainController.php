@@ -46,9 +46,8 @@ class MainController extends Controller
         $view->bestProduct = $bestProduct;
 
         //# 상품 리뷰 / 최신 순
-        $view->productReview = PickupProductReview::leftjoin('product','product.id','pickup_product_review.product_id')
-            ->where('product.store_id', $store_id)->select('pickup_product_review.*')->orderBy('created_at','DESC')->limit(6)->get();
-
+        $view->productReview = PickupProductReview::leftjoin('product','product.id','pickup_product_review.product_id')->leftjoin('product_stock', 'product_stock.product_id','pickup_product_review.product_id')
+            ->where('product.store_id', $store_id)->select('pickup_product_review.*', 'product_stock.device_id')->orderBy('created_at','DESC')->limit(6)->get();
         $shopAuth = new ShopAuth($request);
         if(!empty($shopAuth->user())){
             $view->customer = $shopAuth->user();

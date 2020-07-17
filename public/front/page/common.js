@@ -94,8 +94,8 @@ var PickupCommon = {
     },
 
     //# 상품 선택
-    selProduct : function (product_id, status='cart') {
-        $.get('/front/api/sel/product', {'product_id':product_id}, function(res) {
+    selProduct : function (product_id, device_id, status='cart') {
+        $.get('/front/cart/sel', {'product_id':product_id, 'device_id':device_id}, function(res) {
             if(res.code == 200){
                 $('.purchase-wrapper .header-section p').html(res.name);
                 $('.purchase-wrapper .totalNum span').html(res.price);
@@ -103,10 +103,10 @@ var PickupCommon = {
                 $('.purchase-wrapper .up-btn').attr('onclick', 'pageModal.cntNum(' + res.cnt + ', \'plus\',' + res.price.replace(/,/gi,'') + ')');
                 $('.purchase-wrapper .down-btn').attr('onclick', 'pageModal.cntNum(' + res.cnt + ', \'minus\',' + res.price.replace(/,/gi,'') + ')');
                 if(status == 'pay'){
-                    $('.purchase-wrapper .footer-section').attr('onclick', 'PickupCommon.addOrder(\'product\', '+ product_id +')');
+                    $('.purchase-wrapper .footer-section').attr('onclick', 'PickupCommon.addOrder('+ product_id + ', '+ device_id + ', \'product\')');
                     $('.purchase-wrapper .footer-section button').text('구매하기');
                 }else{
-                    $('.purchase-wrapper .footer-section').attr('onclick', 'PickupCommon.addCart('+ product_id + ', \'add\')');
+                    $('.purchase-wrapper .footer-section').attr('onclick', 'PickupCommon.addCart('+ product_id + ', '+ device_id + ', \'add\')');
                     $('.purchase-wrapper .footer-section button').text('장바구니 추가하기');
                 }
                 pageModal.cartPopup();
@@ -118,10 +118,10 @@ var PickupCommon = {
     },
 
     //# 장바구니 추가 / 삭제
-    addCart : function (product_id, status) {
+    addCart : function (product_id, device_id, status) {
         var cnt = $('.purchase-wrapper .goodsAmount').text();
 
-        $.get('/front/api/add/cart', {'product_id':product_id, 'status':status, 'cnt':cnt}, function(res) {
+        $.get('/front/cart/add', {'product_id':product_id, 'device_id':device_id, 'status':status, 'cnt':cnt}, function(res) {
             if(res.code == 600){
                 pageModal.alertPopup(res.msg);
                 return false;
@@ -130,11 +130,22 @@ var PickupCommon = {
                 $('.popup-wrapper').removeClass('active');
                 pageModal.cartSavePopup();
             }else if(res.code == 300){
-                if($("#check_item_" + res.product_id).prop("checked")){
-                    $('.content-area .product_'+res.product_id).remove();
-                    PickupCart.totalPrice();
+                //# 매장 유일값일 경우, 매장 제거
+                if($('.content-area .product_'+res.product_id).parent('.store-wrap').find('.content-wrap').length == 1){
+                    //# 체크박스 체크되어 있을 경우, 금액 재계산
+                    if($("#check_item_" + res.product_id).prop("checked")){
+                        $('.content-area .product_'+res.product_id).parent('.store-wrap').remove();
+                        PickupCart.totalPrice();
+                    }else{
+                        $('.content-area .product_'+res.product_id).parent('.store-wrap').remove();
+                    }
                 }else{
-                    $('.content-area .product_'+res.product_id).remove();
+                    if($("#check_item_" + res.product_id).prop("checked")){
+                        $('.content-area .product_'+res.product_id).remove();
+                        PickupCart.totalPrice();
+                    }else{
+                        $('.content-area .product_'+res.product_id).remove();
+                    }
                 }
                 if( $('.content-area .content-wrap').length == 0 ) {
                     $('.content-area').append('<p class="none-list">등록된 상품이 없습니다.</p>');
@@ -154,7 +165,7 @@ var PickupCommon = {
     },
 
     //# 구매하기 버튼 클릭
-    addOrder : function (type = 'cart', product_id='') {
+    addOrder : function (product_id = '', device_id = '', type = 'cart') {
         var data = new FormData();
         if(type == 'cart'){
             //# 장바구니에서 구매하기
@@ -162,13 +173,13 @@ var PickupCommon = {
         }else{
             //# 상품에서 구매하기
             var num = $('.purchase-wrapper .goodsAmount').text();
-            data.append('product', JSON.stringify([[product_id,num]]));
+            data.append('product', JSON.stringify([[product_id,device_id,num]]));
         }
         data.append('type', type);
 
         $.ajax({
             type: 'POST',
-            url: "/front/cart",
+            url: "/front/cart/pay",
             data: data,
             contentType: false,
             processData: false,
