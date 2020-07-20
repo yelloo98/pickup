@@ -8,7 +8,6 @@
                 <select name="searchSort" class="listUp-btn" onchange="pageProduct.urlLink()">
                     <option @if(empty($_GET['searchType'])) selected @endif value="">최신순</option>
                     <option @if(($_GET['searchSort'] ?? '') == 'hit') selected @endif value="hit">인기순</option>
-                    <option @if(($_GET['searchSort'] ?? '') == 'lately') selected @endif value="lately">최근 본 상품</option>
                 </select>
             </div>
         </div>

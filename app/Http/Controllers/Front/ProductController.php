@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Front;
 use App\Helper\ShopAuth;
 use App\Http\Controllers\Controller;
 use App\Models\Device;
+use App\Models\PickupOrdersProduct;
 use App\Models\PickupProductLikes;
 use App\Models\PickupProductReview;
 use App\Models\PickupProductViews;
@@ -35,15 +36,22 @@ class ProductController extends Controller
         //# 상품 리스트
         $productList = ProductStock::leftjoin('device','device.id','product_stock.device_id')->select('product_stock.*')
             ->where('device.store_id', $store)->where('product_stock.product_id','!=','0')->groupBy('product_stock.product_id')
-            ->groupBy('product_stock.device_id')->orderBy('created_at','desc');
+            ->groupBy('product_stock.device_id')->orderBy('created_at','desc')->get();
+        foreach ($productList as $item){
+            $item->hit = PickupOrdersProduct::where('product_id', $item->product_id)->sum('count');
+        }
 
         //# 기기 선택
         if(!empty($searchDevice)){
-            $productList = $productList->where('product_stock.device_id', $searchDevice);
+            $productList = $productList->where('device_id', $searchDevice);
         }
-        $productList = $productList->get();
-        $view->productList = $productList;
 
+        //# 정렬 선택
+        if(!empty($searchSort)){
+            $productList = $productList->sortByDesc($searchSort);
+        }
+
+        $view->productList = $productList;
         return $view;
     }
 
