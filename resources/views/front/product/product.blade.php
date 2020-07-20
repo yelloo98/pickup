@@ -17,7 +17,7 @@
                 <ul class="machine-tab">
                     <li @if(empty($_GET['searchDevice'])) class="active" @endif onclick="pageProduct.searchDevice()">ALL</li>
                     @foreach($deviceList as $k => $v)
-                    <li @if(($_GET['searchDevice'] ?? '') == $v->id) class="active" @endif onclick="pageProduct.searchDevice({{$v->id}})">기기{{$k+1}}</li>
+                    <li @if(($_GET['searchDevice'] ?? '') == $v->id) class="active" @endif onclick="pageProduct.searchDevice({{$v->id}})">{{\App\Helper\Codes::deviceTypeText($v->frozen_type ?? '').($v->store_order_no ?? '')}}</li>
                     @endforeach
                 </ul>
             </div>

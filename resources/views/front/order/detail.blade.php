@@ -20,7 +20,7 @@
                         <div class="img-wrapper" @if(!empty($vv->product->origin_product->image_path)) style="background-image: url('{{env('IMAGE_URL').$vv->product->origin_product->image_path}}'); background-size:cover;" @endif></div>
                         <div class="word-wrapper">
                             <div class="status-area">
-                                <span class="blue-box">{{\App\Helper\Codes::deviceTypeText($vv->device->frozen_type ?? '').($kk+1)}}</span>
+                                <span class="blue-box">{{\App\Helper\Codes::deviceTypeText($vv->device->frozen_type ?? '').($vv->device->store_order_no ?? '')}}</span>
                                 @if(($vv->status ?? '') == 'done')<p class="clear-text"><span>{{$vv->pickedup_at ?? ''}}</span>픽업완료</p>@endif
                             </div>
                             <div class="menu-area">
