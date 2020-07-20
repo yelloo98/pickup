@@ -98,7 +98,7 @@ class PickupController extends Controller
         //# 키오스크 API 호출
         try{
 //        $url = 'http://192.168.0.42:8080/api/pickup/sendOrder';           //# 테스트 내부접속
-        $url = 'http://dev.e777.kr:8842/api/pickup/sendOrder';              //# 테스트 외부접속
+        $url = 'http://dev.e777.kr:8842/api/pickup/sendOrder';              //# 테스트 외부접속2
 //            $url = 'https://api.smartkiosk.kr/kiosk/api/pickup/sendOrder';      //# 실서버 접속
             $json_data = '{"pickupOrdersId" : "'.$id.'"}';
             $ch = curl_init($url);
