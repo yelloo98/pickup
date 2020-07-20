@@ -97,8 +97,8 @@ class PickupController extends Controller
     {
         //# 키오스크 API 호출
         try{
-//        $url = 'http://192.168.0.42:8080/api/pickup/sendOrder';           //# 테스트 내부접속
-        $url = 'http://dev.e777.kr:8842/api/pickup/sendOrder';              //# 테스트 외부접속2
+//            $url = 'http://192.168.0.42:8080/api/pickup/sendOrder';           //# 테스트 내부접속
+            $url = 'http://dev.e777.kr:8842/api/pickup/sendOrder';              //# 테스트 외부접속2
 //            $url = 'https://api.smartkiosk.kr/kiosk/api/pickup/sendOrder';      //# 실서버 접속
             $json_data = '{"pickupOrdersId" : "'.$id.'"}';
             $ch = curl_init($url);
@@ -113,12 +113,12 @@ class PickupController extends Controller
 
             if(($output->code ?? '') == 200){
                 //# 푸쉬 보내기
-                $push = $this->getPushApi($request);
-                if($push->getData()->code == 200){
+//                $push = $this->getPushApi($request);
+//                if($push->getData()->code == 200){
                     return response()->json(['code'=>200, 'msg'=>'주문 등록']);
-                }else{
-                    return response()->json(['code'=>400, 'msg'=>'주문 실패']);
-                }
+//                }else{
+//                    return response()->json(['code'=>400, 'msg'=>'주문 실패']);
+//                }
             }else{
                 return response()->json(['code'=>400, 'msg'=>'주문 실패']);
             }
@@ -134,58 +134,53 @@ class PickupController extends Controller
      */
     public function getPushApi(Request $request)
     {
-        try {
-            $shopAuth = new ShopAuth($request);
-            $token = PickupCustomerPushInfo::where('customer_id', $shopAuth->user()->memId)->pluck('firebase_token');
-            if ($token->count() == 0) return response()->json(['code' => 400, 'msg' => 'token 없음']);
+        $shopAuth = new ShopAuth($request);
+        dd($shopAuth->user());
+        $token = PickupCustomerPushInfo::where('customer_id', $shopAuth->user()->memId)->pluck('firebase_token');
+        if ($token->count() == 0) return response()->json(['code' => 400, 'msg' => 'token 없음']);
 
-            $ga = new GoogleAuthenticator();
-            $secret = 'VVOFVY6O3VQ3KJKV'; // keep it secretly
-            $oneCode = $ga->getCode($secret); // this code lives up to 60s.
+        $ga = new GoogleAuthenticator();
+        $secret = 'VVOFVY6O3VQ3KJKV'; // keep it secretly
+        $oneCode = $ga->getCode($secret); // this code lives up to 60s.
 
-            $url = 'http://store.smartkiosk.kr/api/store-owner/notification/send';
+        $url = 'http://store.smartkiosk.kr/api/store-owner/notification/send';
 
-            $data = [
-                'tokens' => json_decode($token),
-                'message' => [
-                    'title' => '사용자 픽업 결제 완료',
-                    'content' => '주문하신 픽업상품 결제 완료되었습니다. 매장에 방문하여 상품을 픽업해주세요.',
-                    'type' => 'type php',
-                    'action' => 'action php',
-                    'link' => '/front/order/pickup',
-                    'app_type' => 'app type',
-                    'message_id' => 'event php'
-                ],
-            ];
+        $data = [
+            'tokens' => json_decode($token),
+            'message' => [
+                'title' => '사용자 픽업 결제 완료',
+                'content' => '주문하신 픽업상품 결제 완료되었습니다. 매장에 방문하여 상품을 픽업해주세요.',
+                'type' => 'type php',
+                'action' => 'action php',
+                'link' => '/front/order/pickup',
+                'app_type' => 'app type',
+                'message_id' => 'event php'
+            ],
+        ];
 
-            $curl = curl_init($url);
-            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($curl, CURLOPT_POST, true);
-            curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data));
+        $curl = curl_init($url);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_POST, true);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data));
+        curl_setopt($curl, CURLOPT_HTTPHEADER, [
+            'Authorization: ' . $oneCode,
+            'Content-Type: application/json'
+        ]);
+
+        $response = curl_exec($curl);
+
+        /*if (json_decode($response, true)['code'] != 200) {
+            return response()->json(['code' => 400, 'msg' => 'Make an another attempt when the first one failed.' . PHP_EOL]);
+            $oneCode = $ga->getCode($secret);
             curl_setopt($curl, CURLOPT_HTTPHEADER, [
                 'Authorization: ' . $oneCode,
                 'Content-Type: application/json'
             ]);
-
             $response = curl_exec($curl);
+        }*/
+        curl_close($curl);
 
-            /*if (json_decode($response, true)['code'] != 200) {
-                return response()->json(['code' => 400, 'msg' => 'Make an another attempt when the first one failed.' . PHP_EOL]);
-                $oneCode = $ga->getCode($secret);
-                curl_setopt($curl, CURLOPT_HTTPHEADER, [
-                    'Authorization: ' . $oneCode,
-                    'Content-Type: application/json'
-                ]);
-                $response = curl_exec($curl);
-            }*/
-            curl_close($curl);
-
-            return response()->json(['code' => 200, 'msg' => '푸쉬 성공']);
-        }catch(\Exception $ex){
-            return response()->json(['code'=>400, 'msg'=>'푸쉬 실패']);
-        }catch(\Throwable $throwable){
-            return response()->json(['code'=>400, 'msg'=>'푸쉬 실패']);
-        }
+        return response()->json(['code' => 200, 'msg' => '푸쉬 성공']);
     }
 
     /**
