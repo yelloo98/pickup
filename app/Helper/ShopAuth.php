@@ -14,7 +14,8 @@ class ShopAuth
     protected $user;
 
     public function __construct(Request $request) {
-        $this->user = Customer::find(399);
+//        $this->user = Customer::find(399);
+        $this->user = Customer::find(1452);
         /*try {
 //            $sessVal = $request->cookie(env("SESS_COOKIE_NAME", "GD5SESSID"));    // not work ?? return null
             $sessVal = $_COOKIE[env("SESS_COOKIE_NAME", "GD5SESSID")];
