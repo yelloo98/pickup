@@ -5449,23 +5449,22 @@
 .content-body.allPickup-content .pickupList-container {
 	margin-top: 5px;
 	border-top: 1px solid #eee;
-	padding-top: 20px;
+	padding-top: 15px;
 }
 
 .content-body.allPickup-content .pickupList-container .machine-tabWrapper {
 	margin-bottom: 16px;
 }
 
-.content-body.allPickup-content .pickupList-container .machine-tabWrapper .machine-tab {
-	display: -ms-flexbox;
-	display: -webkit-flex;
-	display: flex;
-	-ms-flex-align: center;
-	-webkit-align-items: center;
-	        align-items: center;
+.content-body.allPickup-content .pickupList-container .machine-tabWrapper .machine-tab:after {
+	content: "";
+	display: block;
+	clear: both;
 }
 
 .content-body.allPickup-content .pickupList-container .machine-tabWrapper .machine-tab li {
+	margin-top: 5px;
+	float: left;
 	padding: 7px 8px;
 	font-size: 12px;
 	font-weight: 400;
