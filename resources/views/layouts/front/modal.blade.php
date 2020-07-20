@@ -353,7 +353,7 @@
                         @if(!empty($customer))
                             <div class="user-header">
                                 <p class="user-name"><strong><span>{{$customer->name ?? ''}}</span>님</strong>환영합니다.</p>
-                                <button class="edit-info" onclick="location.href=''">내 정보 수정하기 <img src="/front/dist/img/icon_arrow_S.png" alt=""></button>
+                                <button class="edit-info" onclick="location.href='{{env('SHOP_URL')}}/mypage/my_page_password.php'">내 정보 수정하기<img src="/front/dist/img/icon_arrow_S.png" alt=""></button>
                             </div>
                             <div class="user-items">
                                 <button onclick="location.href='/front/mypage/order'">
@@ -393,8 +393,8 @@
                             <div class="user-header logOut">
                                 <pre>로그인하셔서 더 많은<br>혜택을 만나보세요!</pre>
                                 <div class="btn-area">
-                                    <button class="loginBtn">로그인</button>
-                                    <button class="joinBtn">회원가입</button>
+                                    <button class="loginBtn" onclick="location.href='{{env('SHOP_URL')}}/member/login.php'">로그인</button>
+                                    <button class="joinBtn" onclick="location.href='{{env('SHOP_URL')}}/member/join_method.php'">회원가입</button>
                                 </div>
                             </div>
                         @endif
@@ -410,20 +410,57 @@
                                 <p class="operatingTime">평일 <span>09:00~19:00</span> / 토요일 <span>09:00~13:00</span></p>
                                 <p class="copyRight">© FRESHSTORE All rights reserved</p>
                                 <div class="btn-section">
-                                    <button>로그아웃<img src="/front/dist/img/icon_logout.png" width="12px" height="12px" alt=""></button>
+                                    <button onclick="location.href='{{env('SHOP_URL')}}/member/logout.php'">로그아웃<img src="/front/dist/img/icon_logout.png" width="12px" height="12px" alt=""></button>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="tabTarget ">
                         <div class="user-area logout-form">
+                            @if(!empty($customer))
+                            <div class="user-header">
+                                <p class="user-name"><strong><span>{{$customer->name ?? ''}}</span>님</strong>환영합니다.</p>
+                                <button class="edit-info" onclick="location.href='{{env('SHOP_URL')}}/mypage/my_page_password.php'">내 정보 수정하기<img src="/front/dist/img/icon_arrow_S.png" alt=""></button>
+                            </div>
+                            <div class="user-items">
+                                <button onclick="location.href='{{env('SHOP_URL')}}/mypage/index.php'">
+                                    <img src="/front/dist/img/icon_menu09.png" alt="">
+                                    <p>마이페이지</p>
+                                </button>
+                                <button onclick="location.href='{{env('SHOP_URL')}}/order/cart.php'">
+                                    <img src="/front/dist/img/icon_menu08.png" alt="">
+                                    <p>장바구니</p>
+                                </button>
+                                <button onclick="location.href='{{env('SHOP_URL')}}/mypage/wish_list.php'">
+                                    <img src="/front/dist/img/icon_menu05.png" alt="">
+                                    <p>찜리스트</p>
+                                </button>
+                                <button onclick="location.href='{{env('SHOP_URL')}}/board/list.php?bdId=goodsreview'">
+                                    <img src="/front/dist/img/icon_menu06.png" alt="">
+                                    <p>상품후기</p>
+                                </button>
+                                <button onclick="location.href='{{env('SHOP_URL')}}/service/faq_list.php'">
+                                    <img src="/front/dist/img/icon_menu07.png" alt="">
+                                    <p>FAQ</p>
+                                </button>
+                                <button onclick="location.href='{{env('SHOP_URL')}}/board/list.php?bdId=goodsqa'">
+                                    <img src="/front/dist/img/icon_menu10.png" alt="">
+                                    <p>상품문의</p>
+                                </button>
+                                <button onclick="location.href='{{env('SHOP_URL')}}/goods/goods_today.php'">
+                                    <img src="/front/dist/img/icon_menu11.png" alt="">
+                                    <p>최근본상품</p>
+                                </button>
+                            </div>
+                            @else
                             <div class="user-header logOut">
                                 <pre>로그인하셔서 더 많은<br>혜택을 만나보세요!</pre>
                                 <div class="btn-area">
-                                    <button class="loginBtn">로그인</button>
-                                    <button class="joinBtn">회원가입</button>
+                                    <button class="loginBtn" onclick="location.href='{{env('SHOP_URL')}}/member/login.php'">로그인</button>
+                                    <button class="joinBtn" onclick="location.href='{{env('SHOP_URL')}}/member/join_method.php'">회원가입</button>
                                 </div>
                             </div>
+                            @endif
                             <div class="nav_category">
                                 <div class="nav_tabmenu_box">
                                     <div class="tab_menu0">
@@ -432,60 +469,60 @@
                                                 <li>
                                                     <a href="#;">축산물<span class="icon_plus">ICON</span></a>
                                                     <ul>
-                                                        <li><a href="../goods/goods_list.php?cateCd=001" class="icon_arrow">전체보기</a></li>
+                                                        <li><a href="{{env('SHOP_URL')}}/goods/goods_list.php?cateCd=001" class="icon_arrow">전체보기</a></li>
                                                         <li>
                                                             <a href="#;">돼지고기<span class="icon_plus">ICON</span> </a>
                                                             <ul>
-                                                                <li><a href="../goods/goods_list.php?cateCd=001001" class="icon_arrow">전체보기</a></li>
+                                                                <li><a href="{{env('SHOP_URL')}}/goods/goods_list.php?cateCd=001001" class="icon_arrow">전체보기</a></li>
                                                                 <li>
                                                                     <a href="#;">앞다리<span class="icon_plus">ICON</span> </a>
                                                                     <ul>
-                                                                        <li><a href="../goods/goods_list.php?cateCd=001001001" class="icon_arrow"> - 전체보기</a></li>
+                                                                        <li><a href="{{env('SHOP_URL')}}/goods/goods_list.php?cateCd=001001001" class="icon_arrow"> - 전체보기</a></li>
                                                                         <li>
-                                                                            <a href="../goods/goods_list.php?cateCd=001001001001" class="icon_arrow"> - 테스트1</a>
+                                                                            <a href="{{env('SHOP_URL')}}/goods/goods_list.php?cateCd=001001001001" class="icon_arrow"> - 테스트1</a>
                                                                         </li>
                                                                     </ul>
                                                                 </li>
                                                                 <li>
-                                                                    <a href="../goods/goods_list.php?cateCd=001001002" class="icon_arrow">뒷다리</a>
+                                                                    <a href="{{env('SHOP_URL')}}/goods/goods_list.php?cateCd=001001002" class="icon_arrow">뒷다리</a>
                                                                 </li>
                                                             </ul>
                                                         </li>
                                                         <li>
-                                                            <a href="../goods/goods_list.php?cateCd=001002" class="icon_arrow">소고기</a>
+                                                            <a href="{{env('SHOP_URL')}}/goods/goods_list.php?cateCd=001002" class="icon_arrow">소고기</a>
                                                         </li>
                                                     </ul>
                                                 </li>
                                                 <li>
                                                     <a href="#;">가공품<span class="icon_plus">ICON</span></a>
                                                     <ul>
-                                                        <li><a href="../goods/goods_list.php?cateCd=002" class="icon_arrow">전체보기</a></li>
+                                                        <li><a href="{{env('SHOP_URL')}}/goods/goods_list.php?cateCd=002" class="icon_arrow">전체보기</a></li>
                                                         <li>
-                                                            <a href="../goods/goods_list.php?cateCd=002001" class="icon_arrow">냉동</a>
+                                                            <a href="{{env('SHOP_URL')}}/goods/goods_list.php?cateCd=002001" class="icon_arrow">냉동</a>
                                                         </li>
                                                         <li>
-                                                            <a href="../goods/goods_list.php?cateCd=002002" class="icon_arrow">냉장</a>
+                                                            <a href="{{env('SHOP_URL')}}/goods/goods_list.php?cateCd=002002" class="icon_arrow">냉장</a>
                                                         </li>
                                                     </ul>
                                                 </li>
                                                 <li>
                                                     <a href="#;">농산물<span class="icon_plus">ICON</span></a>
                                                     <ul>
-                                                        <li><a href="../goods/goods_list.php?cateCd=003" class="icon_arrow">전체보기</a></li>
+                                                        <li><a href="{{env('SHOP_URL')}}/goods/goods_list.php?cateCd=003" class="icon_arrow">전체보기</a></li>
                                                         <li>
-                                                            <a href="../goods/goods_list.php?cateCd=003001" class="icon_arrow">채소</a>
+                                                            <a href="{{env('SHOP_URL')}}/goods/goods_list.php?cateCd=003001" class="icon_arrow">채소</a>
                                                         </li>
                                                     </ul>
                                                 </li>
                                                 <li>
                                                     <a href="#;">수산물<span class="icon_plus">ICON</span></a>
                                                     <ul>
-                                                        <li><a href="../goods/goods_list.php?cateCd=004" class="icon_arrow">전체보기</a></li>
+                                                        <li><a href="{{env('SHOP_URL')}}/goods/goods_list.php?cateCd=004" class="icon_arrow">전체보기</a></li>
                                                         <li>
-                                                            <a href="../goods/goods_list.php?cateCd=004001" class="icon_arrow">냉동</a>
+                                                            <a href="{{env('SHOP_URL')}}/goods/goods_list.php?cateCd=004001" class="icon_arrow">냉동</a>
                                                         </li>
                                                         <li>
-                                                            <a href="../goods/goods_list.php?cateCd=004002" class="icon_arrow">냉장</a>
+                                                            <a href="{{env('SHOP_URL')}}/goods/goods_list.php?cateCd=004002" class="icon_arrow">냉장</a>
                                                         </li>
                                                     </ul>
                                                 </li>
@@ -609,7 +646,7 @@
                                     </ul>
                                 </div>
                                 <div class="order-detail">
-                                    <span>{{\App\Helper\Codes::deviceTypeText($v->device->frozen_type ?? '').($k+1)}}</span>
+                                    <span>{{\App\Helper\Codes::deviceTypeText($v->device->frozen_type ?? '').($v->device->store_order_no ?? '')}}</span>
                                     <p class="order-number">픽업번호<span>{{$orderResult->pickup_num ?? ''}}</span></p>
                                     <p class="order-counting"><span>{{$orderResult->pickup_until_at ?? ''}}</span>까지</p>
                                     <p class="warning-text">(픽업가능시간안에 상품을 픽업하지 않으시면</p>

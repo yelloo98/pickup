@@ -50,7 +50,7 @@
                             <div class="word-box">
                                 <div class="toTop">
                                     <div class="status-area">
-                                        <span class="blue-box">{{\App\Helper\Codes::deviceTypeText($v->device->frozen_type ?? '')}}</span>
+                                        <span class="blue-box">{{\App\Helper\Codes::deviceTypeText($v->device->frozen_type ?? '').($v->device->store_order_no ?? '')}}</span>
                                     </div>
                                     <button class='delete-btn' onclick="PickupCommon.addCart('{{$v->product_id ?? 0}}','{{$v->device_id ?? 0}}', 'delete')"><img src="/front/dist/img/icon_popup_x01.png" alt=""></button>
                                 </div>
