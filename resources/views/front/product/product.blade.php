@@ -2,6 +2,7 @@
 @section('title', $title ?? '')
 @section('content')
     <div class="content-body allPickup-content">
+        <input type="hidden" name="store_id" value="{{$_GET['store_id'] ?? ''}}"/>
         <div class="subMenu-container">
             <div class="select-box">
                 <select name="searchSort" class="listUp-btn" onchange="pageProduct.urlLink()">
@@ -81,6 +82,11 @@
             //# URL 이동
             urlLink : function () {
                 var url = '/front/product?';
+
+                //# 정렬
+                if($('input[name="store_id"]').val()){
+                    url = url + '&store_id='+ $('input[name="store_id"]').val();
+                }
 
                 //# 정렬
                 if($('select[name="searchSort"]').val()){
