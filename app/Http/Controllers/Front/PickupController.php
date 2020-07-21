@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Customer;
 use App\Models\FcTrader;
 use App\Models\PickupCustomerPushInfo;
+use App\Models\PickupOrders;
 use App\Models\PickupProductLikes;
 use App\Models\Product;
 use App\Models\StoreLikes;
@@ -113,7 +114,7 @@ class PickupController extends Controller
 
             if(($output->code ?? '') == 200){
                 //# 푸쉬 보내기
-                $push = $this->getPushApi($request);
+                $push = $this->getPushApi($request, $id);
                 if($push->getData()->code == 200){
                     return response()->json(['code'=>200, 'msg'=>'주문 등록']);
                 }else{
@@ -132,11 +133,12 @@ class PickupController extends Controller
     /**
      * 주문/결제 push
      */
-    public function getPushApi(Request $request)
+    public function getPushApi(Request $request, $id)
     {
         try{
             $shopAuth = new ShopAuth($request);
 
+            $order = PickupOrders::find($id);
             $token = PickupCustomerPushInfo::where('customer_id', $shopAuth->user()->memId)->pluck('firebase_token');
             if ($token->count() == 0) return response()->json(['code' => 400, 'msg' => 'token 없음']);
 
@@ -150,7 +152,7 @@ class PickupController extends Controller
                 'tokens' => json_decode($token),
                 'message' => [
                     'title' => '사용자 픽업 결제 완료',
-                    'content' => '주문하신 픽업상품 결제 완료되었습니다. 매장에 방문하여 상품을 픽업해주세요.',
+                    'content' => '주문하신 픽업상품 결제 완료되었습니다. 매장에서 픽업번호 ['. ($order->pickup_num ?? '') .']을 입력 후 상품을 픽업해주세요.',
                     'type' => 'type php',
                     'action' => 'action php',
                     'link' => '/front/order/pickup',
