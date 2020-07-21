@@ -155,7 +155,7 @@ class PickupController extends Controller
                     'content' => '주문하신 픽업상품 결제 완료되었습니다. 매장에서 픽업번호 ['. ($order->pickup_num ?? '') .']을 입력 후 상품을 픽업해주세요.',
                     'type' => 'type php',
                     'action' => 'action php',
-                    'link' => '/front/order/pickup',
+                    'link' => '/front/order/result/'.$id,
                     'app_type' => 'app type',
                     'message_id' => 'event php'
                 ],
