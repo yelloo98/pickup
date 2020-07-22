@@ -1,6 +1,30 @@
 var PickupCommon = {
     _config : {
-        SUBMIT_WRITE : true
+        SUBMIT_WRITE : true,
+        page: 1,
+        scrollAction : true,
+    },
+
+    defineSearchParameter : function(page){
+        var baseUrl = '?';
+        var searchValue = '';
+        if(location.search != ''){
+            searchValue = location.search.substring(1, location.search.length).split(/\?|\&/);
+            var issetPage = false;
+            for(var i = 0; i < searchValue.length ; i++){
+                if(searchValue[i].indexOf('page=') != -1){
+                    issetPage = true;
+                    searchValue[i] = 'page='+page;
+                }
+            }
+            baseUrl = baseUrl + searchValue.join('&');
+            if(!issetPage){
+                baseUrl = baseUrl + '&page='+page;
+            }
+        }else{
+            baseUrl = baseUrl + 'page='+page;
+        }
+        return baseUrl;
     },
 
     //# 관심매장 추가 / 삭제

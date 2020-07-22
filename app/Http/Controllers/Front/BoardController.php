@@ -62,7 +62,22 @@ class BoardController extends Controller
 
         $shopAuth = new ShopAuth($request);
         $view->customer = $shopAuth->user();
-        $view->eventList = StoreEvent::where('type','admin')->orWhere([['type','store_owner'],['store_id', $store_id]])->orderBy('created_at','desc')->get();
+
+        $eventList = StoreEvent::where('type','admin')->orWhere([['type','store_owner'],['store_id', $store_id]])->orderBy('created_at','desc');
+        $view->eventListCnt = $eventList->get()->count();
+        $view->eventList = $eventList->limit(10)->get();
+        return $view;
+    }
+
+    /**
+     * 이벤트 리스트
+     */
+    public function getEventListComponent(Request $request)
+    {
+        $view = view('front.board.eventComponent');
+        $store_id = $request->input('store_id', 498);
+
+        $view->eventList = StoreEvent::where('type','admin')->orWhere([['type','store_owner'],['store_id', $store_id]])->orderBy('created_at','desc')->paginate(10);
         return $view;
     }
 
