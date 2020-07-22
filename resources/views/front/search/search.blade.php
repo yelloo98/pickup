@@ -50,11 +50,5 @@
 
         var searchWidth = $('.img-box').outerWidth();
         $('.img-box').css('height',searchWidth);
-
-
-
-        if( $('.productSearch .content-box').length == 0 ) {
-            $('.productSearch .goods-container').append('<p class="none-list">주변 매장이 없습니다.</p>');
-        }
     </script>
 @endsection
