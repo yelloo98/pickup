@@ -41,8 +41,9 @@ class SearchController extends Controller
                     $item->sale_amount = $productStock->sum('sale_amount');
                 }
             }
+
+            $view->productList = $productList;
         }
-        $view->productList = $productList;
 
         return $view;
 	}
