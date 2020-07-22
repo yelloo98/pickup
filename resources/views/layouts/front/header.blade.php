@@ -63,6 +63,8 @@
             공지사항
         @elseif(($page ?? '') == 'order')
             주문/결제
+        @elseif(($page ?? '') == 'event')
+            이벤트
         @endif
         </p>
         <div class="btns-wrap">

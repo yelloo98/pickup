@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Front;
 use App\Helper\ShopAuth;
 use App\Http\Controllers\Controller;
 use App\Models\PickupNotice;
+use App\Models\StoreEvent;
 use Illuminate\Http\Request;
 
 class BoardController extends Controller
@@ -51,30 +52,31 @@ class BoardController extends Controller
     }
 
     /**
-     * 공지사항
+     * 이벤트
      */
     public function getEventList(Request $request)
     {
         $view = view('front.board.event');
-        $view->page = 'notice';
+        $view->page = 'event';
+        $store_id = $request->input('store_id', 498);
 
         $shopAuth = new ShopAuth($request);
         $view->customer = $shopAuth->user();
-        $view->noticeList = PickupNotice::orderBy('created_at','desc')->get();
+        $view->eventList = StoreEvent::where('type','admin')->orWhere([['type','store_owner'],['store_id', $store_id]])->orderBy('created_at','desc')->get();
         return $view;
     }
 
     /**
-     * 공지사항 상세
+     * 이벤트 상세
      */
     public function getEventDetail(Request $request, $id = 0)
     {
         $view = view('front.board.eventDetail');
-        $view->page = 'notice';
+        $view->page = 'event';
 
         $shopAuth = new ShopAuth($request);
         $view->customer = $shopAuth->user();
-        $view->notice = PickupNotice::find($id);
+        $view->event = StoreEvent::find($id);
         return $view;
     }
 

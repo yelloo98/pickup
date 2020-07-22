@@ -18,6 +18,12 @@ class StoreEvent extends Model implements ModelAdminInterface
         return $this->belongsTo('App\Models\thumbnailImages', 'thumbnail_images_id');
     }
 
+    //# fc_trader 정보
+    public function fc_trader(){
+        return $this->belongsTo('App\Models\FcTrader', 'store_id','traderNo');
+    }
+
+
     /**
      * Override : DataTableList
      * -----------------------------------------------------------------------------------------------------------------
