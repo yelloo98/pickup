@@ -401,8 +401,9 @@
                             <div class="userBar-items">
                                 <ul>
                                     <li>알림 수신 동의<div class="custom-box"><input type="checkbox" id="toggleing01"><label for="toggleing01" class="radio"><span class="checkbox-custom"></span></label></div></li>
-                                    <li onclick="location.href='/front/mypage/term'">이용약관<img src="/front/dist/img/icon_arrow_MR.png" height="13px" width="8px" alt=""></li>
-                                    <li onclick="location.href='/front/mypage/notice'">공지사항<img src="/front/dist/img/icon_arrow_MR.png" height="13px" width="8px" alt=""></li>
+                                    <li onclick="location.href='/front/board/term'">이용약관<img src="/front/dist/img/icon_arrow_MR.png" height="13px" width="8px" alt=""></li>
+                                    <li onclick="location.href='/front/board/notice'">공지사항<img src="/front/dist/img/icon_arrow_MR.png" height="13px" width="8px" alt=""></li>
+                                    <li onclick="location.href='/front/board/notice'">이벤트<img src="/front/dist/img/icon_arrow_MR.png" height="13px" width="8px" alt=""></li>
                                 </ul>
                             </div>
                             <div class="telephone-item">

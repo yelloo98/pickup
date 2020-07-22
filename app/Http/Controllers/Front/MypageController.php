@@ -8,7 +8,6 @@ use App\Models\Customer;
 use App\Models\FcTrader;
 use App\Models\PickupCoupon;
 use App\Models\PickupCouponCustomer;
-use App\Models\PickupNotice;
 use App\Models\PickupOrders;
 use App\Models\PickupOrdersProduct;
 use App\Models\PickupProductLikes;
@@ -18,7 +17,6 @@ use App\Models\PointUser;
 use App\Models\Product;
 use App\Models\StoreLikes;
 use Carbon\Carbon;
-use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -420,46 +418,4 @@ class MypageController extends Controller
     {
 
     }
-
-    /**
-     * 이용약관
-     */
-    public function getTermList(Request $request)
-    {
-        $view = view('front.mypage.term');
-        $view->page = 'term';
-
-        $shopAuth = new ShopAuth($request);
-        $view->customer = $shopAuth->user();
-        return $view;
-    }
-
-    /**
-     * 공지사항
-     */
-    public function getNoticeList(Request $request)
-    {
-        $view = view('front.mypage.notice');
-        $view->page = 'notice';
-
-        $shopAuth = new ShopAuth($request);
-        $view->customer = $shopAuth->user();
-        $view->noticeList = PickupNotice::orderBy('created_at','desc')->get();
-        return $view;
-    }
-
-    /**
-     * 공지사항 상세
-     */
-    public function getNoticeDetail(Request $request, $id = 0)
-    {
-        $view = view('front.mypage.noticeDetail');
-        $view->page = 'notice';
-
-        $shopAuth = new ShopAuth($request);
-        $view->customer = $shopAuth->user();
-        $view->notice = PickupNotice::find($id);
-        return $view;
-    }
-
 }

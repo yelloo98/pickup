@@ -5,7 +5,7 @@
         <div class="listUp-container">
             <ul>
                 @forelse($noticeList as $k => $v)
-                <li onclick="location.href='/front/mypage/notice/{{$v->id ?? 0}}'">
+                <li onclick="location.href='/front/board/notice/{{$v->id ?? 0}}'">
                     <div class="listUp-warpper">
                         <p class="listUp-category">[<span>{{$v->category ?? ''}}</span>]</p>
                         <p class="listUp-text" style="-webkit-box-orient: vertical;">{{$v->title ?? ''}}</p>

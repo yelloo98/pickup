@@ -66,6 +66,27 @@ Route::group(['namespace' => 'Front', 'middleware' => 'front', 'prefix' => 'fron
     });
 
     /**
+     * Board
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+    Route::group(['prefix' => 'board', 'as' => 'board.'], function () {
+        //# 이용약관
+        Route::group(['prefix' => 'term', 'as' => 'term.'], function () {
+            Route::get('/', 'BoardController@getTermList');                 //# 게시판 - 이용약관
+        });
+        //# 공지사항
+        Route::group(['prefix' => 'notice', 'as' => 'notice.'], function () {
+            Route::get('/', 'BoardController@getNoticeList');               //# 게시판 - 공지사항 목록
+            Route::get('/{id?}', 'BoardController@getNoticeDetail');        //# 게시판 - 공지사항 상세
+        });
+        //# 이벤트
+        Route::group(['prefix' => 'event', 'as' => 'event.'], function () {
+            Route::get('/', 'BoardController@getEventList');                //# 게시판 - 이벤트 목록
+            Route::get('/{id?}', 'BoardController@getEventDetail');         //# 게시판 - 이벤트 상세
+        });
+    });
+
+    /**
      * Mypage
      * -----------------------------------------------------------------------------------------------------------------
      */
@@ -115,15 +136,6 @@ Route::group(['namespace' => 'Front', 'middleware' => 'front', 'prefix' => 'fron
         Route::group(['prefix' => 'push', 'as' => 'push.'], function () {
             Route::get('/', 'MypageController@getPush');                 //# 마이페이지 - 알림 ON/OFF
             Route::post('/', 'MypageController@postPush');               //# 마이페이지 - 알림 ON/OFF 수정
-        });
-        //# 이용약관
-        Route::group(['prefix' => 'term', 'as' => 'term.'], function () {
-            Route::get('/', 'MypageController@getTermList');             //# 마이페이지 - 이용약관
-        });
-        //# 공지사항
-        Route::group(['prefix' => 'notice', 'as' => 'notice.'], function () {
-            Route::get('/', 'MypageController@getNoticeList');           //# 마이페이지 - 공지사항 목록
-            Route::get('/{id?}', 'MypageController@getNoticeDetail');    //# 마이페이지 - 공지사항 상세
         });
     });
 
