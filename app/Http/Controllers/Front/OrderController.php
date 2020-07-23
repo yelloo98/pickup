@@ -190,12 +190,14 @@ class OrderController extends Controller
     {
         $view = view('front.order.pickup');
         $view->page = 'pickup';
+        $pageNum = $request->input('pageNum', 1);
+        $view->pageNum = $pageNum;
 
         $shopAuth = new ShopAuth($request);
         $view->customer = $shopAuth->user();
         $orderList = PickupOrders::where([['customer_id', $shopAuth->user()->id],['pickup_until_at','>',now()],['status','pay']])->orderBy('created_at','desc');
         $view->orderListCnt = $orderList->get()->count();
-        $orderList = $orderList->limit(10)->get();
+        $orderList = $orderList->limit(10 * $pageNum)->get();
         foreach ($orderList as $k=>$v){
             $v->productList = PickupOrdersProduct::where('pickup_orders_id',$v->id)->get();
             $v->until_second = (Carbon::createFromDate($v->pickup_until_at) > Carbon::now())? Carbon::createFromDate($v->pickup_until_at)->diffInSeconds(Carbon::now()) : 0;

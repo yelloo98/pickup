@@ -3,12 +3,13 @@
 @section('content')
     <div class="content-body ppGoods-content">
         <input type="hidden" name="listCnt" value="{{$orderListCnt ?? 0}}">
+        <input type="hidden" name="pageNum" value="{{$pageNum}}"/>
         <div class="subEtc-container">
             <p>시간안에 상품을 픽업해주시기 바랍니다.</p>
         </div>
         <div class="goodsList-container">
             @forelse($orderList as $k => $v)
-                <div class="goods-wrap " onclick="location.href='/front/order/detail/{{$v->id ?? 0}}'">
+                <div class="goods-wrap " onclick="PickupCommon.pageMove('/front/order/detail/{{$v->id ?? 0}}')">
                     <div class="goods-header">
                         <p class="pickUp-num">
                             픽업번호 : <span>{{$v->pickup_num ?? ''}}</span>
@@ -99,13 +100,19 @@
         };
 
         $(document).ready(function(){
+            PickupCommon._config.page = $('input[name=pageNum]').val();
+            if(history.state != null){
+                var pageHistory = history.state;
+                var scrollTop = pageHistory['scrollTop'];
+                $('html, body').animate({scrollTop : scrollTop}, 400);
+            }
+
             $(window).scroll(function(){
                 if(PickupCommon._config.scrollAction){
                     if (Math.round($(window).scrollTop() + $(window).height()) > $(document).height() - 100) {
                         PickupCommon._config.scrollAction = false;
                         //component 호출
                         if($('.goods-wrap').length < $('input[name=listCnt]').val()){
-                            console.log("qkfehd");
                             pagePickup.getPickupComponent();
                         }
                     }

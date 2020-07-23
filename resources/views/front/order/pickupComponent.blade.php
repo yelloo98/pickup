@@ -1,6 +1,6 @@
 @if(count($orderList) > 0)
     @foreach($orderList as $k => $v)
-        <div class="goods-wrap goods-{{$_GET['page'] ?? ''}}" onclick="location.href='/front/order/detail/{{$v->id ?? 0}}'">
+        <div class="goods-wrap goods-{{$_GET['page'] ?? ''}}" onclick="PickupCommon.pageMove('/front/order/detail/{{$v->id ?? 0}}')">
             <div class="goods-header">
                 <p class="pickUp-num">
                     픽업번호 : <span>{{$v->pickup_num ?? ''}}</span>

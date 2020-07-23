@@ -105,18 +105,5 @@
                 }
             });
         });
-
-        function getParameter(name) {
-            name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-            var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-                results = regex.exec(location.search);
-            return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-        }
-
-        $(document).ready(function(){
-           if(getParameter("popup")){
-               $('id').attr('style', "display:inline;");
-           }
-        });
     </script>
 @endsection
