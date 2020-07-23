@@ -110,7 +110,8 @@ Route::group(['namespace' => 'Front', 'middleware' => 'front', 'prefix' => 'fron
         });
         //# 관심매장
         Route::group(['prefix' => 'store', 'as' => 'store.'], function () {
-            Route::get('/', 'MypageController@getStoreList');                         //# 마이페이지 - 관심매장 내역
+            Route::get('/', 'MypageController@getStoreList');                         //# 마이페이지 - 관심매장 리스트
+            Route::get('/list/component', 'MypageController@getStoreListComponent');  //# 마이페이지 - 관심매장 리스트 추가
         });
         //# 관심상품
         Route::group(['prefix' => 'product', 'as' => 'product.'], function () {

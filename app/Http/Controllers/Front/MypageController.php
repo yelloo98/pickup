@@ -65,7 +65,6 @@ class MypageController extends Controller
     public function getOrderListComponent(Request $request)
     {
         $view = view('front.mypage.orderComponent');
-
         $shopAuth = new ShopAuth($request);
         $searchType = $request->input('searchType', null);
         $orderList = PickupOrders::where('customer_id', $shopAuth->user()->id);
@@ -177,7 +176,6 @@ class MypageController extends Controller
     {
         $view = view('front.mypage.pointComponent');
         $shopAuth = new ShopAuth($request);
-
         //# 포인트 내역 / 소멸되기 전 모든 포인트 내역
         $view->pointList = PointUser::where('customer_id',$shopAuth->user()->id)->where('created_at','>', now()->subYears(2))->orderBy('created_at','DESC')->paginate(15);
         return $view;
@@ -190,10 +188,25 @@ class MypageController extends Controller
     {
         $view = view('front.mypage.store');
         $view->page = 'my_store';
+        $pageNum = $request->input('pageNum', 1);
+        $view->pageNum = $pageNum;
 
         $shopAuth = new ShopAuth($request);
         $view->customer = $shopAuth->user();
-        $view->store_like = StoreLikes::where('customer_id', $shopAuth->user()->id)->get();
+        $storeList = StoreLikes::where('customer_id', $shopAuth->user()->id);
+        $view->storeListCnt = $storeList->count();
+        $view->storeList = $storeList->limit(10 * $pageNum)->get();
+        return $view;
+    }
+
+    /**
+     * 관심매장 리스트 추가
+     */
+    public function getStoreListComponent(Request $request)
+    {
+        $view = view('front.mypage.storeComponent');
+        $shopAuth = new ShopAuth($request);
+        $view->storeList = StoreLikes::where('customer_id', $shopAuth->user()->id)->paginate(10);
         return $view;
     }
 

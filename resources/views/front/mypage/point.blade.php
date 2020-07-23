@@ -76,6 +76,7 @@
         };
 
         $(document).ready(function(){
+            PickupCommon._config.page = $('input[name=pageNum]').val();
             $(window).scroll(function(){
                 if(PickupCommon._config.scrollAction){
                     if (Math.round($(window).scrollTop() + $(window).height()) > $(document).height() - 100) {
