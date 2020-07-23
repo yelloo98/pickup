@@ -30,11 +30,8 @@ class MypageController extends Controller
 	{
         $view = view('front.mypage.order');
         $view->page = 'my_order';
-        if($request->page){
-            $pageNum = $request->page;
-        }else{
-            $pageNum = 1;
-        }
+        $pageNum = $request->input('pageNum', 1);
+        $view->pageNum = $pageNum;
 
         $shopAuth = new ShopAuth($request);
         $view->customer = $shopAuth->user();
@@ -44,9 +41,8 @@ class MypageController extends Controller
         if(!empty($searchType)){
             $orderList = $orderList->where('status', $searchType);
         }
-        $view->orderListCnt = $orderList->get()->count();
+        $view->orderListCnt = $orderList->count();
         $orderList = $orderList->orderBy('created_at','desc')->limit(10 * $pageNum)->get();
-        $view->pageNum = $pageNum;
         foreach ($orderList as $k=>$v){
             $v->productList = PickupOrdersProduct::where('pickup_orders_id', $v->id)->get();
             $storeArr = array();
@@ -150,12 +146,14 @@ class MypageController extends Controller
     }
 
     /**
-     * 적립금
+     * 적립금 리스트
      */
     public function getPointList(Request $request)
     {
         $view = view('front.mypage.point');
         $view->page = 'my_point';
+        $pageNum = $request->input('pageNum', 1);
+        $view->pageNum = $pageNum;
 
         $shopAuth = new ShopAuth($request);
         $view->customer = $shopAuth->user();
@@ -165,8 +163,23 @@ class MypageController extends Controller
         //# 소멸 포인트 / 정책상 : 2년 (소멸 예정은 1개월 전 노출)
         $view->dis_point = PointUser::where('customer_id',$shopAuth->user()->id)->whereBetween('created_at', [now()->subYears(2), now()->subMonths(23)])->sum('point');
         //# 포인트 내역 / 소멸되기 전 모든 포인트 내역
-        $view->pointList = PointUser::where('customer_id',$shopAuth->user()->id)->where('created_at','>', now()->subYears(2))->orderBy('created_at','DESC')->get();
+        $pointList = PointUser::where('customer_id',$shopAuth->user()->id)->where('created_at','>', now()->subYears(2))->orderBy('created_at','DESC');
+        $view->pointListCnt = $pointList->count();
+        $view->pointList = $pointList->limit(15 * $pageNum)->get();
 
+        return $view;
+    }
+
+    /**
+     * 적립금 리스트 추가
+     */
+    public function getPointListComponent(Request $request)
+    {
+        $view = view('front.mypage.pointComponent');
+        $shopAuth = new ShopAuth($request);
+
+        //# 포인트 내역 / 소멸되기 전 모든 포인트 내역
+        $view->pointList = PointUser::where('customer_id',$shopAuth->user()->id)->where('created_at','>', now()->subYears(2))->orderBy('created_at','DESC')->paginate(15);
         return $view;
     }
 

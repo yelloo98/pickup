@@ -106,6 +106,7 @@ Route::group(['namespace' => 'Front', 'middleware' => 'front', 'prefix' => 'fron
         //# 적립금
         Route::group(['prefix' => 'point', 'as' => 'point.'], function () {
             Route::get('/', 'MypageController@getPointList');                         //# 마이페이지 - 적립 내역
+            Route::get('/list/component', 'MypageController@getPointListComponent');  //# 마이페이지 - 적립 내역 추가
         });
         //# 관심매장
         Route::group(['prefix' => 'store', 'as' => 'store.'], function () {

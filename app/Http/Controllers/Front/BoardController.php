@@ -64,7 +64,7 @@ class BoardController extends Controller
         $view->customer = $shopAuth->user();
 
         $eventList = StoreEvent::where('type','admin')->orWhere([['type','store_owner'],['store_id', $store_id]])->orderBy('created_at','desc');
-        $view->eventListCnt = $eventList->get()->count();
+        $view->eventListCnt = $eventList->count();
         $view->eventList = $eventList->limit(10)->get();
         return $view;
     }

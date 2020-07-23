@@ -2,6 +2,8 @@
 @section('title', $title ?? '')
 @section('content')
     <div class="content-body reward">
+        <input type="hidden" name="listCnt" value="{{$pointListCnt ?? 0}}">
+        <input type="hidden" name="pageNum" value="{{$pageNum ?? 1}}"/>
         <div class="card-container">
             <div class="main-box">
                 <p class="nickName"><span>{{$customer->name ?? ''}}님의</span>적립금</p>
@@ -46,4 +48,45 @@
     </div>
 @endsection
 @section('script')
+    <script>
+        var pagePoint = {
+            getPointComponent : function(){
+                PickupCommon._config.page++;
+                setTimeout(function() {
+                    try{
+                        var result = false;
+                        $.get('/front/mypage/point/list/component' + PickupCommon.defineSearchParameter(PickupCommon._config.page), function (res) {
+                            if(res == ''){
+                                result = false;
+                            }else{
+                                $('.content-body .content-section').append(res);
+                                PickupCommon._config.scrollAction = true;
+                                result = true;
+                            }
+                        });
+                        if(!result){
+                            PickupCommon._config.page--;
+                        }
+                    }catch(e){
+                        PickupCommon._config.page--;
+                        PickupCommon._config.scrollAction = true;
+                    }
+                },300);
+            }
+        };
+
+        $(document).ready(function(){
+            $(window).scroll(function(){
+                if(PickupCommon._config.scrollAction){
+                    if (Math.round($(window).scrollTop() + $(window).height()) > $(document).height() - 100) {
+                        PickupCommon._config.scrollAction = false;
+                        //component 호출
+                        if($('.list-box').length < $('input[name=listCnt]').val()){
+                            pagePoint.getPointComponent();
+                        }
+                    }
+                }
+            });
+        });
+    </script>
 @endsection

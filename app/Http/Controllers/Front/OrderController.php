@@ -196,7 +196,7 @@ class OrderController extends Controller
         $shopAuth = new ShopAuth($request);
         $view->customer = $shopAuth->user();
         $orderList = PickupOrders::where([['customer_id', $shopAuth->user()->id],['pickup_until_at','>',now()],['status','pay']])->orderBy('created_at','desc');
-        $view->orderListCnt = $orderList->get()->count();
+        $view->orderListCnt = $orderList->count();
         $orderList = $orderList->limit(10 * $pageNum)->get();
         foreach ($orderList as $k=>$v){
             $v->productList = PickupOrdersProduct::where('pickup_orders_id',$v->id)->get();
