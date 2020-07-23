@@ -217,10 +217,25 @@ class MypageController extends Controller
     {
         $view = view('front.mypage.product');
         $view->page = 'my_product';
+        $pageNum = $request->input('pageNum', 1);
+        $view->pageNum = $pageNum;
 
         $shopAuth = new ShopAuth($request);
         $view->customer = $shopAuth->user();
-        $view->product_like = PickupProductLikes::where('customer_id', $shopAuth->user()->id)->get();
+        $productList = PickupProductLikes::where('customer_id', $shopAuth->user()->id);
+        $view->productListCnt = $productList->count();
+        $view->productList = $productList->limit(10 * $pageNum)->get();
+        return $view;
+    }
+
+    /**
+     * 관심상품 리스트 추가
+     */
+    public function getProductListComponent(Request $request)
+    {
+        $view = view('front.mypage.productComponent');
+        $shopAuth = new ShopAuth($request);
+        $view->productList = PickupProductLikes::where('customer_id', $shopAuth->user()->id)->paginate(10);
         return $view;
     }
 
