@@ -13,6 +13,7 @@ class Customer extends Model implements ModelAdminInterface
     use SoftDeletes, ModelFunction;
 
     protected $table = 'customer';
+    protected $fillable = ['name', 'memId'];
 
     /**
      * Override : DataTableList
