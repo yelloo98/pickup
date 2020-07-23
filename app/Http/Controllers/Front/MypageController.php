@@ -30,6 +30,11 @@ class MypageController extends Controller
 	{
         $view = view('front.mypage.order');
         $view->page = 'my_order';
+        if($request->page){
+            $pageNum = $request->page;
+        }else{
+            $pageNum = 1;
+        }
 
         $shopAuth = new ShopAuth($request);
         $view->customer = $shopAuth->user();
@@ -39,8 +44,10 @@ class MypageController extends Controller
         if(!empty($searchType)){
             $orderList = $orderList->where('status', $searchType);
         }
-        $orderList = $orderList->orderBy('created_at','asc')->get();
-        foreach ($orderList as $k=>$v) {
+        $view->orderListCnt = $orderList->get()->count();
+        $orderList = $orderList->orderBy('created_at','desc')->limit(10 * $pageNum)->get();
+        $view->pageNum = $pageNum;
+        foreach ($orderList as $k=>$v){
             $v->productList = PickupOrdersProduct::where('pickup_orders_id', $v->id)->get();
             $storeArr = array();
             $storeCnt = 0;
@@ -55,6 +62,37 @@ class MypageController extends Controller
         $view->orderList = $orderList;
         return $view;
 	}
+
+    /**
+     *  주문내역 리스트 추가
+     */
+    public function getOrderListComponent(Request $request)
+    {
+        $view = view('front.mypage.orderComponent');
+
+        $shopAuth = new ShopAuth($request);
+        $searchType = $request->input('searchType', null);
+        $orderList = PickupOrders::where('customer_id', $shopAuth->user()->id);
+        //# 검색 타입
+        if(!empty($searchType)){
+            $orderList = $orderList->where('status', $searchType);
+        }
+        $orderList = $orderList->orderBy('created_at','desc')->paginate(10);
+        foreach ($orderList as $k=>$v) {
+            $v->productList = PickupOrdersProduct::where('pickup_orders_id', $v->id)->get();
+            $storeArr = array();
+            $storeCnt = 0;
+            foreach ($v->productList as $kk => $vv) {
+                if (!in_array($vv->product->store_id, $storeArr)) {
+                    array_push($storeArr, $vv->product->store_id);
+                    $storeCnt++;
+                }
+            }
+            $v->storeCnt = $storeCnt - 1;
+        }
+        $view->orderList = $orderList;
+        return $view;
+    }
 
     /**
      *  쿠폰 리스트

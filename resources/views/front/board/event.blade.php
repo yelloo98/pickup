@@ -23,20 +23,15 @@
 @section('script')
     <script>
         var pageEvent = {
-            _config : {
-                type : 'event',
-                page : 1
-            },
             getEventComponent : function(){
-                pageEvent._config.page++;
+                PickupCommon._config.page++;
                 setTimeout(function() {
                     try{
                         var result = false;
-                        $.get('/front/board/event/list/component' + PickupCommon.defineSearchParameter(pageEvent._config.page), function (res) {
+                        $.get('/front/board/event/list/component' + PickupCommon.defineSearchParameter(PickupCommon._config.page), function (res) {
                             if(res == ''){
                                 result = false;
-                            }
-                            else{
+                            }else{
                                 $('.content-body .listUp-container ul').append(res);
                                 PickupCommon._config.scrollAction = true;
                                 result = true;
@@ -48,11 +43,10 @@
                     }catch(e){
                         PickupCommon._config.page--;
                         PickupCommon._config.scrollAction = true;
-
                     }
                 },300);
             }
-        }
+        };
 
         $(document).ready(function(){
             $(window).scroll(function(){

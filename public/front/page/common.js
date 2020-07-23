@@ -5,6 +5,12 @@ var PickupCommon = {
         scrollAction : true,
     },
 
+    pageMove : function(url){
+        var baseUrl = location.origin + location.pathname + PickupCommon.defineSearchParameter(PickupCommon._config.page);
+        history.pushState({scrollTop : $(window).scrollTop()}, null, baseUrl);
+        location.href = url;
+    },
+
     defineSearchParameter : function(page){
         var baseUrl = '?';
         var searchValue = '';

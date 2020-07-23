@@ -52,7 +52,7 @@ class BoardController extends Controller
     }
 
     /**
-     * 이벤트
+     * 이벤트 리스트
      */
     public function getEventList(Request $request)
     {
@@ -70,7 +70,7 @@ class BoardController extends Controller
     }
 
     /**
-     * 이벤트 리스트
+     * 이벤트 리스트 추가
      */
     public function getEventListComponent(Request $request)
     {

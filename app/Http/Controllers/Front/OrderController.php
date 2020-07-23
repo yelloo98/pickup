@@ -186,14 +186,33 @@ class OrderController extends Controller
     /**
      *  픽업 리스트
      */
-    public function getOrderPickupList(Request $request)
+    public function getPickupList(Request $request)
     {
         $view = view('front.order.pickup');
         $view->page = 'pickup';
 
         $shopAuth = new ShopAuth($request);
         $view->customer = $shopAuth->user();
-        $orderList = PickupOrders::where([['customer_id', $shopAuth->user()->id],['pickup_until_at','>',now()],['status','pay']])->orderBy('created_at','desc')->get();
+        $orderList = PickupOrders::where([['customer_id', $shopAuth->user()->id],['pickup_until_at','>',now()],['status','pay']])->orderBy('created_at','desc');
+        $view->orderListCnt = $orderList->get()->count();
+        $orderList = $orderList->limit(10)->get();
+        foreach ($orderList as $k=>$v){
+            $v->productList = PickupOrdersProduct::where('pickup_orders_id',$v->id)->get();
+            $v->until_second = (Carbon::createFromDate($v->pickup_until_at) > Carbon::now())? Carbon::createFromDate($v->pickup_until_at)->diffInSeconds(Carbon::now()) : 0;
+        }
+        $view->orderList = $orderList;
+        return $view;
+    }
+
+    /**
+     *  픽업 리스트 추가
+     */
+    public function getPickupListComponent(Request $request)
+    {
+        $view = view('front.order.pickupComponent');
+
+        $shopAuth = new ShopAuth($request);
+        $orderList = PickupOrders::where([['customer_id', $shopAuth->user()->id],['pickup_until_at','>',now()],['status','pay']])->orderBy('created_at','desc')->paginate(10);
         foreach ($orderList as $k=>$v){
             $v->productList = PickupOrdersProduct::where('pickup_orders_id',$v->id)->get();
             $v->until_second = (Carbon::createFromDate($v->pickup_until_at) > Carbon::now())? Carbon::createFromDate($v->pickup_until_at)->diffInSeconds(Carbon::now()) : 0;

@@ -2,12 +2,13 @@
 @section('title', $title ?? '')
 @section('content')
     <div class="content-body ppGoods-content">
+        <input type="hidden" name="listCnt" value="{{$orderListCnt ?? 0}}">
         <div class="subEtc-container">
             <p>시간안에 상품을 픽업해주시기 바랍니다.</p>
         </div>
         <div class="goodsList-container">
             @forelse($orderList as $k => $v)
-                <div class="goods-wrap" onclick="location.href='/front/order/detail/{{$v->id ?? 0}}'">
+                <div class="goods-wrap " onclick="location.href='/front/order/detail/{{$v->id ?? 0}}'">
                     <div class="goods-header">
                         <p class="pickUp-num">
                             픽업번호 : <span>{{$v->pickup_num ?? ''}}</span>
@@ -45,31 +46,77 @@
 @endsection
 @section('script')
     <script>
-        $('.goods-wrap').each(function () {
-            var id = $(this).find('.counting').children('span').attr('id');
-            var time = $(this).find("input[name='time']").val();
-            countdown(id, time, this);
-        });
+        var pagePickup = {
+            getPickupComponent : function(){
+                PickupCommon._config.page++;
+                setTimeout(function() {
+                    try{
+                        var result = false;
+                        $.get('/front/order/pickup/list/component' + PickupCommon.defineSearchParameter(PickupCommon._config.page), function (res) {
+                            if(res == ''){
+                                result = false;
+                            }else{
+                                $('.content-body .goodsList-container').append(res);
+                                $('.goods-'+PickupCommon._config.page).each(function () {
+                                    var id = $(this).find('.counting').children('span').attr('id');
+                                    var time = $(this).find("input[name='time']").val();
+                                    pagePickup.countdown(id, time, this);
+                                });
+                                PickupCommon._config.scrollAction = true;
+                                result = true;
+                            }
+                        });
+                        if(!result){
+                            PickupCommon._config.page--;
+                        }
+                    }catch(e){
+                        PickupCommon._config.page--;
+                        PickupCommon._config.scrollAction = true;
+                    }
+                },300);
+            },
 
-        function countdown(elementId, seconds, obj ){
-            var element, endTime, hours, mins, msLeft, time;
+            countdown : function(elementId, seconds, obj){
+                var element, endTime, hours, mins, msLeft, time;
 
-            function updateTimer(){
-                msLeft = endTime - (+new Date);
-                if ( msLeft <= 0 ) {
-                    $(obj).find('.counting').children('span').text('시간초과');
-                } else {
-                    time = new Date( msLeft );
-                    hours = time.getUTCHours();
-                    mins = time.getUTCMinutes();
-                    element.innerHTML = (hours ? ('0' + hours).slice(-2) +  ':' + ('0' + mins).slice(-2) : mins) + ':' + ('0' + time.getUTCSeconds()).slice(-2);
-                    setTimeout( updateTimer, time.getUTCMilliseconds());
+                function updateTimer(){
+                    msLeft = endTime - (+new Date);
+                    if ( msLeft <= 0 ) {
+                        $(obj).find('.counting').children('span').text('시간초과');
+                    } else {
+                        time = new Date( msLeft );
+                        hours = time.getUTCHours();
+                        mins = time.getUTCMinutes();
+                        element.innerHTML = (hours ? ('0' + hours).slice(-2) +  ':' + ('0' + mins).slice(-2) : mins) + ':' + ('0' + time.getUTCSeconds()).slice(-2);
+                        setTimeout( updateTimer, time.getUTCMilliseconds());
+                    }
                 }
-            }
 
-            element = document.getElementById( elementId );
-            endTime = (+new Date) + 1000 * seconds;
-            updateTimer();
-        }
+                element = document.getElementById( elementId );
+                endTime = (+new Date) + 1000 * seconds;
+                updateTimer();
+            }
+        };
+
+        $(document).ready(function(){
+            $(window).scroll(function(){
+                if(PickupCommon._config.scrollAction){
+                    if (Math.round($(window).scrollTop() + $(window).height()) > $(document).height() - 100) {
+                        PickupCommon._config.scrollAction = false;
+                        //component 호출
+                        if($('.goods-wrap').length < $('input[name=listCnt]').val()){
+                            console.log("qkfehd");
+                            pagePickup.getPickupComponent();
+                        }
+                    }
+                }
+            });
+
+            $('.goods-wrap').each(function () {
+                var id = $(this).find('.counting').children('span').attr('id');
+                var time = $(this).find("input[name='time']").val();
+                pagePickup.countdown(id, time, this);
+            });
+        });
     </script>
 @endsection

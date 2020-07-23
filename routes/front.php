@@ -58,11 +58,12 @@ Route::group(['namespace' => 'Front', 'middleware' => 'front', 'prefix' => 'fron
      * -----------------------------------------------------------------------------------------------------------------
      */
     Route::group(['prefix' => 'order', 'as' => 'order.'], function () {
-        Route::get('/', 'OrderController@getOrderIndex');                             //# 주문/결제 입력
-        Route::post('/', 'OrderController@postOrder');                                //# 주문 요청
-        Route::get('/result/{id?}', 'OrderController@getOrderResult');                //# 주문
-        Route::get('/pickup', 'OrderController@getOrderPickupList');                  //# 구매한 픽업상품 목록
-        Route::get('/detail/{id?}', 'OrderController@getOrderDetail');                //# 주문내역 상세
+        Route::get('/', 'OrderController@getOrderIndex');                              //# 주문/결제 입력
+        Route::post('/', 'OrderController@postOrder');                                 //# 주문 요청
+        Route::get('/result/{id?}', 'OrderController@getOrderResult');                 //# 주문
+        Route::get('/pickup', 'OrderController@getPickupList');                        //# 구매한 픽업상품 목록
+        Route::get('/pickup/list/component', 'OrderController@getPickupListComponent');//# 구매한 픽업상품 목록 추가
+        Route::get('/detail/{id?}', 'OrderController@getOrderDetail');                 //# 주문내역 상세
     });
 
     /**
@@ -95,6 +96,7 @@ Route::group(['namespace' => 'Front', 'middleware' => 'front', 'prefix' => 'fron
         //# 주문내역
         Route::group(['prefix' => 'order', 'as' => 'order.'], function () {
             Route::get('/', 'MypageController@getOrderList');                         //# 마이페이지 - 주문내역
+            Route::get('/list/component', 'MypageController@getOrderListComponent');  //# 마이페이지 - 주문내역 추가
         });
         //# 쿠폰함
         Route::group(['prefix' => 'coupon', 'as' => 'coupon.'], function () {
