@@ -11,6 +11,12 @@ var PickupCommon = {
         location.href = url;
     },
 
+    pageMoveTarget : function(url, target){
+        var baseUrl = location.origin + location.pathname + PickupCommon.defineSearchParameter(PickupCommon._config.page);
+        history.pushState({scrollTop : $(target).scrollTop()}, null, baseUrl);
+        location.href = url;
+    },
+
     defineSearchParameter : function(page){
         var baseUrl = '?';
         var searchValue = '';

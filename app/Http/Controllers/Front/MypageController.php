@@ -246,19 +246,52 @@ class MypageController extends Controller
     {
         $view = view('front.mypage.review');
         $view->page = 'my_review';
+        $view->type = $request->input('type', 'unreview');
+        $pageNum = $request->input('pageNum', 1);
+        $view->pageNum = $pageNum;
 
         $shopAuth = new ShopAuth($request);
         $view->customer = $shopAuth->user();
-        //# 후기 미작성 리스트
-        $view->unreviewList = PickupOrdersProduct::leftjoin('pickup_orders', '.pickup_orders.id', 'pickup_orders_product.pickup_orders_id')
-            ->leftjoin('product', 'product.id', 'pickup_orders_product.product_id')
-            ->leftjoin('pickup_product_review', 'pickup_product_review.product_id', 'product.id')
-            ->select('pickup_orders_product.*', 'pickup_product_review.id as pickup_product_review_id')
-            ->orderBy('pickup_orders_product.id', 'desc')
-            ->where('pickup_orders.customer_id', $shopAuth->user()->id)->whereNull('pickup_product_review.id')->orderBy('created_at','desc')->get();
-        //# 내가 쓴 후기
-        $view->review_list = PickupProductReview::where('customer_id', $shopAuth->user()->id)->orderBy('created_at','desc')->get();
+        if($view->type == 'unreview') {
+            //# 후기 미작성 리스트
+            $unreviewList = PickupOrdersProduct::leftjoin('pickup_orders', '.pickup_orders.id', 'pickup_orders_product.pickup_orders_id')
+                ->leftjoin('product', 'product.id', 'pickup_orders_product.product_id')
+                ->leftjoin('pickup_product_review', 'pickup_product_review.product_id', 'product.id')
+                ->select('pickup_orders_product.*', 'pickup_product_review.id as pickup_product_review_id')
+                ->orderBy('pickup_orders_product.id', 'desc')
+                ->where('pickup_orders.customer_id', $shopAuth->user()->id)->whereNull('pickup_product_review.id')->orderBy('created_at', 'desc');
+            $view->unreviewListCnt = $unreviewList->count();
+            $view->unreviewList = $unreviewList->limit(10 * $pageNum)->get();
+        }else{
+            //# 내가 쓴 후기
+            $reviewList = PickupProductReview::where('customer_id', $shopAuth->user()->id)->orderBy('created_at','desc');
+            $view->reviewListCnt = $reviewList->count();
+            $view->reviewList = $reviewList->limit(10 * $pageNum)->get();
+        }
 
+        return $view;
+    }
+
+    /**
+     *  상품후기 리스트 추가
+     */
+    public function getReviewListComponent(Request $request)
+    {
+        $view = view('front.mypage.reviewComponent');
+        $shopAuth = new ShopAuth($request);
+        $view->type = $request->input('type', 'unreview');
+        if($view->type == 'unreview'){
+            //# 후기 미작성 리스트
+            $view->unreviewList = PickupOrdersProduct::leftjoin('pickup_orders', '.pickup_orders.id', 'pickup_orders_product.pickup_orders_id')
+                ->leftjoin('product', 'product.id', 'pickup_orders_product.product_id')
+                ->leftjoin('pickup_product_review', 'pickup_product_review.product_id', 'product.id')
+                ->select('pickup_orders_product.*', 'pickup_product_review.id as pickup_product_review_id')
+                ->orderBy('pickup_orders_product.id', 'desc')
+                ->where('pickup_orders.customer_id', $shopAuth->user()->id)->whereNull('pickup_product_review.id')->orderBy('created_at','desc')->paginate(10);
+        }else{
+            //# 내가 쓴 후기
+            $view->reviewList = PickupProductReview::where('customer_id', $shopAuth->user()->id)->orderBy('created_at','desc')->paginate(10);
+        }
         return $view;
     }
 

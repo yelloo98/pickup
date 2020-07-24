@@ -121,6 +121,7 @@ Route::group(['namespace' => 'Front', 'middleware' => 'front', 'prefix' => 'fron
         //# 상품후기
         Route::group(['prefix' => 'review', 'as' => 'review.'], function () {
             Route::get('/', 'MypageController@getReviewList');                        //# 마이페이지 - 상품후기 내역
+            Route::get('/list/component', 'MypageController@getReviewListComponent'); //# 마이페이지 - 상품후기 내역 추가
             Route::get('/{id?}', 'MypageController@getReviewDetail');                 //# 마이페이지 - 상품후기 상세 내역
             Route::post('/save', 'MypageController@postReview');                      //# 마이페이지 - 상품후기 등록 / 수정 / 삭제
         });
