@@ -15,7 +15,8 @@ class ShopAuth
     protected $user;
 
     public function __construct(Request $request) {
-        try {
+        $this->user = Customer::where('memNo', 50)->first();
+        /*try {
 //            $sessVal = $request->cookie(env("SESS_COOKIE_NAME", "GD5SESSID"));    // not work ?? return null
 //            $sessVal = $_COOKIE[env("SESS_COOKIE_NAME", "GD5SESSID")];
 //            if($sessVal == null)  $sessVal = env("SESS_COOKIE_VALUE", "m07mjcpvm61gqk6h0din7ah33pb4s88vv3rm4hhbsi93a9e5iqpblpc9pl8so99auneibs2oftj6bh3odiogjm9k0q94ciro45619v1");
@@ -33,7 +34,7 @@ class ShopAuth
             }
         } catch (\GuzzleHttp\Exception\BadResponseException $e) {
             return response()->json(['code' => 400, 'msg' => '쇼핑몰 연동 에러']);
-        }
+        }*/
     }
 
     // return user
