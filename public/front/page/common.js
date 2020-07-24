@@ -221,7 +221,7 @@ var PickupCommon = {
             processData: false,
             success: function (res) {
                 if (res.code == 200) {
-                    //location.href = res.url;
+                    location.href = res.url;
                 }else{
                     pageModal.alertPopup(res.msg);
                     return false;
