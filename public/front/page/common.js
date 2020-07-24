@@ -212,11 +212,7 @@ var PickupCommon = {
             data.append('product', JSON.stringify([[product_id,device_id,num]]));
         }
         data.append('type', type);
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
+        data.append('_token', $('meta[name="csrf-token"]').attr('content'));
         $.ajax({
             type: 'POST',
             url: "/front/cart/pay",
