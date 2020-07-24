@@ -367,15 +367,43 @@ class MypageController extends Controller
     /**
      * Q&A 리스트
      */
-    public function getQna(Request $request)
+    public function getQnaList(Request $request)
     {
         $view = view('front.mypage.qna');
         $view->page = 'my_qna';
+        $view->type = $request->input('type', 'product');
+        $pageNum = $request->input('pageNum', 1);
+        $view->pageNum = $pageNum;
 
         $shopAuth = new ShopAuth($request);
         $view->customer = $shopAuth->user();
-        $view->productQna = PickupQna::where([['customer_id', $shopAuth->user()->id],['type','product']])->orderBy('created_at','desc')->get();
-        $view->storeQna = PickupQna::where([['customer_id', $shopAuth->user()->id],['type','store']])->orderBy('created_at','desc')->get();
+
+        if($view->type == 'product') {
+            $productQna = PickupQna::where([['customer_id', $shopAuth->user()->id], ['type', 'product']])->orderBy('created_at', 'desc');
+            $view->productQnaCnt = $productQna->count();
+            $view->productQna = $productQna->limit(10 * $pageNum)->get();
+        }else{
+            $storeQna = PickupQna::where([['customer_id', $shopAuth->user()->id],['type','store']])->orderBy('created_at','desc');
+            $view->storeQnaCnt = $storeQna->count();
+            $view->storeQna = $storeQna->limit(10*$pageNum)->get();
+        }
+        return $view;
+    }
+
+    /**
+     * Q&A 리스트 추가
+     */
+    public function getQnaListComponent(Request $request)
+    {
+        $view = view('front.mypage.qnaComponent');
+        $shopAuth = new ShopAuth($request);
+        $view->type = $request->input('type', 'product');
+
+        if($view->type == 'product') {
+            $view->productQna = PickupQna::where([['customer_id', $shopAuth->user()->id], ['type', 'product']])->orderBy('created_at', 'desc')->paginate(10);
+        }else{
+            $view->storeQna = PickupQna::where([['customer_id', $shopAuth->user()->id],['type','store']])->orderBy('created_at','desc')->paginate(10);
+        }
         return $view;
     }
 

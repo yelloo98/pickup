@@ -127,7 +127,8 @@ Route::group(['namespace' => 'Front', 'middleware' => 'front', 'prefix' => 'fron
         });
         //# Q&A
         Route::group(['prefix' => 'qna', 'as' => 'qna.'], function () {
-            Route::get('/', 'MypageController@getQna');                               //# 마이페이지 - Q&A 목록
+            Route::get('/', 'MypageController@getQnaList');                           //# 마이페이지 - Q&A 목록
+            Route::get('/list/component', 'MypageController@getQnaListComponent');    //# 마이페이지 - Q&A 목록 추가
             //# 상품 Q&A
             Route::group(['prefix' => 'product'], function () {
                 Route::get('/{id?}', 'MypageController@getProductQna');               //# 마이페이지 - 상품 Q&A 상세
