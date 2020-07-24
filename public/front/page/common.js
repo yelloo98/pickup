@@ -1,14 +1,3 @@
-$(document).ready(function(){
-    $.ajaxSetup({
-        //ajax IE, Edge 통신을 위한 cache 세팅
-        cache : false,
-        //ajax 중복 호출 방지
-        async : false,
-        //ajax 통신을 위한 csrf-token 세팅
-        headers : {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
-    });
-});
-
 var PickupCommon = {
     _config : {
         SUBMIT_WRITE : true,
@@ -440,6 +429,15 @@ var PickupCommon = {
     }
 }
 
-
+$(document).ready(function(){
+    $.ajaxSetup({
+        //ajax IE, Edge 통신을 위한 cache 세팅
+        cache : false,
+        //ajax 중복 호출 방지
+        async : false,
+        //ajax 통신을 위한 csrf-token 세팅
+        headers : {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
+    });
+});
 
 
