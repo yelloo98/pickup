@@ -406,7 +406,6 @@ var PickupCommon = {
         $.ajax({
             type: 'POST',
             url: "/front/mypage/review/save",
-            '_token': $('meta[name="csrf-token"]').attr('content'),
             data: data,
             contentType: false,
             processData: false,
