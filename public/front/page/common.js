@@ -221,7 +221,7 @@ var PickupCommon = {
             processData: false,
             success: function (res) {
                 if (res.code == 200) {
-                    location.href = res.url;
+                    //location.href = res.url;
                 }else{
                     pageModal.alertPopup(res.msg);
                     return false;
@@ -437,7 +437,7 @@ $(document).ready(function(){
         //ajax 중복 호출 방지
         async : false,
         //ajax 통신을 위한 csrf-token 세팅
-        headers : {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
+        headers : {'X-CSRF-TOKEN': $('meta[name=csrf-token]').attr('content')}
     });
 });
 
