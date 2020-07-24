@@ -30,10 +30,26 @@ class BoardController extends Controller
     {
         $view = view('front.board.notice');
         $view->page = 'notice';
+        $pageNum = $request->input('pageNum', 1);
+        $view->pageNum = $pageNum;
 
         $shopAuth = new ShopAuth($request);
         $view->customer = $shopAuth->user();
-        $view->noticeList = PickupNotice::orderBy('created_at','desc')->get();
+        $noticeList = PickupNotice::orderBy('created_at','desc');
+        $view->noticeListCnt = $noticeList->count();
+        $view->noticeList = $noticeList->limit(10 * $pageNum)->get();
+        return $view;
+    }
+
+    /**
+     * 공지사항 추가
+     */
+    public function getNoticeListComponent(Request $request)
+    {
+        $view = view('front.board.noticeComponent');
+        $noticeList = PickupNotice::orderBy('created_at','desc');
+        $view->noticeListCnt = $noticeList->count();
+        $view->noticeList = $noticeList->paginate(10);
         return $view;
     }
 
@@ -58,6 +74,8 @@ class BoardController extends Controller
     {
         $view = view('front.board.event');
         $view->page = 'event';
+        $pageNum = $request->input('pageNum', 1);
+        $view->pageNum = $pageNum;
         $store_id = $request->input('store_id', 498);
 
         $shopAuth = new ShopAuth($request);
@@ -65,7 +83,7 @@ class BoardController extends Controller
 
         $eventList = StoreEvent::where('type','admin')->orWhere([['type','store_owner'],['store_id', $store_id]])->orderBy('created_at','desc');
         $view->eventListCnt = $eventList->count();
-        $view->eventList = $eventList->limit(10)->get();
+        $view->eventList = $eventList->limit(10 * $pageNum)->get();
         return $view;
     }
 

@@ -87,6 +87,7 @@
         var pageReview = {
             getReviewComponent : function(){
                 PickupCommon._config.page++;
+                pageModal.openProgressPopup();
                 setTimeout(function() {
                     try{
                         var result = false;
@@ -109,8 +110,10 @@
                         if(!result){
                             PickupCommon._config.page--;
                         }
+                        pageModal.closeProgressPopup();
                     }catch(e){
                         PickupCommon._config.page--;
+                        pageModal.closeProgressPopup();
                         PickupCommon._config.scrollAction = true;
                     }
                 },300);

@@ -78,6 +78,7 @@ Route::group(['namespace' => 'Front', 'middleware' => 'front', 'prefix' => 'fron
         //# 공지사항
         Route::group(['prefix' => 'notice', 'as' => 'notice.'], function () {
             Route::get('/', 'BoardController@getNoticeList');                         //# 게시판 - 공지사항 목록
+            Route::get('/list/component', 'BoardController@getNoticeListComponent');  //# 게시판 - 공지사항 목록 추가
             Route::get('/{id?}', 'BoardController@getNoticeDetail');                  //# 게시판 - 공지사항 상세
         });
         //# 이벤트

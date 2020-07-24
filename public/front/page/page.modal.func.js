@@ -36,6 +36,14 @@ var pageModal = {
         $('.alert-wrapper-two').addClass('active');
     },
 
+    openProgressPopup : function(){
+        $('.progress-wrapper').addClass('active');
+    },
+
+    closeProgressPopup : function(){
+        $('.progress-wrapper').removeClass('active');
+    },
+
     addComma : function (num) {
         var regexp = /\B(?=(\d{3})+(?!\d))/g;
         return num.toString().replace(regexp, ',');

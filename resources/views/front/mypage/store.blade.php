@@ -29,23 +29,26 @@
         var pageStore = {
             getStoreComponent : function(){
                 PickupCommon._config.page++;
+                pageModal.openProgressPopup();
                 setTimeout(function() {
                     try{
                         var result = false;
                         $.get('/front/mypage/store/list/component' + PickupCommon.defineSearchParameter(PickupCommon._config.page), function (res) {
-                            if(res == ''){
-                                result = false;
-                            }else{
+                            if(res != ''){
                                 $('.content-body .storeList-container').append(res);
                                 PickupCommon._config.scrollAction = true;
                                 result = true;
+                            }else{
+                                result = false;
                             }
                         });
                         if(!result){
                             PickupCommon._config.page--;
                         }
+                        pageModal.closeProgressPopup();
                     }catch(e){
                         PickupCommon._config.page--;
+                        pageModal.closeProgressPopup();
                         PickupCommon._config.scrollAction = true;
                     }
                 },300);
