@@ -661,6 +661,13 @@
             @endif
         </div>
     </div>
+
+    <div class="popup-wrapper loading-wrapper">
+        <div class="loading-inner">
+            <img class="spinner" src="/front/dist/img/loading.png" alt="">
+            <p class="loading-text">로딩중입니다, 잠시만 기다려주세요.</p>
+        </div>
+    </div>
 </div>
 
 <script src="/front/page/page.modal.func.js"></script>

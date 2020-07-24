@@ -2759,6 +2759,9 @@
 	-ms-flex-align: center;
 	-webkit-align-items: center;
 	        align-items: center;
+	-ms-flex-pack: center;
+	-webkit-justify-content: center;
+	        justify-content: center;
 }
 
 .index-box .popup-wrapper .popup-inner {
@@ -3960,6 +3963,49 @@
 	        text-decoration-line: underline;
 }
 
+.index-box .popup-wrapper .loading-inner {
+	text-align: center;
+	/* Animation */
+}
+
+@-webkit-keyframes spinner {
+	0% {
+		-webkit-transform: rotate(0deg);
+		-ms-transform: rotate(0deg);
+		transform: rotate(0deg);
+	}
+	100% {
+		-webkit-transform: rotate(360deg);
+		-ms-transform: rotate(360deg);
+		transform: rotate(360deg);
+	}
+}
+
+@keyframes spinner {
+	0% {
+		-webkit-transform: rotate(0deg);
+		-ms-transform: rotate(0deg);
+		transform: rotate(0deg);
+	}
+	100% {
+		-webkit-transform: rotate(360deg);
+		-ms-transform: rotate(360deg);
+		transform: rotate(360deg);
+	}
+}
+
+.index-box .popup-wrapper .loading-inner .spinner {
+	-webkit-animation: spinner 1500ms infinite linear;
+	animation: spinner 1500ms infinite linear;
+}
+
+.index-box .popup-wrapper .loading-inner .loading-text {
+	margin-top: 20px;
+	font-size: 15px;
+	font-weight: 700;
+	color: #fff;
+}
+
 /* 카테고리 proc/_category_all.html */
 .prd_cate {
 	padding: 0 0 5px 0;
@@ -4640,7 +4686,7 @@
 
 .content-body.orderDetail .accordion-container .container-list .list-wrapper .alert-text {
 	text-align: center;
-	margin-top: 15px;
+	margin-top: 30px;
 }
 
 .content-body.orderDetail .accordion-container .container-list .list-wrapper .alert-text p {
