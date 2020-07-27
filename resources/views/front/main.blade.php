@@ -63,7 +63,7 @@
                 @foreach($newProduct as $k=>$v)
                 <div class="swiper-slide" onclick="pageMain.selProduct('{{$v->product_id ?? 0}}', '{{$v->device_id ?? 0}}')">
                     <div class="img-box" @if(!empty($v->product->origin_product->image_path)) style="background-image: url('{{env('IMAGE_URL').$v->product->origin_product->image_path}}')" @endif>
-                        @if(($v->slot_status ?? '') == 'DP-COMPLETE' && ($v->use_status ?? '') == 'use' && ($v->inserted_amount ?? '') > ($v->sale_amount ?? ''))
+                        @if(($v->stock ?? 0) > 0)
                         <img src="/front/dist/img/icon_cart_box.png" alt="">
                         @else
                         <div class="outOfStock"><p>품절</p></div>

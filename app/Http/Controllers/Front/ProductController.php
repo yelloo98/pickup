@@ -72,8 +72,10 @@ class ProductController extends Controller
         //# 세일율
         $view->productSale = floor((1 - (($view->product->price ?? 0) / ($view->product->origin_product->price_cost ?? 1))) * 100);
         //# 재고량
-        $productList = ProductStock::where([['product_id', $id],['device_id', $device_id],['slot_status','DP-COMPLETE'],['use_status','use']])->whereColumn('inserted_amount', '>', 'sale_amount');
-        $view->productCnt = $productList->sum('inserted_amount') - $productList->sum('sale_amount');
+        $productStock = ProductStock::where([['product_id', $id],['device_id', $device_id],['slot_status','DP-COMPLETE'],['use_status','use'],['inserted_amount','>','sale_amount']])
+            ->select('device_id',DB::raw('sum(inserted_amount) - sum(sale_amount) as product_res'))->first();
+        $orderCnt = PickupOrdersProduct::where([['product_id', $id],['device_id', $device_id],['status','pay']])->sum('count');
+        $view->productCnt = (!empty($productStock) && $productStock->product_res > $orderCnt)? $productStock->product_res - $orderCnt : 0;
         //# 상품후기
         $view->reviewList = PickupProductReview::where('product_id',$id)->orderBy('created_at', 'desc')->get();
         $view->photoReviewList = PickupProductReview::where('product_id',$id)->whereNotNull('img1')->orderBy('created_at', 'desc')->get();

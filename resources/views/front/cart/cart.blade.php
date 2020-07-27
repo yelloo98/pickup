@@ -38,14 +38,14 @@
                             <p class="address">{{$item->product->fc_trader->address ?? ''}}</p>
                         </div>
                         @foreach($item->cartList as $k=>$v)
-                        <div class="content-wrap @if(($v->product_res ?? '') == 0) withoutGoods @endif product_{{$v->product_id}}">
+                        <div class="content-wrap @if(($v->product_res ?? '') <= 0) withoutGoods @endif product_{{$v->product_id}}">
                             <div class="checkbox-box">
                                 <input type="hidden" name="device_id" value="{{$v->device_id ?? ''}}"/>
                                 <input type="checkbox" id="check_item_{{$v->product_id ?? 0}}" name="check_item[]" onclick="PickupCart.totalPrice()" @if(($v->product_res ?? '') == 0) disabled @endif value="{{$v->product_id ?? ''}}"/>
                                 <label for="check_item_{{$v->product_id ?? 0}}"><span class="checkbox-custom"></span></label>
                             </div>
                             <div class="img-box" @if(!empty($v->product->origin_product->image_path)) style="background-image: url('{{env('IMAGE_URL').$v->product->origin_product->image_path}}'); background-size:cover;" @endif>
-                                @if(($v->product_res ?? '') == 0)<p>품 절</p>@endif
+                                @if(($v->product_res ?? '') <= 0)<p>품 절</p>@endif
                             </div>
                             <div class="word-box">
                                 <div class="toTop">

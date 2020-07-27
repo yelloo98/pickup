@@ -6,6 +6,7 @@ use App\Helper\ShopAuth;
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
 use App\Models\PickupCart;
+use App\Models\PickupOrdersProduct;
 use App\Models\Product;
 use App\Models\ProductStock;
 use Illuminate\Http\Request;
@@ -32,7 +33,8 @@ class CartController extends Controller
             foreach ($item->cartList as $v){
                 $productStock = ProductStock::where([['product_id', $v->product_id],['device_id', $v->device_id],['slot_status','DP-COMPLETE'],['use_status','use'],['inserted_amount','>','sale_amount']])
                     ->select('device_id',DB::raw('sum(inserted_amount) - sum(sale_amount) as product_res'))->first();
-                $v->product_res = (!empty($productStock))? $productStock->product_res : 0;
+                $orderCnt = PickupOrdersProduct::where([['product_id', $v->product_id],['device_id', $v->device_id],['status','pay']])->sum('count');
+                $v->product_res = (!empty($productStock) && $productStock->product_res > $orderCnt)? $productStock->product_res - $orderCnt : 0;
             }
         }
         $view->productStore = $productStore;
@@ -50,11 +52,12 @@ class CartController extends Controller
                 if(empty(Customer::find($shopAuth->user()->id))) return response()->json(['code'=>600, 'msg'=>'로그인해주세요']);
 
                 $res = $request->all();
-                $productList = ProductStock::where([['product_id', $res['product_id']],['device_id', $res['device_id']],['slot_status','DP-COMPLETE'],['use_status','use']])->whereColumn('inserted_amount', '>', 'sale_amount');
-                if($productList->count() > 0){
-                    $productCnt = $productList->sum('inserted_amount') - $productList->sum('sale_amount');
-                    $product = $productList->first()->product;
-                    return response()->json(['code' => 200, 'msg' => '장바구니 정보', 'cnt' => $productCnt ?? 0, 'name' => $product->origin_product->name ?? '', 'price' => number_format($product->price) ?? '']);
+                $productList = ProductStock::where([['product_id', $res['product_id']],['device_id', $res['device_id']],['slot_status','DP-COMPLETE'],['use_status','use'],['inserted_amount','>','sale_amount']])
+                    ->select('product_id','device_id',DB::raw('sum(inserted_amount) - sum(sale_amount) as product_res'))->first();
+                $orderCnt = PickupOrdersProduct::where([['product_id', $res['product_id']],['device_id', $res['device_id']],['status','pay']])->sum('count');
+                if(!empty($productList) && $productList->product_res > $orderCnt){
+                    $productCnt = $productList->product_res - $orderCnt;
+                    return response()->json(['code' => 200, 'msg' => '장바구니 정보', 'cnt' => $productCnt ?? 0, 'name' => $productList->product->origin_product->name ?? '', 'price' => number_format($productList->product->price) ?? '']);
                 }else{
                     return response()->json(['code' => 400, 'msg' => '해당 상품의 재고가 없습니다']);
                 }
@@ -126,9 +129,11 @@ class CartController extends Controller
                 $product = json_decode($res['product']);
                 if(empty($product)) return response()->json(['code' => 300, 'msg' =>'상품을 선택해주세요.']);
                 foreach ($product as $k=>$v){
-                    $productList = ProductStock::where([['product_id', $v[0]],['device_id', $v[1]],['slot_status','DP-COMPLETE'],['use_status','use']])->whereColumn('inserted_amount', '>', 'sale_amount');
-                    $productCnt = $productList->sum('inserted_amount') - $productList->sum('sale_amount');
-                    $productName = $productList->first()->product->origin_product->name;
+                    $productList = ProductStock::where([['product_id', $v[0]],['device_id', $v[1]],['slot_status','DP-COMPLETE'],['use_status','use'],['inserted_amount','>','sale_amount']])
+                        ->select('product_id','device_id',DB::raw('sum(inserted_amount) - sum(sale_amount) as product_res'))->first();
+                    $orderCnt = PickupOrdersProduct::where([['product_id', $v[0]],['device_id', $v[1]],['status','pay']])->sum('count');
+                    $productCnt = (!empty($productList) && $productList->product_res > $orderCnt)? $productList->product_res - $orderCnt : 0;
+                    $productName = $productList->product->origin_product->name;
                     if($productCnt >= $v[2]){
                         //# 재고가 있을 경우
                         $url_parameter = $url_parameter . '&product['.$k.']='.$v[0].','.$v[1].','.$v[2];
@@ -137,9 +142,9 @@ class CartController extends Controller
                             $cart->count = $v[2];
                             $cart->save();
                         }
-                    }elseif($productCnt < 0){
+                    }elseif($productCnt < $v[2] && $productCnt > 0){
                         //# 재고가 부족할 경우
-                        return response()->json(['code' => 300, 'msg' => $productName . ' 상품의 재고는 ' . $productList->count() . '개까지만 선택 가능합니다.']);
+                        return response()->json(['code' => 300, 'msg' => $productName . ' 상품의 재고는 ' . $productCnt . '개까지만 선택 가능합니다.']);
                     }else{
                         //# 재고가 품절일 경우
                         return response()->json(['code' => 300, 'msg' => $productName . ' 상품은 품절되었습니다.']);
