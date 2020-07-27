@@ -114,6 +114,7 @@ class OrderController extends Controller
                                 $orderProduct->price = $product[$k]->price * $stockCnt;
                                 //# 결제 모듈 추가 시 status = ''
                                 $orderProduct->status = 'pay';
+                                $orderProduct->initial_status = 'pay';
                                 $orderProduct->save();
                             }
                         }
