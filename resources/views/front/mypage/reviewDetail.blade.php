@@ -23,13 +23,13 @@
         <div class="goodsWord-container">
             <textarea class="hasPhoto" name="contents" id="" cols="30" rows="10" placeholder="상품 후기를 작성해주세요.">{{$review->contents ?? ''}}</textarea>
             <div class="upload-btn">
-                <input type="file" id="review_img">
+                <input type="file" id="review_img" name="review_img" accept="image/png, image/jpeg, image/jpg">
                 @if(!empty($review->img1))
-                <label for="review_img"  style="background-image: url('{{env('IMAGE_URL').$review->img1}}'); background-size:cover;">
-                    <button class="delete-btn"><img src="/front/dist/img/icon_image_x.png" alt=""></button>
+                <label id="review_img_view" for="review_img" style="background-image: url('{{env('IMAGE_URL').$review->img1}}'); background-size:cover;">
+                    <button class="delete-btn" onclick="pageReviewDetail.deleteImg();"><img src="/front/dist/img/icon_image_x.png" alt=""></button>
                 </label>
                 @else
-                <label for="review_img"></label>
+                <label id="review_img_view" for="review_img"></label>
                 @endif
             </div>
         </div>
@@ -46,4 +46,25 @@
     </div>
 @endsection
 @section('script')
+    <script>
+        var pageReviewDetail = {
+            deleteImg : function() {
+                if(PickupCommon._config.CURRENT_BROWSER == 'IE'){
+                    // ie 일때 input[type=file] init.
+                    $("#review_img").replaceWith( $("#filename").clone(true) ); }
+                else {
+                    // other browser 일때 input[type=file] init.
+                    $("#review_img").val("");
+                }
+
+                $('#review_img_view').remove();
+                $('.upload-btn').append('<label id="review_img_view" for="review_img"></label>');
+            }
+        }
+        // 이벤트를 바인딩해서 input에 파일이 올라올때 위의 함수를 this context로 실행합니다.
+        $("#review_img").change(function(){
+            PickupCommon.readURL(this, '#review_img_view');
+            $("#review_img_view").append('<button class="delete-btn" onclick="pageReviewDetail.deleteImg();"><img src="/front/dist/img/icon_image_x.png" alt=""></button>');
+        });
+    </script>
 @endsection

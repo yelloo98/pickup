@@ -351,6 +351,18 @@ class MypageController extends Controller
                         $review->contents = $res['contents'];
                         $review->save();
                     }
+                    //# 이미지 등록
+                    /*if($request->hasFile('img')) {
+                        $img = $request->file('img');
+                        $fileName = 'review_'.time().'.'.$img->getClientOriginalExtension();
+                        $img_path = env('IMAGE_URL') . '/data/smartkiosk/images/pickup/product/' . ($review->id ?? 0) . $fileName;
+                        if (move_uploaded_file($img, $img_path)) {
+                            $review->img1 = $fileName;
+                            $review->save();
+                        } else {
+                            return response()->json(['code'=>400, 'msg'=>'이미지 등록에 실패하였습니다.']);
+                        }
+                    }*/
 
                     return response()->json(['code'=>200, 'msg'=>'후기 등록 성공']);
                 }

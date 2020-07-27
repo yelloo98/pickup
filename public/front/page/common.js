@@ -3,6 +3,20 @@ var PickupCommon = {
         SUBMIT_WRITE : true,
         page: 1,
         scrollAction : true,
+        CURRENT_BROWSER : ''
+    },
+
+    readURL  : function(input, view) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $(view).css({"background":"url(" + e.target.result + ") center center"});
+                $(view).css({"background-size":"cover"});
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
     },
 
     pageMove : function(url){
@@ -399,6 +413,7 @@ var PickupCommon = {
             data.append('product_id', $('input[name="product_id"]').val());
             data.append('score', $("input:radio[name='star-input']:checked").val());
             data.append('contents', $('[name=contents]').val());
+            data.append('img', $('input[name=review_img]')[0].files[0]);
         }
         data.append('review_id', review_id);
         data.append('status', status);
@@ -438,6 +453,23 @@ $(document).ready(function(){
         //ajax 통신을 위한 csrf-token 세팅
         headers : {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
     });
+
+    if (navigator.userAgent.toLowerCase().indexOf("trident") != -1 || (navigator.userAgent.toLowerCase().indexOf("msie") != -1) ) {
+        PickupCommon._config.CURRENT_BROWSER = 'IE';
+    }else {
+        if (navigator.userAgent.toLowerCase().indexOf("safari") != -1) {
+            PickupCommon._config.CURRENT_BROWSER = 'SAFARI';
+        }
+        if (navigator.userAgent.toLowerCase().indexOf("chrome") != -1) {
+            PickupCommon._config.CURRENT_BROWSER = 'CHROME';
+        }
+        if (navigator.userAgent.toLowerCase().indexOf("edge") != -1) {
+            PickupCommon._config.CURRENT_BROWSER = 'EDGE';
+        }
+        // if (navigator.userAgent.toLowerCase().indexOf("firefox") != -1) {
+        //     WitCommon._config.CURRENT_BROWSER = 'FIREFOX';
+        // }
+    }
 });
 
 
