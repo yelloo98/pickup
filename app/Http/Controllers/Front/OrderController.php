@@ -100,7 +100,7 @@ class OrderController extends Controller
                                     ->where('pickup_orders_product.status','pay');
                             })->select('product_stock.*', DB::RAW('(inserted_amount - sale_amount - ifnull(SUM(pickup_orders_product.count),0)) as stock'))
                                 ->where([['product_stock.product_id',$product[$k]->id], ['product_stock.device_id',$item[1]], ['slot_status','DP-COMPLETE'], ['use_status','use'], ['inserted_amount','>','sale_amount']])
-                                ->groupBy('product_stock_id')->get();
+                                ->groupBy('product_stock_id')->orderBy('stock', 'desc')->get();
                             //# 재고 부족 시
                             if($productStockList->sum('stock') < $item[2]){
                                 DB::rollBack();
