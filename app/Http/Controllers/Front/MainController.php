@@ -32,7 +32,7 @@ class MainController extends Controller
 
         //# 신규 상품 / 슬롯에 새로 들어온 상품
         $newProduct = ProductStock::leftjoin('product','product.id','product_stock.product_id')
-            ->where('product.store_id', $store_id)->select('product_stock.*')->orderBy('product_stock.id','DESC')->limit(10)->get();
+            ->where('product.store_id', $store_id)->select('product_stock.*')->groupBy('product_stock.product_id')->groupBy('product_stock.device_id')->orderBy('product_stock.id','DESC')->limit(10)->get();
         foreach ($newProduct as $item){
             if(($item->slot_status ?? '') == 'DP-COMPLETE' && ($item->use_status ?? '') == 'use' && ($item->inserted_amount ?? '') > ($item->sale_amount ?? '')){
                 $productStock = $item->inserted_amount - $item->sale_amount;
