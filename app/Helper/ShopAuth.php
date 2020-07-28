@@ -21,14 +21,13 @@ class ShopAuth
 //            $sessVal = $_COOKIE[env("SESS_COOKIE_NAME", "GD5SESSID")];
 //            if($sessVal == null)  $sessVal = env("SESS_COOKIE_VALUE", "m07mjcpvm61gqk6h0din7ah33pb4s88vv3rm4hhbsi93a9e5iqpblpc9pl8so99auneibs2oftj6bh3odiogjm9k0q94ciro45619v1");
             $sessVal = (!empty($_COOKIE["GD5SESSID"]))? $_COOKIE[env("SESS_COOKIE_NAME", "GD5SESSID")] : null;
-            //dd($sessVal);
             $http = new Client(['cookies' => true]);
             $cookieJar = CookieJar::fromArray([
                 env("SESS_COOKIE_NAME", "GD5SESSID") => $sessVal
             ], env("SESSION_DOMAIN", ".chaesukwoo1.godomall.com"));
             $res = $http->get(env("SHOP_URL", "http://m.chaesukwoo1.godomall.com/")."member/memberCheck.php", ['cookies' => $cookieJar, 'debug' => false]);
             $body = json_decode($res->getBody()->getContents());
-            dd($body->res->code);
+//            dd($body);
             if($body->res->code == 200 && $body->data != null) {
                 $this->user = Customer::where('memNo', $body->data->memNo)->first();
                 $this->user->update(['name' => $body->data->memNm, 'memId' => $body->data->memId]);
