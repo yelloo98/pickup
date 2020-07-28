@@ -28,7 +28,7 @@ class ShopAuth
             ], env("SESSION_DOMAIN", ".chaesukwoo1.godomall.com"));
             $res = $http->get(env("SHOP_URL", "http://m.chaesukwoo1.godomall.com/")."member/memberCheck.php", ['cookies' => $cookieJar, 'debug' => false]);
             $body = json_decode($res->getBody()->getContents());
-//            dd($body);
+            dd($body);
             if($body->res->code == 200 && $body->data != null) {
                 $this->user = Customer::where('memNo', $body->data->memNo)->first();
                 $this->user->update(['name' => $body->data->memNm, 'memId' => $body->data->memId]);
