@@ -21,7 +21,7 @@ class ShopAuth
 //            $sessVal = $_COOKIE[env("SESS_COOKIE_NAME", "GD5SESSID")];
 //            if($sessVal == null)  $sessVal = env("SESS_COOKIE_VALUE", "m07mjcpvm61gqk6h0din7ah33pb4s88vv3rm4hhbsi93a9e5iqpblpc9pl8so99auneibs2oftj6bh3odiogjm9k0q94ciro45619v1");
             $sessVal = (!empty($_COOKIE["GD5SESSID"]))? $_COOKIE[env("SESS_COOKIE_NAME", "GD5SESSID")] : null;
-            dd($sessVal);
+            //dd($sessVal);
             $http = new Client(['cookies' => true]);
             $cookieJar = CookieJar::fromArray([
                 env("SESS_COOKIE_NAME", "GD5SESSID") => $sessVal
