@@ -93,8 +93,14 @@ class OrderController extends Controller
                         $product[$k] = Product::find($item[0]);
                         if(!empty($product[$k])){
                             $productSum = $productSum + ($product[$k]->price * $item[2]);
-                            $productStockList = ProductStock::select('product_stock.*',DB::raw('(inserted_amount - sale_amount) as stock'))->
-                            where([['product_id', $product[$k]->id],['device_id', $item[1]],['slot_status','DP-COMPLETE'],['use_status','use']])->whereColumn('inserted_amount', '>', 'sale_amount')->orderBy('stock','desc')->get();
+                            $productStockList = ProductStock::leftJoin('pickup_orders_product', function($join){
+                                $join->on('pickup_orders_product.product_id', 'product_stock.product_id')
+                                    ->on('pickup_orders_product.device_id','product_stock.device_id')
+                                    ->on('pickup_orders_product.product_stock_id','product_stock.product_stock_id')
+                                    ->where('pickup_orders_product.status','pay');
+                            })->select('product_stock.*', DB::RAW('(inserted_amount - sale_amount - ifnull(SUM(pickup_orders_product.count),0)) as stock'))
+                                ->where([['product_stock.product_id',$product[$k]->id], ['product_stock.device_id',$item[1]], ['slot_status','DP-COMPLETE'], ['use_status','use'], ['inserted_amount','>','sale_amount']])
+                                ->groupBy('product_stock_id')->get();
                             //# 재고 부족 시
                             if($productStockList->sum('stock') < $item[2]){
                                 DB::rollBack();
