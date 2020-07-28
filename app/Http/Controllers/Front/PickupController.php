@@ -92,12 +92,13 @@ class PickupController extends Controller
     }
 
     /**
-     * 주문/결제 API
+     * 주문/결제 API / 키오스크 API 호출
      */
     public function getOrderApi(Request $request, $id)
     {
-        //# 키오스크 API 호출
         try{
+            if(env('APP_ENV') == 'local') return response()->json(['code' => 200, 'msg' => '주문 패스']);
+
 //            $url = 'http://192.168.0.42:8080/api/pickup/sendOrder';           //# 테스트 내부접속
 //            $url = 'http://dev.e777.kr:8842/api/pickup/sendOrder';              //# 테스트 외부접속2
             $url = 'https://api.smartkiosk.kr/kiosk/api/pickup/sendOrder';      //# 실서버 접속
